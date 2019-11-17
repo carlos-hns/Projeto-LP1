@@ -24,6 +24,8 @@ int gerar_id(int tipo){
         return (1000 + (rand()%1000));
     case 6:
         return (2000 + (rand()%2000));
+    case 7:
+        return(3000 + (rand()%3000));
     }
 }
 
@@ -34,6 +36,7 @@ int verificar_ID(int tipo, int ID){
     FILE *oficinas;
     FILE *congress;
     FILE *organizadores;
+    FILE *pale;
 
     switch (tipo){
     // Verifica um ID para Palestra
@@ -141,6 +144,23 @@ int verificar_ID(int tipo, int ID){
                 }
             }
             fclose(organizadores);
+            return 1; // RETORNA 1 SE O ID NÃO EXISTIA
+        }
+    case 7:
+        pale = fopen("Arquivos\\palestrantes.txt", "rb");
+
+        if (pale == NULL){
+            printf("Falha ao carregar o arquivo.");
+        } else {
+            PALESTRANTE palest;
+
+            while (fread(&palest, sizeof(PALESTRANTE), 1, pale) == 1){
+                if (ID == palest.ID){
+                    fclose(pale);
+                    return 0; // RETORNA 0 SE O ID JÁ EXISTE
+                }
+            }
+            fclose(pale);
             return 1; // RETORNA 1 SE O ID NÃO EXISTIA
         }
     }

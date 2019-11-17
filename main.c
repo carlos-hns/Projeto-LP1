@@ -5,6 +5,7 @@
 #include "Eventos.h"
 
 main(){
-    cadastrar_organizador();
-    listar_organizadores();
+    //criar_palestrante();
+    listar_palestrantes();
+    //remover_palestrante();
 }
