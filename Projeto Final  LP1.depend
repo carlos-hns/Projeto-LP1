@@ -1,0 +1,33 @@
+# depslib dependency file v1.0
+1573957319 source:c:\users\usuário\documents\c\projeto final  lp1\main.c
+	<stdio.h>
+	<stdlib.h>
+	"Participantes.h"
+	"Uteis.h"
+	"Eventos.h"
+
+1573955653 c:\users\usuário\documents\c\projeto final  lp1\participantes.h
+
+1573957199 source:c:\users\usuário\documents\c\projeto final  lp1\participantes.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	<string.h>
+	"Participantes.h"
+	"Uteis.h"
+	"Eventos.h"
+
+1573955614 source:c:\users\usuário\documents\c\projeto final  lp1\uteis.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Participantes.h"
+	"Eventos.h"
+	"Uteis.h"
+
+1573947651 c:\users\usuário\documents\c\projeto final  lp1\uteis.h
+
+1573948257 source:c:\users\usuário\documents\c\projeto final  lp1\eventos.c
+
+1573948471 c:\users\usuário\documents\c\projeto final  lp1\eventos.h
+
