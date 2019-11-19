@@ -3,11 +3,12 @@
 
 typedef struct {
 
-    int ID;
+    int ID; // ID DO LOCAL
     char horario[15];
+    int tipo_evento;
     int dia;
-    char tema[50];
-    char carga_horaria[4];
+    int carga_horaria;
+    char local[15];
     int disponibilidade;
 
 } LOCAL;
@@ -15,13 +16,11 @@ typedef struct {
 typedef struct {
 
     int ID; // ID DA PALESTRA
+    int capacidade;
     int matriculas[150];
-    char local[15];
-    int horario;
-    int carga_horaria;
     char tema[50];
     int professor_palestrante; // ID DO PALESTRANTE
-
+    LOCAL loc;
 
 } PALESTRA;
 
@@ -63,5 +62,11 @@ typedef struct {
 
 
 } OFICINA;
+
+// LOCAL
+
+void cadastrar_local();
+
+
 
 #endif // LOCAL_EVENTO

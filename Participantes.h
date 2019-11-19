@@ -26,4 +26,22 @@ typedef struct {
 
 } PALESTRANTE;
 
+// CONGRESSSISTAS
+int quantidade_congressistas();
+void listar_congressistas();
+void cadastrar_congressista();
+void remover_congressista();
+
+// ORGANIZADORES
+int quantidade_organizadores();
+void listar_organizadores();
+void cadastrar_organizador();
+void remover_organizador();
+
+// PALESTRANTES
+int quantidade_palestrantes();
+void listar_palestrantes();
+void cadastrar_palestrante();
+void remover_palestrante();
+
 #endif

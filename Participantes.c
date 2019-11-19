@@ -290,7 +290,7 @@ void listar_palestrantes(){
     }
 }
 
-void criar_palestrante(){
+void cadastrar_palestrante(){
 
     FILE *pale;
     pale = fopen("Arquivos\\palestrantes.txt", "ab");

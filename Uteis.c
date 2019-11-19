@@ -12,20 +12,25 @@ int gerar_id(int tipo){
         return (0 + (rand()%100));
     // Gera um ID para Grupo de Discussoes
     case 2:
-        return (100 + (rand()%200));
+        return (100 + (rand()%100));
     // Gera um ID para Curso
     case 3:
-        return (200 + (rand()%200));
+        return (200 + (rand()%100));
     // Gera um ID para Oficina
     case 4:
-        return (300 + (rand()%300));
+        return (300 + (rand()%100));
     // Gera um ID Para Congressista
     case 5:
         return (1000 + (rand()%1000));
+    // Gera um ID Para Organizador
     case 6:
-        return (2000 + (rand()%2000));
+        return (2000 + (rand()%1000));
+    // Gera um ID Para Palestrante
     case 7:
-        return(3000 + (rand()%3000));
+        return(3000 + (rand()%1000));
+    //Gera um ID para Local
+    case 8:
+        return (4000 + (rand()%1000));
     }
 }
 
@@ -37,6 +42,7 @@ int verificar_ID(int tipo, int ID){
     FILE *congress;
     FILE *organizadores;
     FILE *pale;
+    FILE *locais;
 
     switch (tipo){
     // Verifica um ID para Palestra
@@ -129,6 +135,7 @@ int verificar_ID(int tipo, int ID){
             fclose(congress);
             return 1; // RETORNA 1 SE O ID NÃO EXISTIA
         }
+    // Gera um ID para Organizador
     case 6:
         organizadores = fopen("Arquivos\\organizadores.txt", "rb");
 
@@ -146,6 +153,7 @@ int verificar_ID(int tipo, int ID){
             fclose(organizadores);
             return 1; // RETORNA 1 SE O ID NÃO EXISTIA
         }
+    // Gera um ID para Palestrante
     case 7:
         pale = fopen("Arquivos\\palestrantes.txt", "rb");
 
@@ -163,6 +171,24 @@ int verificar_ID(int tipo, int ID){
             fclose(pale);
             return 1; // RETORNA 1 SE O ID NÃO EXISTIA
         }
+    // Gera um ID para Local
+    case 8:
+        locais = fopen("Arquivos\\locais.txt", "rb");
+
+        if (locais == NULL){
+            printf("Falha ao carregar o arquivo.");
+        } else {
+            LOCAL loc;
+
+            while (fread(&loc, sizeof(LOCAL), 1, locais) == 1){
+                if (ID == loc.ID){
+                    fclose(locais);
+                    return 0; // RETORNA 0 SE O ID JÁ EXISTE
+                }
+            }
+            fclose(locais);
+            return 1; // RETORNA 1 SE O ID NÃO EXISTIA
+        }
     }
 }
 
@@ -173,4 +199,12 @@ int gerar_id_valido(int tipo){
         id = gerar_id(tipo);
     } while(verificar_ID(tipo, id) != 1);
     return id;
+}
+
+void zerarArray(int *array, int n){
+
+    int i;
+    for (i=0; i < n; i++){
+        array[i] = 0;
+    }
 }
