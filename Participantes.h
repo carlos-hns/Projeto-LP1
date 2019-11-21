@@ -22,7 +22,7 @@ typedef struct {
     int ID;
     char nome[30];
     // Area em que se especializou.
-    char especialidade[30];
+    char formacao[30];
 
 } PALESTRANTE;
 

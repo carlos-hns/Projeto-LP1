@@ -403,7 +403,6 @@ int cadastrar_organizador(){
         orga.ID = gerar_id_valido(6);
 
         setbuf(stdin, NULL);
-
         printf("\n\n");
 
         printf("Login: ");
@@ -417,8 +416,8 @@ int cadastrar_organizador(){
         fwrite(&orga, sizeof(ORGANIZADOR), 1, org);
         fclose(org);
     }
-    return 0;
     fclose(org);
+    return 0;
 }
 
 int remover_organizador(){
@@ -482,7 +481,7 @@ int editar_organizador(){
         } else {
 
         listar_organizadores();
-        printf("Digite o ID que Deseja Remover: ");
+        printf("Digite o ID que Deseja Alterar: ");
         scanf("%d", &ID);
 
         do {
@@ -557,7 +556,8 @@ int quantidade_palestrantes(){
     pales = fopen("Arquivos\\palestrantes.txt", "rb");
 
     if (pales == NULL){
-        printf("Falha ao carregar o arquivo.\n");
+        fclose(pales);
+        return -1;
     } else {
         PALESTRANTE pa;
         while (fread(&pa, sizeof(PALESTRANTE), 1, pales) == 1){
@@ -568,18 +568,18 @@ int quantidade_palestrantes(){
     return quantidade;
 }
 
-void listar_palestrantes(){
+int listar_palestrantes(){
 
     FILE *pale;
     pale = fopen("Arquivos\\palestrantes.txt", "rb");
 
     if (pale == NULL){
         fclose(pale);
-        printf("Falha ao carregar o arquivo.\n");
+        return -1;
     } else {
         PALESTRANTE palest;
         if (quantidade_palestrantes() == 0){
-            printf("Nao existem palestrantes cadastrados.");
+            return -1;
         } else {
             printf("Listando: \n");
             while(fread(&palest, sizeof(PALESTRANTE),1, pale) == 1){
@@ -591,67 +591,167 @@ void listar_palestrantes(){
         }
         fclose(pale);
     }
+    fclose(pale);
 }
 
-void cadastrar_palestrante(){
+int cadastrar_palestrante(){
 
     FILE *pale;
     pale = fopen("Arquivos\\palestrantes.txt", "ab");
 
     if (pale == NULL){
-        printf("Falha ao carregar o arquivo.\n");
+        fclose(pale);
+        return -1;
     } else {
         PALESTRANTE palest;
 
+        if (quantidade_palestrantes() == 0){
+            fclose(pale);
+            return -1;
+        }
+
         // 7 GERA UM ID DO TIPO PALESTRANTE
         palest.ID = gerar_id_valido(7);
+
+        setbuf(stdin, NULL);
+        printf("\n\n");
 
         printf("Nome: ");
         fgets(palest.nome, 30, stdin);
         strcpy(palest.nome, strupr(palest.nome));
         setbuf(stdin, NULL);
 
-        printf("Especialidade: ");
-        fgets(palest.especialidade, 30, stdin);
-        strcpy(palest.especialidade, strupr(palest.especialidade));
+        printf("Formacao: ");
+        fgets(palest.formacao, 30, stdin);
+        strcpy(palest.formacao, strupr(palest.formacao));
         setbuf(stdin, NULL);
 
         fwrite(&palest, sizeof(CONGRESSISTA), 1, pale);
 
     }
     fclose(pale);
+    return 0;
 }
 
-void remover_palestrante(){
+int remover_palestrante(){
 
     FILE *pale;
     FILE *pale_aux;
 
     pale = fopen("Arquivos\\palestrantes.txt", "rb");
-    pale_aux = fopen("Arquivos\\temp.txt", "wb");
+    pale_aux = fopen("Arquivos\\temp.txt", "ab");
 
-    if (pale == NULL){
+    if (pale == NULL || pale_aux == NULL){
         fclose(pale);
-        printf("Falha ao carregar o arquivo.\n");
+        return -1;
     } else {
-        if (pale_aux == NULL){
-            fclose(pale_aux);
-            printf("Falha ao carregar o arquivo.\n");
+        PALESTRANTE palest;
+
+        if (quantidade_palestrantes() == 0){
+            return -1;
+        }
+
+        listar_palestrantes();
+        printf("Digite o ID que Deseja Remover: ");
+        int ID;
+        scanf("%d", &ID);
+
+        while (fread(&palest, sizeof(PALESTRANTE), 1, pale) == 1){
+            if (ID != palest.ID){
+                fwrite(&palest, sizeof(PALESTRANTE), 1, pale_aux);
+            }
+        }
+        fclose(pale);
+        fclose(pale_aux);
+        remove("Arquivos\\palestrantes.txt");
+        rename("Arquivos\\temp.txt", "Arquivos\\palestrantes.txt");
+        }
+
+    fclose(pale);
+    fclose(pale_aux);
+}
+
+int editar_palestrante(){
+
+    FILE *pale;
+    FILE *pale_aux;
+
+    pale = fopen("Arquivos\\palestramtes.txt", "rb");
+    pale_aux = fopen("Arquivos\\temp.txt", "ab");
+
+    if (pale == NULL || pale_aux == NULL){
+        fclose(pale);
+        fclose(pale_aux);
+        return -1;
+    } else {
+        PALESTRANTE aux;
+        int editar_escolha;
+        int ID;
+        if (quantidade_organizadores() == 0){
+            fclose(org);
+            fclose(org_aux);
+            return -1;
         } else {
-            PALESTRANTE palest;
 
-            int ID;
-            scanf("%d", &ID);
+        listar_palestrantes();
+        printf("Digite o ID que Deseja Alterar: ");
+        scanf("%d", &ID);
 
-            while (fread(&palest, sizeof(PALESTRANTE), 1, pale) == 1){
-                if (ID != palest.ID){
-                    fwrite(&palest, sizeof(PALESTRANTE), 1, pale_aux);
+        do {
+            printf("\n|1| - Alterar Nome\n");
+            printf("|2| - Alterar Formacao\n");
+            printf("|3| - Alterar Tudo\n");
+            printf("|4| - Voltar\n");
+            printf(">>> ");
+            scanf("%d", &editar_escolha);
+            setbuf(stdin, NULL);
+
+            switch(editar_escolha){
+            case 1:
+
+                while(fread(&aux, sizeof(PALESTRANTE), 1, pale)){
+                    if (aux.ID != ID){
+                        fwrite(&aux, sizeof(PALESTRANTE), 1, pale_aux);
+                    } else {
+                        printf("\nNovo Nome: ");
+                        fgets(aux.nome, 30, stdin);
+                        fwrite(&aux, sizeof(PALESTRANTE), 1, pale_aux);
+                    }
+                }
+                break;
+            case 2:
+                while(fread(&aux, sizeof(PALESTRANTE), 1, pale)){
+                    if (aux.ID != ID){
+                        fwrite(&aux, sizeof(PALESTRANTE), 1, pale_aux);
+                    } else {
+                        printf("\nNova Formacao: ");
+                        fgets(aux.formacao, 30, stdin);
+                        fwrite(&aux, sizeof(PALESTRANTE), 1, pale_aux);
+                    }
+                }
+            case 3:
+                while(fread(&aux, sizeof(PALESTRANTE), 1, pale)){
+                    if (aux.ID != ID){
+                        fwrite(&aux, sizeof(PALESTRANTE), 1, pale_aux);
+                    } else {
+                        printf("\nNovo Nome: ");
+                        fgets(aux.nome, 30, stdin);
+                        setbuf(stdin, NULL);
+
+                        printf("\nNova Formacao: ");
+                        fgets(aux.formacao, 30, stdin);
+                        setbuf(stdin, NULL);
+
+                        fwrite(&aux, sizeof(PALESTRANTE), 1, pale_aux);
+                    }
                 }
             }
-            fclose(pale);
-            fclose(pale_aux);
-            remove("Arquivos\\palestrantes.txt");
-            rename("Arquivos\\temp.txt", "Arquivos\\palestrantes.txt");
+        } while(editar_escolha != 4);
+
         }
     }
+    fclose(pale);
+    fclose(pale_aux);
+    remove("Arquivos\\palestrantes.txt");
+    rename("Arquivos\\temp.txt", "Arquivos\\palestrantes.txt");
 }
