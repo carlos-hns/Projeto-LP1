@@ -6,11 +6,10 @@
 #include "Uteis.h"
 #include "Eventos.h"
 
-
 /*
 *   ------------------------------------------------------------------------
 *       AVISOS IMPORTANTES PARA MIM MSM!
-*       1º FALTAM AS FUNÇÕES DE MODIFICAÇÃO CONGRESSISTA/PALESTRANTE/ORGANIZADOR
+*       1º FALTAM AS FUNÇÕES DE MODIFICAÇÃO PALESTRANTE/ORGANIZADOR
 *
 *       2º AS FUNÇÕES ESTÃO SOMENTE NO ESQUELETO (FALTA FAZER AS RESTRIÇÕES DE CADA CLASSE,
 *       OU SEJA, AS CONDIÇÕES NÃO FORAM ANTENDIDAS AINDA (EXEMPLO PALESTRANTE SÓ PODE DAR UMA PALESTRA),
@@ -31,26 +30,30 @@ int quantidade_congressistas(){
     congress = fopen("Arquivos\\congressistas.txt", "rb");
 
     if (congress == NULL){
-        printf("Falha ao carregar o arquivo.\n");
+        fclose(congress);
+        return -1;
     } else {
         CONGRESSISTA cong;
         while (fread(&cong, sizeof(CONGRESSISTA), 1, congress) == 1){
             quantidade++;
         }
+        fclose(congress);
+        return quantidade;
     }
-    return quantidade;
 }
 
-void listar_congressistas(){
+int listar_congressistas(){
 
     FILE *congress;
     congress = fopen("Arquivos\\congressistas.txt", "rb");
 
     if (congress == NULL){
-        printf("Falha ao carregar o arquivo.\n");
+        fclose(congress);
+        return -1;
     } else {
         if (quantidade_congressistas() == 0){
-            printf("Nenhum congressista cadastrado.\n");
+            fclose(congress);
+            return -1;
         } else {
             CONGRESSISTA cong;
             printf("Listando:\n\n");
@@ -60,25 +63,32 @@ void listar_congressistas(){
                 printf("Curso: %s", cong.curso);
                 putchar('\n');
             }
+
+            fclose(congress);
+            return 0;
         }
-        fclose(congress);
     }
+    fclose(congress);
 }
 
-void cadastrar_congressista(){
+int cadastrar_congressista(){
 
     FILE *congress;
     congress = fopen("Arquivos\\congressistas.txt", "ab");
 
     if (congress == NULL){
-        printf("Falha ao carregar o arquivo.\n");
+        fclose(congress);
+        return -1;
     } else {
         CONGRESSISTA cong;
-
         if (quantidade_congressistas() >= 300){
-            printf("Impossivel Cadastrar, Limite Alacancado.\n");
+            printf("\n\nImpossivel Cadastrar, Limite Alacancado.\n");
         } else {
             cong.ID = gerar_id_valido(5);
+
+            setbuf(stdin, NULL);
+            putchar('\n');
+            putchar('\n');
 
             printf("Nome: ");
             fgets(cong.nome, 30, stdin);
@@ -91,46 +101,149 @@ void cadastrar_congressista(){
             setbuf(stdin, NULL);
 
             fwrite(&cong, sizeof(CONGRESSISTA), 1, congress);
+            fclose(congress);
+            printf("\n==> CONGRESSISTA CADASTRADO COM SUCESSO!\n");
         }
     }
     fclose(congress);
+    return 0;
 }
 
-void remover_congressista(){
+
+// LEMBRAR DE SÓ REMOVER UM ALUNO SE ELE NÃO ESTIVER CADASTRADO EM NADA;
+// -------------------------------------------------------------------->
+int remover_congressista(){
 
     FILE *congress;
     FILE *congress2;
 
     congress = fopen("Arquivos\\congressistas.txt", "rb");
-    congress2 = fopen("Arquivos\\temp.txt", "wb");
+    congress2 = fopen("Arquivos\\temp.txt", "ab");
 
-    if (congress == NULL){
+    if (congress == NULL || congress2 == NULL){
         fclose(congress);
-        printf("Falha ao carregar o arquivo.\n");
+        fclose(congress2);
+        return -1;
     } else {
-        if (congress2 == NULL){
-            fclose(congress2);
-            printf("Falha ao carregar o arquivo.\n");
-        } else {
-            CONGRESSISTA cong;
+        CONGRESSISTA cong;
+        if (quantidade_congressistas() == 0){
+                printf("\n\n==> NAO EXISTEM CONGRESSISTAS CADASTRADOS\n");
+            } else {
 
-            int ID;
-            scanf("%d", &ID);
+                listar_congressistas();
+                int ID;
+                printf("Digite o ID que Deseja Remover: ");
+                scanf("%d", &ID);
 
-            while (fread(&cong, sizeof(CONGRESSISTA), 1, congress) == 1){
-                if (ID != cong.ID){
-                    fwrite(&cong, sizeof(CONGRESSISTA), 1, congress2);
+                while (fread(&cong, sizeof(CONGRESSISTA), 1, congress) == 1){
+                    if (ID != cong.ID){
+                        fwrite(&cong, sizeof(CONGRESSISTA), 1, congress2);
+                    }
                 }
-            }
 
-            // O arquivo só será aberto se não houve falha.
-            // Logo só será preciso fechar se ele foi aberto.
+                // O arquivo só será aberto se não houve falha.
+                // Logo só será preciso fechar se ele foi aberto.
+                fclose(congress2);
+                fclose(congress);
+                remove("Arquivos\\congressistas.txt");
+                rename("Arquivos\\temp.txt", "Arquivos\\congressistas.txt");
+                printf("\n==> CONGRESSISTA REMOVIDO COM SUCESSO\n");
+                return 0;
+        }
+
+    }
+    fclose(congress2);
+    fclose(congress);
+}
+
+int editar_congressista(){
+
+    FILE *congress;
+    FILE *congress2;
+
+    congress = fopen("Arquivos\\congressistas.txt", "rb");
+    congress2 = fopen("Arquivos\\temp.txt", "ab");
+
+    if (congress == NULL || congress2 == NULL){
+        fclose(congress);
+        fclose(congress2);
+        return -1;
+    } else {
+        CONGRESSISTA aux;
+        int editar_escolha;
+        int ID;
+        if (quantidade_congressistas() == 0){
             fclose(congress);
             fclose(congress2);
-            remove("Arquivos\\congressistas.txt");
-            rename("Arquivos\\temp.txt", "Arquivos\\congressistas.txt");
+            return -1;
+        } else {
+
+        listar_congressistas();
+        printf("Digite o ID que Deseja Remover: ");
+        scanf("%d", &ID);
+
+        do {
+            printf("\n|1| - Alterar Nome\n");
+            printf("|2| - Alterar Curso\n");
+            printf("|3| - Alterar Tudo\n");
+            printf("|4| - Voltar\n");
+            printf(">>> ");
+            scanf("%d", &editar_escolha);
+            setbuf(stdin, NULL);
+
+            switch(editar_escolha){
+            case 1:
+
+                while(fread(&aux, sizeof(CONGRESSISTA), 1, congress)){
+                    if (aux.ID != ID){
+                        fwrite(&aux, sizeof(CONGRESSISTA), 1, congress2);
+                    } else {
+                        printf("\nNovo Nome: ");
+                        fgets(aux.nome, 30, stdin);
+                        strcpy(aux.nome, strupr(aux.nome));
+                        fwrite(&aux, sizeof(CONGRESSISTA), 1, congress2);
+                    }
+                }
+                break;
+            case 2:
+                while(fread(&aux, sizeof(CONGRESSISTA), 1, congress)){
+                    if (aux.ID != ID){
+                        fwrite(&aux, sizeof(CONGRESSISTA), 1, congress2);
+                    } else {
+                        printf("\nNovo Curso: ");
+                        fgets(aux.curso, 30, stdin);
+                        strcpy(aux.curso, strupr(aux.curso));
+                        fwrite(&aux, sizeof(CONGRESSISTA), 1, congress2);
+                    }
+                }
+            case 3:
+                while(fread(&aux, sizeof(CONGRESSISTA), 1, congress)){
+                    if (aux.ID != ID){
+                        fwrite(&aux, sizeof(CONGRESSISTA), 1, congress2);
+                    } else {
+                        printf("\nNovo Nome: ");
+                        fgets(aux.nome, 30, stdin);
+                        strcpy(aux.nome, strupr(aux.nome));
+                        setbuf(stdin, NULL);
+
+                        printf("\nNovo Curso: ");
+                        fgets(aux.curso, 30, stdin);
+                        strcpy(aux.curso, strupr(aux.curso));
+                        setbuf(stdin, NULL);
+
+                        fwrite(&aux, sizeof(CONGRESSISTA), 1, congress2);
+                    }
+                }
+            }
+        } while(editar_escolha != 4);
+
         }
     }
+    fclose(congress);
+    fclose(congress2);
+    remove("Arquivos\\congressistas.txt");
+    rename("Arquivos\\temp.txt", "Arquivos\\congressistas.txt");
+    printf("\n==> CONGRESSISTA ALTERADO COM SUCESSO\n");
 }
 
 /*
@@ -146,7 +259,8 @@ int quantidade_organizadores(){
     org = fopen("Arquivos\\organizadores.txt", "rb");
 
     if (org == NULL){
-        printf("Falha ao carregar o arquivo.\n");
+        fclose(org);
+        return -1;
     } else {
         ORGANIZADOR orga;
         while (fread(&orga, sizeof(ORGANIZADOR), 1, org) == 1){
@@ -157,18 +271,19 @@ int quantidade_organizadores(){
     return quantidade;
 }
 
-void listar_organizadores(){
+int listar_organizadores(){
 
     FILE *org;
     org = fopen("Arquivos\\organizadores.txt", "rb");
 
     if (org == NULL){
         fclose(org);
-        printf("Falha ao carregar o arquivo.\n");
+        return -1;
     } else {
         ORGANIZADOR orga;
         if (quantidade_organizadores() == 0){
-            printf("Nao existem organizadores cadastrados.");
+            fclose(org);
+            return -1;
         } else {
             printf("Listando: \n");
             while(fread(&orga, sizeof(ORGANIZADOR),1, org) == 1){
@@ -177,19 +292,21 @@ void listar_organizadores(){
                 printf("Senha: %s", orga.senha);
                 putchar('\n');
             }
+            fclose(org);
         }
-        fclose(org);
     }
+    fclose(org);
+    return 0;
 }
 
-void cadastrar_organizador(){
+int cadastrar_organizador(){
 
     FILE *org;
     org = fopen("Arquivos\\organizadores.txt", "ab");
 
     if (org == NULL){
         fclose(org);
-        printf("Falha ao carregar o arquivo.\n");
+        return -1;
     } else {
         ORGANIZADOR orga;
         // NUMERO 6 RECEBE UM ID DE ORGANIZADOR
@@ -206,9 +323,11 @@ void cadastrar_organizador(){
         fwrite(&orga, sizeof(ORGANIZADOR), 1, org);
         fclose(org);
     }
+    return 0;
+    fclose(org);
 }
 
-void remover_organizador(){
+int remover_organizador(){
 
     FILE *org;
     FILE *org_aux;
@@ -233,12 +352,12 @@ void remover_organizador(){
                     fwrite(&pessoa, sizeof(ORGANIZADOR), 1, org_aux);
                 }
             }
-            fclose(org);
-            fclose(org_aux);
-            remove("Arquivos\\organizadores.txt");
-            rename("Arquivos\\temp.txt", "Arquivos\\organizadores.txt");
         }
     }
+    fclose(org);
+    fclose(org_aux);
+    remove("Arquivos\\organizadores.txt");
+    rename("Arquivos\\temp.txt", "Arquivos\\organizadores.txt");
 }
 
 /*

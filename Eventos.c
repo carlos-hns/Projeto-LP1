@@ -147,6 +147,45 @@ void cadastrar_local(){
     }
 }
 
+/*
+int gerar_locais_zerados(){
+
+    FILE *locais;
+    locais = fopen("Arquivos\\locais.txt", "wb");
+
+    if (locais == locais){
+        printf("Falha ao carregar o arquivo.");
+    } else {
+
+        LOCAL loc;
+
+        // AUDITORIO 1
+        loc.tipo_evento = 1; // PALESTRA
+        loc.dia = 14; // DIA 14
+        strcpy(loc.horario, "07:00-09:00");
+        loc.carga_horaria = 2; // 2H
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "AUDITORIO 1");
+
+        // AUDITORIO 1
+        loc.tipo_evento = 1; // PALESTRA
+        loc.dia = 14; // DIA 14
+        strcpy(loc.horario, "07:00-09:00");
+        loc.carga_horaria = 2; // 2H
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "AUDITORIO 1");
+
+
+
+
+
+
+    }
+}
+*/
+
 void listar_reservas_locais(){
 
     FILE *locais;
@@ -456,10 +495,6 @@ int remover_palestra(){
         rename("Arquivos\\tempo.txt", "Arquivos\\palestras.txt");
     }
 }
-
-
-
-
 
 /*
 *       -----------------------

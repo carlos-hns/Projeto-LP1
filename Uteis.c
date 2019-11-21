@@ -63,6 +63,7 @@ int verificar_ID(int tipo, int ID){
             fclose(palestras);
             return 1; // RETORNA 1 SE O ID NÃO EXISTIA
         }
+        break;
     // Verifica um ID para Grupo de Discussoes
     case 2:
         gp = fopen("Arquivos\\gp_discussoes.txt", "rb");
@@ -81,11 +82,12 @@ int verificar_ID(int tipo, int ID){
             fclose(gp);
             return 1; // RETORNA 1 SE O ID NÃO EXISTIA
         }
+        break;
     // Verifica um ID para Curso
     case 3:
         cursos = fopen("Arquivos\\cursos.txt", "rb");
 
-        if (gp == NULL){
+        if (cursos == NULL){
             printf("Falha ao carregar o arquivo.");
         } else {
             CURSO cur;
@@ -99,11 +101,12 @@ int verificar_ID(int tipo, int ID){
             fclose(cursos);
             return 1; // RETORNA 1 SE O ID NÃO EXISTIA
         }
+        break;
     // Verifica um ID para Oficina
     case 4:
         oficinas = fopen("Arquivos\\oficinas.txt", "rb");
 
-        if (gp == NULL){
+        if (oficinas == NULL){
             printf("Falha ao carregar o arquivo.");
         } else {
             OFICINA ofic;
@@ -117,11 +120,12 @@ int verificar_ID(int tipo, int ID){
             fclose(oficinas);
             return 1; // RETORNA 1 SE O ID NÃO EXISTIA
         }
+        break;
     // Gera um ID Para Congressista
     case 5:
         congress = fopen("Arquivos\\congressistas.txt", "rb");
 
-        if (gp == NULL){
+        if (congress == NULL){
             printf("Falha ao carregar o arquivo.");
         } else {
             CONGRESSISTA cong;
@@ -135,6 +139,7 @@ int verificar_ID(int tipo, int ID){
             fclose(congress);
             return 1; // RETORNA 1 SE O ID NÃO EXISTIA
         }
+        break;
     // Gera um ID para Organizador
     case 6:
         organizadores = fopen("Arquivos\\organizadores.txt", "rb");
@@ -153,6 +158,7 @@ int verificar_ID(int tipo, int ID){
             fclose(organizadores);
             return 1; // RETORNA 1 SE O ID NÃO EXISTIA
         }
+        break;
     // Gera um ID para Palestrante
     case 7:
         pale = fopen("Arquivos\\palestrantes.txt", "rb");
@@ -171,6 +177,7 @@ int verificar_ID(int tipo, int ID){
             fclose(pale);
             return 1; // RETORNA 1 SE O ID NÃO EXISTIA
         }
+        break;
     // Gera um ID para Local
     case 8:
         locais = fopen("Arquivos\\locais.txt", "rb");
@@ -189,6 +196,7 @@ int verificar_ID(int tipo, int ID){
             fclose(locais);
             return 1; // RETORNA 1 SE O ID NÃO EXISTIA
         }
+        break;
     }
 }
 

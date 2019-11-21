@@ -28,9 +28,9 @@ typedef struct {
 
 // CONGRESSSISTAS
 int quantidade_congressistas();
-void listar_congressistas();
-void cadastrar_congressista();
-void remover_congressista();
+int listar_congressistas();
+int cadastrar_congressista();
+int remover_congressista();
 
 // ORGANIZADORES
 int quantidade_organizadores();
