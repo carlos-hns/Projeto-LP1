@@ -579,19 +579,21 @@ int listar_palestrantes(){
     } else {
         PALESTRANTE palest;
         if (quantidade_palestrantes() == 0){
+            fclose(pale);
             return -1;
         } else {
-            printf("Listando: \n");
+            printf("\nListando: \n\n");
             while(fread(&palest, sizeof(PALESTRANTE),1, pale) == 1){
                 printf("ID: %d\n", palest.ID);
                 printf("Nome: %s", palest.nome);
-                printf("Especialidade: %s", palest.especialidade);
+                printf("Formacao: %s", palest.formacao);
                 putchar('\n');
             }
         }
         fclose(pale);
     }
     fclose(pale);
+    return 0;
 }
 
 int cadastrar_palestrante(){
@@ -604,11 +606,6 @@ int cadastrar_palestrante(){
         return -1;
     } else {
         PALESTRANTE palest;
-
-        if (quantidade_palestrantes() == 0){
-            fclose(pale);
-            return -1;
-        }
 
         // 7 GERA UM ID DO TIPO PALESTRANTE
         palest.ID = gerar_id_valido(7);
@@ -626,7 +623,7 @@ int cadastrar_palestrante(){
         strcpy(palest.formacao, strupr(palest.formacao));
         setbuf(stdin, NULL);
 
-        fwrite(&palest, sizeof(CONGRESSISTA), 1, pale);
+        fwrite(&palest, sizeof(PALESTRANTE), 1, pale);
 
     }
     fclose(pale);
@@ -643,11 +640,14 @@ int remover_palestrante(){
 
     if (pale == NULL || pale_aux == NULL){
         fclose(pale);
+        fclose(pale_aux);
         return -1;
     } else {
         PALESTRANTE palest;
 
         if (quantidade_palestrantes() == 0){
+            fclose(pale);
+            fclose(pale_aux);
             return -1;
         }
 
@@ -669,6 +669,7 @@ int remover_palestrante(){
 
     fclose(pale);
     fclose(pale_aux);
+    return 0;
 }
 
 int editar_palestrante(){
@@ -676,7 +677,7 @@ int editar_palestrante(){
     FILE *pale;
     FILE *pale_aux;
 
-    pale = fopen("Arquivos\\palestramtes.txt", "rb");
+    pale = fopen("Arquivos\\palestrantes.txt", "rb");
     pale_aux = fopen("Arquivos\\temp.txt", "ab");
 
     if (pale == NULL || pale_aux == NULL){
@@ -687,11 +688,14 @@ int editar_palestrante(){
         PALESTRANTE aux;
         int editar_escolha;
         int ID;
-        if (quantidade_organizadores() == 0){
-            fclose(org);
-            fclose(org_aux);
+
+        if (quantidade_palestrantes() == 0){
+            fclose(pale);
+            fclose(pale_aux);
             return -1;
         } else {
+
+        setbuf(stdin, NULL);
 
         listar_palestrantes();
         printf("Digite o ID que Deseja Alterar: ");
@@ -715,6 +719,7 @@ int editar_palestrante(){
                     } else {
                         printf("\nNovo Nome: ");
                         fgets(aux.nome, 30, stdin);
+                        strcpy(aux.nome, strupr(aux.nome));
                         fwrite(&aux, sizeof(PALESTRANTE), 1, pale_aux);
                     }
                 }
@@ -726,9 +731,11 @@ int editar_palestrante(){
                     } else {
                         printf("\nNova Formacao: ");
                         fgets(aux.formacao, 30, stdin);
+                        strcpy(aux.formacao, strupr(aux.formacao));
                         fwrite(&aux, sizeof(PALESTRANTE), 1, pale_aux);
                     }
                 }
+                break;
             case 3:
                 while(fread(&aux, sizeof(PALESTRANTE), 1, pale)){
                     if (aux.ID != ID){
@@ -736,22 +743,30 @@ int editar_palestrante(){
                     } else {
                         printf("\nNovo Nome: ");
                         fgets(aux.nome, 30, stdin);
+                        strcpy(aux.nome, strupr(aux.nome));
                         setbuf(stdin, NULL);
 
-                        printf("\nNova Formacao: ");
+                        printf("Nova Formacao: ");
                         fgets(aux.formacao, 30, stdin);
+                        strcpy(aux.formacao, strupr(aux.formacao));
                         setbuf(stdin, NULL);
 
                         fwrite(&aux, sizeof(PALESTRANTE), 1, pale_aux);
                     }
                 }
             }
+            break;
+            setbuf(stdin, NULL);
         } while(editar_escolha != 4);
-
+            fclose(pale);
+            fclose(pale_aux);
         }
+        fclose(pale);
+        fclose(pale_aux);
     }
     fclose(pale);
     fclose(pale_aux);
     remove("Arquivos\\palestrantes.txt");
     rename("Arquivos\\temp.txt", "Arquivos\\palestrantes.txt");
+    return 0;
 }

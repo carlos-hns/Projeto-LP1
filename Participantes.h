@@ -40,8 +40,8 @@ int remover_organizador();
 
 // PALESTRANTES
 int quantidade_palestrantes();
-void listar_palestrantes();
-void cadastrar_palestrante();
-void remover_palestrante();
+int listar_palestrantes();
+int cadastrar_palestrante();
+int remover_palestrante();
 
 #endif
