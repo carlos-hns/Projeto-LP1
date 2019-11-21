@@ -102,7 +102,6 @@ int cadastrar_congressista(){
 
             fwrite(&cong, sizeof(CONGRESSISTA), 1, congress);
             fclose(congress);
-            printf("\n==> CONGRESSISTA CADASTRADO COM SUCESSO!\n");
         }
     }
     fclose(congress);
@@ -247,6 +246,97 @@ int editar_congressista(){
 }
 
 /*
+int editar_congressista(){
+
+    FILE *congress;
+    FILE *congress2;
+
+    congress = fopen("Arquivos\\congressistas.txt", "rb");
+    congress2 = fopen("Arquivos\\temp.txt", "ab");
+
+    if (congress == NULL || congress2 == NULL){
+        fclose(congress);
+        fclose(congress2);
+        return -1;
+    } else {
+        CONGRESSISTA aux;
+        int editar_escolha;
+        int ID;
+        if (quantidade_congressistas() == 0){
+            fclose(congress);
+            fclose(congress2);
+            return -1;
+        } else {
+
+        listar_congressistas();
+        printf("Digite o ID que Deseja Remover: ");
+        scanf("%d", &ID);
+
+        do {
+            printf("\n|1| - Alterar Nome\n");
+            printf("|2| - Alterar Curso\n");
+            printf("|3| - Alterar Tudo\n");
+            printf("|4| - Voltar\n");
+            printf(">>> ");
+            scanf("%d", &editar_escolha);
+            setbuf(stdin, NULL);
+
+            switch(editar_escolha){
+            case 1:
+
+                while(fread(&aux, sizeof(CONGRESSISTA), 1, congress)){
+                    if (aux.ID != ID){
+                        fwrite(&aux, sizeof(CONGRESSISTA), 1, congress2);
+                    } else {
+                        printf("\nNovo Nome: ");
+                        fgets(aux.nome, 30, stdin);
+                        strcpy(aux.nome, strupr(aux.nome));
+                        fwrite(&aux, sizeof(CONGRESSISTA), 1, congress2);
+                    }
+                }
+                break;
+            case 2:
+                while(fread(&aux, sizeof(CONGRESSISTA), 1, congress)){
+                    if (aux.ID != ID){
+                        fwrite(&aux, sizeof(CONGRESSISTA), 1, congress2);
+                    } else {
+                        printf("\nNovo Curso: ");
+                        fgets(aux.curso, 30, stdin);
+                        strcpy(aux.curso, strupr(aux.curso));
+                        fwrite(&aux, sizeof(CONGRESSISTA), 1, congress2);
+                    }
+                }
+            case 3:
+                while(fread(&aux, sizeof(CONGRESSISTA), 1, congress)){
+                    if (aux.ID != ID){
+                        fwrite(&aux, sizeof(CONGRESSISTA), 1, congress2);
+                    } else {
+                        printf("\nNovo Nome: ");
+                        fgets(aux.nome, 30, stdin);
+                        strcpy(aux.nome, strupr(aux.nome));
+                        setbuf(stdin, NULL);
+
+                        printf("\nNovo Curso: ");
+                        fgets(aux.curso, 30, stdin);
+                        strcpy(aux.curso, strupr(aux.curso));
+                        setbuf(stdin, NULL);
+
+                        fwrite(&aux, sizeof(CONGRESSISTA), 1, congress2);
+                    }
+                }
+            }
+        } while(editar_escolha != 4);
+
+        }
+    }
+    fclose(congress);
+    fclose(congress2);
+    remove("Arquivos\\congressistas.txt");
+    rename("Arquivos\\temp.txt", "Arquivos\\congressistas.txt");
+    printf("\n==> CONGRESSISTA ALTERADO COM SUCESSO\n");
+}
+*/
+/*
 *       -----------------------
 *           ORGANIZADORES
 *       -----------------------
@@ -285,7 +375,7 @@ int listar_organizadores(){
             fclose(org);
             return -1;
         } else {
-            printf("Listando: \n");
+            printf("\n\nListando: \n");
             while(fread(&orga, sizeof(ORGANIZADOR),1, org) == 1){
                 printf("ID: %d\n", orga.ID);
                 printf("Login: %s", orga.login);
@@ -312,6 +402,10 @@ int cadastrar_organizador(){
         // NUMERO 6 RECEBE UM ID DE ORGANIZADOR
         orga.ID = gerar_id_valido(6);
 
+        setbuf(stdin, NULL);
+
+        printf("\n\n");
+
         printf("Login: ");
         fgets(orga.login, 30, stdin);
         setbuf(stdin, NULL);
@@ -332,26 +426,116 @@ int remover_organizador(){
     FILE *org;
     FILE *org_aux;
     org = fopen("Arquivos\\organizadores.txt", "rb");
-    org_aux = fopen("Arquivos\\temp.txt", "wb");
+    org_aux = fopen("Arquivos\\temp.txt", "ab");
 
-    if (org == NULL){
+    if (org == NULL || org_aux == NULL){
         fclose(org);
-        printf("Falha ao carregar o arquivo.\n");
+        fclose(org_aux);
+        return -1;
     } else {
-        if (org_aux == NULL){
-            fclose(org_aux);
-            printf("Falha ao carregar o arquivo.\n");
-        } else {
             ORGANIZADOR pessoa;
 
-            int ID;
-            scanf("%d", &ID);
+            if (quantidade_organizadores() == 0){
+                printf("\n\n==> NAO EXISTEM ORGANIZADORES CADASTRADOS\n");
+            } else {
+                listar_organizadores();
+                int ID;
+                printf("Digite o ID que Deseja Remover: ");
+                scanf("%d", &ID);
 
-            while (fread(&pessoa, sizeof(ORGANIZADOR), 1, org) == 1){
-                if (ID != pessoa.ID){
-                    fwrite(&pessoa, sizeof(ORGANIZADOR), 1, org_aux);
+                while (fread(&pessoa, sizeof(ORGANIZADOR), 1, org) == 1){
+                    if (ID != pessoa.ID){
+                        fwrite(&pessoa, sizeof(ORGANIZADOR), 1, org_aux);
+                    }
+                }
+
+                fclose(org);
+                fclose(org_aux);
+                remove("Arquivos\\organizadores.txt");
+                rename("Arquivos\\temp.txt", "Arquivos\\organizadores.txt");
+        }
+    }
+    fclose(org);
+    fclose(org_aux);
+}
+
+int editar_organizador(){
+
+    FILE *org;
+    FILE *org_aux;
+
+    org = fopen("Arquivos\\organizadores.txt", "rb");
+    org_aux = fopen("Arquivos\\temp.txt", "ab");
+
+    if (org == NULL || org_aux == NULL){
+        fclose(org);
+        fclose(org_aux);
+        return -1;
+    } else {
+        ORGANIZADOR aux;
+        int editar_escolha;
+        int ID;
+        if (quantidade_organizadores() == 0){
+            fclose(org);
+            fclose(org_aux);
+            return -1;
+        } else {
+
+        listar_organizadores();
+        printf("Digite o ID que Deseja Remover: ");
+        scanf("%d", &ID);
+
+        do {
+            printf("\n|1| - Alterar Login\n");
+            printf("|2| - Alterar Senha\n");
+            printf("|3| - Alterar Tudo\n");
+            printf("|4| - Voltar\n");
+            printf(">>> ");
+            scanf("%d", &editar_escolha);
+            setbuf(stdin, NULL);
+
+            switch(editar_escolha){
+            case 1:
+
+                while(fread(&aux, sizeof(ORGANIZADOR), 1, org)){
+                    if (aux.ID != ID){
+                        fwrite(&aux, sizeof(ORGANIZADOR), 1, org_aux);
+                    } else {
+                        printf("\nNovo Login: ");
+                        fgets(aux.login, 30, stdin);
+                        fwrite(&aux, sizeof(ORGANIZADOR), 1, org_aux);
+                    }
+                }
+                break;
+            case 2:
+                while(fread(&aux, sizeof(ORGANIZADOR), 1, org)){
+                    if (aux.ID != ID){
+                        fwrite(&aux, sizeof(ORGANIZADOR), 1, org_aux);
+                    } else {
+                        printf("\nNova Senha: ");
+                        fgets(aux.senha, 30, stdin);
+                        fwrite(&aux, sizeof(ORGANIZADOR), 1, org_aux);
+                    }
+                }
+            case 3:
+                while(fread(&aux, sizeof(ORGANIZADOR), 1, org)){
+                    if (aux.ID != ID){
+                        fwrite(&aux, sizeof(ORGANIZADOR), 1, org_aux);
+                    } else {
+                        printf("\nNovo Login: ");
+                        fgets(aux.login, 30, stdin);
+                        setbuf(stdin, NULL);
+
+                        printf("\nNova Senha: ");
+                        fgets(aux.senha, 30, stdin);
+                        setbuf(stdin, NULL);
+
+                        fwrite(&aux, sizeof(ORGANIZADOR), 1, org_aux);
+                    }
                 }
             }
+        } while(editar_escolha != 4);
+
         }
     }
     fclose(org);

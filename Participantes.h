@@ -34,9 +34,9 @@ int remover_congressista();
 
 // ORGANIZADORES
 int quantidade_organizadores();
-void listar_organizadores();
-void cadastrar_organizador();
-void remover_organizador();
+int listar_organizadores();
+int cadastrar_organizador();
+int remover_organizador();
 
 // PALESTRANTES
 int quantidade_palestrantes();

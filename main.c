@@ -45,7 +45,7 @@ void menu_principal(int colunas){
 
     printf("\n\n");
 
-    printf("|1| - ORGANIZACAO\n");
+    printf("|1| - PESSOAS\n");
     printf("|2| - EVENTOS\n");
     printf("|3| - SAIR\n");
     printf(">>> ");
@@ -107,6 +107,39 @@ void menu_congressistas(int colunas){
     printf(">>> ");
 }
 
+void menu_organizadores(int colunas){
+
+    int i;
+    for (i=0; i<colunas; i++){
+        printf("=");
+    }
+
+    int meio = (colunas - strlen("ENEC - ORGANIZADORES")) / 2;
+    for (i=0; i < meio; i++){
+        printf(" ");
+    }
+
+    printf("ENEC - ORGANIZADORES\n");
+
+    for (i=0; i<colunas; i++){
+        printf("=");
+    }
+
+    printf("\n\n");
+
+    printf("|1| - Cadastrar Organizador\n");
+    printf("|2| - Remover Organizador\n");
+    printf("|3| - Alterar Dados de um Organizador\n");
+    printf("|4| - Listar Organizadores\n");
+    printf("|5| - Quantidade Organizadores\n");
+    printf("|6| - Voltar\n");
+    printf(">>> ");
+
+}
+
+
+
+
 main(){
 
     system("Color 3F");
@@ -115,6 +148,8 @@ main(){
     int menu_principal_escolha;
     int menu_organizacao_escolha;
     int menu_congressista_escolha;
+
+    int menu_organizadores_escolha;
 
     do {
         system("cls");
@@ -143,6 +178,7 @@ main(){
                             system("cls");
                             gerar_topo(80, "CADASTRANDO CONGRESSISTA");
                             cadastrar_congressista();
+                            printf("\n==> CONGRESSISTA CADASTRADO COM SUCESSO!\n");
                             Sleep(1000);
                             break;
                         case 2:
@@ -155,7 +191,7 @@ main(){
                             break;
                         case 3:
                             system("cls");
-                            gerar_topo(80, "REMOVER CONGRESSISTA");
+                            gerar_topo(80, "EDITAR CONGRESSISTA");
                              if (editar_congressista() == -1){
                                 printf("\n\n==> CONGRESSISTAS NAO CADASTRADOS!");
                              }
@@ -177,7 +213,7 @@ main(){
                             if (quantidade_congressistas() == 0 || quantidade_congressistas() == -1){
                                 printf("\n\n==> CONGRESSISTAS NAO CADASTRADOS!");
                             } else {
-                                printf("\n\n==> %d CONGRESSISTAS CADASTRADOS!", quantidade_congressistas());
+                                printf("\n\n==> %d CONGRESSISTA(S) CADASTRADOS!", quantidade_congressistas());
                             }
                             setbuf(stdin, NULL);
                             getchar();
@@ -185,8 +221,66 @@ main(){
                         }
                     } while(menu_congressista_escolha != 6);
 
-                //case 2:
+                case 2:
+                    break;
 
+
+                // ESCOLHA ORGANIZADOR
+                case 3:
+                    do {
+                        system("cls");
+                        menu_organizadores(80);
+                        scanf("%d", &menu_organizadores_escolha);
+
+                        switch(menu_organizadores_escolha){
+                        case 1:
+                            system("cls");
+                            gerar_topo(80, "CADASTRANDO ORGANIZADOR");
+                            cadastrar_organizador();
+                            printf("\n==> ORGANIZADOR CADASTRADO COM SUCESSO!\n");
+                            Sleep(1000);
+                            break;
+                        case 2:
+                            system("cls");
+                            gerar_topo(80, "REMOVER ORGANIZADOR");
+                             if (remover_organizador() == -1){
+                                printf("\n\n==> ORGANIZADORES NAO CADASTRADOS!");
+                             }
+                            Sleep(1000);
+                            break;
+                        case 3:
+                            system("cls");
+                            gerar_topo(80, "EDITAR ORGANIZADOR");
+                            // FALTA CRIAR ESSA BENÇÃO
+                             if (editar_organizador() == -1){
+                                printf("\n\n==> ORGANIZADORES NAO CADASTRADOS!");
+                             }
+                             printf("\n==> ORGANIZADOR ALTERADO COM SUCESSO\n");
+                             setbuf(stdin, NULL);
+                             getchar();
+                            break;
+                        case 4:
+                            system("cls");
+                            gerar_topo(80, "LISTANDO ORGANIZADORES");
+                             if (listar_organizadores() == -1){
+                                printf("\n\n==> ORGANIZADORES NAO CADASTRADOS!");
+                             }
+                             setbuf(stdin, NULL);
+                             getchar();
+                             break;
+                        case 5:
+                            system("cls");
+                            gerar_topo(80, "ORGANIZADORES CADASTRADOS");
+                            if (quantidade_organizadores() == 0 || quantidade_congressistas() == -1){
+                                printf("\n\n==> ORGANIZADORES NAO CADASTRADOS!");
+                            } else {
+                                printf("\n\n==> %d ORGANIZADOR(ES) CADASTRADOS!", quantidade_congressistas());
+                            }
+                            setbuf(stdin, NULL);
+                            getchar();
+                            break;
+                        }
+                    } while(menu_organizadores_escolha != 6);
 
 
                 }
