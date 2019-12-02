@@ -147,44 +147,400 @@ void cadastrar_local(){
     }
 }
 
-/*
 int gerar_locais_zerados(){
 
     FILE *locais;
     locais = fopen("Arquivos\\locais.txt", "wb");
 
-    if (locais == locais){
-        printf("Falha ao carregar o arquivo.");
+    if (locais == NULL){
+        fclose(locais);
+        return -1;
     } else {
 
         LOCAL loc;
 
         // AUDITORIO 1
         loc.tipo_evento = 1; // PALESTRA
-        loc.dia = 14; // DIA 14
+        loc.dia = 14;
         strcpy(loc.horario, "07:00-09:00");
-        loc.carga_horaria = 2; // 2H
+        loc.carga_horaria = 2;
         loc.disponibilidade = 1; // DISPONIVEL
         loc.ID = gerar_id_valido(8); // ID LOCAL
         strcpy(loc.local, "AUDITORIO 1");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
 
         // AUDITORIO 1
         loc.tipo_evento = 1; // PALESTRA
-        loc.dia = 14; // DIA 14
-        strcpy(loc.horario, "07:00-09:00");
-        loc.carga_horaria = 2; // 2H
+        loc.dia = 14;
+        strcpy(loc.horario, "09:00-11:00");
+        loc.carga_horaria = 2;
         loc.disponibilidade = 1; // DISPONIVEL
         loc.ID = gerar_id_valido(8); // ID LOCAL
         strcpy(loc.local, "AUDITORIO 1");
 
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+        // AUDITORIO 1
+        loc.tipo_evento = 1; // PALESTRA
+        loc.dia = 15;
+        strcpy(loc.horario, "07:00-09:00");
+        loc.carga_horaria = 2;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "AUDITORIO 1");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
 
 
+        // AUDITORIO 1
+        loc.tipo_evento = 1; // PALESTRA
+        loc.dia = 15;
+        strcpy(loc.horario, "09:00-11:00");
+        loc.carga_horaria = 2;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "AUDITORIO 1");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+        // <---------------------------------------------->
+
+        // AUDITORIO 2
+        loc.tipo_evento = 1; // PALESTRA
+        loc.dia = 14;
+        strcpy(loc.horario, "07:00-09:00");
+        loc.carga_horaria = 2;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "AUDITORIO 2");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
 
 
+        // AUDITORIO 2
+        loc.tipo_evento = 1; // PALESTRA
+        loc.dia = 14;
+        strcpy(loc.horario, "09:00-11:00");
+        loc.carga_horaria = 2;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "AUDITORIO 2");
 
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+
+        // AUDITORIO 2
+        loc.tipo_evento = 1; // PALESTRA
+        loc.dia = 15;
+        strcpy(loc.horario, "07:00-09:00");
+        loc.carga_horaria = 2;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "AUDITORIO 2");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+        // AUDITORIO 2
+        loc.tipo_evento = 1; // PALESTRA
+        loc.dia = 15;
+        strcpy(loc.horario, "09:00-11:00");
+        loc.carga_horaria = 2;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "AUDITORIO 2");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+        // <---------------------------------------------->
+
+        // AUDITORIO 3
+        loc.tipo_evento = 1; // PALESTRA
+        loc.dia = 14;
+        strcpy(loc.horario, "07:00-09:00");
+        loc.carga_horaria = 2;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "AUDITORIO 3");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+        // AUDITORIO 3
+        loc.tipo_evento = 1; // PALESTRA
+        loc.dia = 14;
+        strcpy(loc.horario, "09:00-11:00");
+        loc.carga_horaria = 2;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "AUDITORIO 3");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+        loc.tipo_evento = 1; // PALESTRA
+        loc.dia = 15;
+        strcpy(loc.horario, "07:00-09:00");
+        loc.carga_horaria = 2;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "AUDITORIO 3");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+        // AUDITORIO 3
+        loc.tipo_evento = 1; // PALESTRA
+        loc.dia = 15;
+        strcpy(loc.horario, "09:00-11:00");
+        loc.carga_horaria = 2;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "AUDITORIO 3");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+        // <---------------------------------------------->
+
+        // SALA 1 - CURSOS
+        loc.tipo_evento = 3; // CURSO
+        loc.dia = 14;
+        strcpy(loc.horario, "13:00-15:00");
+        loc.carga_horaria = 2;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "SALA 1");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+        // SALA 1
+        loc.tipo_evento = 3; // CURSO
+        loc.dia = 15;
+        strcpy(loc.horario, "13:00-15:00");
+        loc.carga_horaria = 2;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "SALA 1");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+        // <---------------------------------------------->
+
+
+        // SALA 2
+        loc.tipo_evento = 3; // CURSO
+        loc.dia = 14;
+        strcpy(loc.horario, "13:00-15:00");
+        loc.carga_horaria = 2;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "SALA 2");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+        // SALA 2
+        loc.tipo_evento = 3; // CURSO
+        loc.dia = 15;
+        strcpy(loc.horario, "13:00-15:00");
+        loc.carga_horaria = 2;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "SALA 2");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+        // <---------------------------------------------->
+
+        // SALA 1 - GP DE DISCUSSAO
+        loc.tipo_evento = 2; // GP DISCUSSAO
+        loc.dia = 14;
+        strcpy(loc.horario, "15:00-16:00");
+        loc.carga_horaria = 1;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "SALA 1");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+        // SALA 1
+        loc.tipo_evento = 2; // GP DISCUSSAO
+        loc.dia = 15;
+        strcpy(loc.horario, "15:00-16:00");
+        loc.carga_horaria = 1;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "SALA 1");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+        // <---------------------------------------------->
+
+
+        // SALA 2 - GP DE DISCUSSAO
+        loc.tipo_evento = 2; // GP DISCUSSAO
+        loc.dia = 14;
+        strcpy(loc.horario, "15:00-16:00");
+        loc.carga_horaria = 1;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "SALA 2");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+        // SALA 2
+        loc.tipo_evento = 2; // GP DISCUSSAO
+        loc.dia = 15;
+        strcpy(loc.horario, "15:00-16:00");
+        loc.carga_horaria = 1;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "SALA 2");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+        // <---------------------------------------------->
+
+        // SALA 3 - GP DE DISCUSSAO
+        loc.tipo_evento = 2; // GP DISCUSSAO
+        loc.dia = 14;
+        strcpy(loc.horario, "13:00-14:00");
+        loc.carga_horaria = 1;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "SALA 3");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+        // SALA 3
+        loc.tipo_evento = 2; // GP DISCUSSAO
+        loc.dia = 14;
+        strcpy(loc.horario, "14:00-15:00");
+        loc.carga_horaria = 2;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "SALA 3");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+
+        // SALA 3 - GP DE DISCUSSAO
+        loc.tipo_evento = 2; // GP DISCUSSAO
+        loc.dia = 15;
+        strcpy(loc.horario, "13:00-14:00");
+        loc.carga_horaria = 1;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "SALA 3");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+        // SALA 3
+        loc.tipo_evento = 2; // GP DISCUSSAO
+        loc.dia = 15;
+        strcpy(loc.horario, "14:00-15:00");
+        loc.carga_horaria = 2;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "SALA 3");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+        // <---------------------------------------------->
+
+
+        // LABORATORIO 1 - OFICINA
+        loc.tipo_evento = 4; // OFICINA
+        loc.dia = 14;
+        strcpy(loc.horario, "13:00-15:00");
+        loc.carga_horaria = 2;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "LABORATORIO 1");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+        // LABORATORIO 1
+        loc.tipo_evento = 4; // OFICINA
+        loc.dia = 14;
+        strcpy(loc.horario, "15:00-17:00");
+        loc.carga_horaria = 2;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "LABORATORIO 1");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+
+        // LABORATORIO 1 - OFICINA
+        loc.tipo_evento = 4; // OFICINA
+        loc.dia = 15;
+        strcpy(loc.horario, "13:00-15:00");
+        loc.carga_horaria = 2;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "LABORATORIO 1");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+        // LABORATORIO 1
+        loc.tipo_evento = 4; // OFICINA
+        loc.dia = 15;
+        strcpy(loc.horario, "15:00-17:00");
+        loc.carga_horaria = 2;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "LABORATORIO 1");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+
+        // <---------------------------------------------->
+
+        // LABORATORIO 2 - OFICINA
+        loc.tipo_evento = 4; // OFICINA
+        loc.dia = 14;
+        strcpy(loc.horario, "13:00-15:00");
+        loc.carga_horaria = 2;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "LABORATORIO 2");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+        // LABORATORIO 1
+        loc.tipo_evento = 4; // OFICINA
+        loc.dia = 14;
+        strcpy(loc.horario, "15:00-17:00");
+        loc.carga_horaria = 2;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "LABORATORIO 2");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+
+        // LABORATORIO 2 - OFICINA
+        loc.tipo_evento = 4; // OFICINA
+        loc.dia = 15;
+        strcpy(loc.horario, "13:00-15:00");
+        loc.carga_horaria = 2;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "LABORATORIO 2");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+
+        // LABORATORIO 2
+        loc.tipo_evento = 4; // OFICINA
+        loc.dia = 15;
+        strcpy(loc.horario, "15:00-17:00");
+        loc.carga_horaria = 2;
+        loc.disponibilidade = 1; // DISPONIVEL
+        loc.ID = gerar_id_valido(8); // ID LOCAL
+        strcpy(loc.local, "LABORATORIO 2");
+
+        fwrite(&loc, sizeof(LOCAL), 1, locais);
+        fclose(locais);
     }
+    fclose(locais);
 }
-*/
 
 void listar_reservas_locais(){
 
@@ -192,7 +548,7 @@ void listar_reservas_locais(){
     locais = fopen("Arquivos\\locais.txt", "rb");
 
     if (locais == NULL){
-            fclose(locais);
+        fclose(locais);
         printf("Falha ao carregar o arquivo.");
     } else {
         LOCAL loc;
@@ -206,11 +562,13 @@ void listar_reservas_locais(){
             printf("LOCAL: %s\n", loc.local);
             printf("DISPONIBILIDADE: %d\n", loc.disponibilidade);
             putchar('\n');
+            //Sleep(500);
 
         }
 
         fclose(locais);
     }
+    fclose(locais);
 }
 
 void listar_por_tipo_evento(int ID){
@@ -282,39 +640,33 @@ void listar_por_tipo_evento(int ID){
     }
 }
 
-void alterar_disponibilidade(int ID, int estado){
-
-    // 1 DISPONIVEL
-    // -1 INDISPONIVEL
+int alterar_disponibilidade(int ID, int estado){
 
     FILE *locais;
     FILE *locais_aux;
+
     locais = fopen("Arquivos\\locais.txt", "rb");
-    locais_aux = fopen("Arquivos\\temp.txt", "wb");
-    if (locais == NULL){
-            fclose(locais);
-        printf("Falha ao carregar o arquivo.\n");
+    locais_aux = fopen("Arquivos\\alterar_disponibilidade.txt", "ab");
+
+    if (locais == NULL || locais_aux == NULL){
+        return -1;
     } else {
-        if (locais_aux == NULL){
-            locais_aux;
-            printf("Falha ao carregar o arquivo.\n");
-        } else {
 
-            LOCAL loc;
-
-            while(fread(&loc, sizeof(LOCAL), 1, locais)){
-                if (loc.ID == ID){
-                    loc.disponibilidade = estado;
-                }
-
-                fwrite(&loc, sizeof(LOCAL), 1, locais_aux);
+        LOCAL loc;
+        while(fread(&loc, sizeof(LOCAL), 1, locais)){
+            if(loc.ID == ID){
+                loc.disponibilidade = estado;
             }
-            fclose(locais);
-            fclose(locais_aux);
-            remove("Arquivos\\locais.txt");
-            rename("Arquivos\\temp.txt", "Arquivos\\locais.txt");
+            fwrite(&loc, sizeof(LOCAL), 1, locais_aux);
         }
+
+        fclose(locais);
+        fclose(locais_aux);
+
+        remove("Arquivos\\locais.txt");
+        rename("Arquivos\\alterar_disponibilidade.txt", "Arquivos\\locais.txt");
     }
+    return 0;
 }
 
 /*
@@ -354,18 +706,20 @@ int disponibilidade_palestrante_PCO(int ID){
     palestras = fopen("Arquivos\\palestras.txt", "rb");
 
     if (palestras == NULL){
-        printf("Falha ao carregar o arquivo.\n");
+        fclose(palestras);
+        return -1;
     } else {
         PALESTRA pale;
         while(fread(&pale, sizeof(PALESTRA), 1, palestras) == 1){
             printf("ID PROFESSORES: %d\n", pale.professor_palestrante);
             if (ID == pale.professor_palestrante){
-                return 0; // PROFESSOR JÁ PARTICIPA DE ALGO
+                fclose(palestras);
+                return -1; // PROFESSOR JÁ PARTICIPA DE ALGO
             }
         }
 
-
-        return -1;
+        fclose(palestras);
+        return 0;
     }
 }
 
@@ -373,90 +727,126 @@ int cadastrar_palestra(){
 
     FILE *palestras;
     FILE *locais;
-    FILE *locais2;
 
     palestras = fopen("Arquivos\\palestras.txt", "ab");
-
     if (palestras == NULL){
-        printf("Falha ao carregar o arquivo.\n");
+        fclose(palestras);
+        return -1;
     } else {
-        if (quantidade_palestrantes() == 0){
-            printf("Nao existem palestrantes cadastrados.\n");
-            printf("Por favor, cadastre e tente novamente.");
+        if (quantidade_palestrantes() == -1){
+            fclose(palestras);
+            return -1;
         } else {
-            PALESTRA pale;
-
-            // GERA ID DE PALESTRA
-            pale.ID = gerar_id_valido(1);
-            zerarArray(pale.matriculas, 150);
-
-            //CAPACIDADE
-            printf("CAPACIDADE >>> ");
-            do {
-                scanf("%d", &pale.capacidade);
-            } while(pale.capacidade < 50 || pale.capacidade > 150);
-
-            setbuf(stdin, NULL);
-
-            // TEMA
-            printf("TEMA: ");
-            fgets(pale.tema, 50, stdin);
-            strcpy(pale.tema, strupr(pale.tema));
-            setbuf(stdin, NULL);
-
-            //ESCOLHER PALESTRANTE
-            listar_palestrantes();
-            int matricula_palestrante;
-            printf("ID DO PALESTRANTE: >>> ");
-
-            do {
-                scanf("%d", &matricula_palestrante);
-            } while (verificar_ID(7, matricula_palestrante) != 0);
-
-            if (disponibilidade_palestrante_PCO(matricula_palestrante) == 0){
-                printf("Professor ja ministra um evento.\n");
-                return -1;
-            }
-
-            pale.professor_palestrante = matricula_palestrante;
-
-            locais = fopen("Arquivos\\locais.txt", "rb");
-
-            if (locais == NULL){
-                printf("Falha ao carregar o arquivo.\n");
-            } else {
-                LOCAL loc;
-                while(fread(&loc, sizeof(LOCAL), 1, locais)){
-                    if (loc.tipo_evento == 1 && loc.disponibilidade == 1){
-                        printf("ID: %d\n", loc.ID);
-                        printf("DIA: %d\n", loc.dia);
-                        printf("HORARIO: %s\n", loc.horario);
-                        printf("CARGA HORARIA: %dH\n", loc.carga_horaria);
-                        printf("LOCAL: %s\n", loc.local);
-                        printf("DISPONIBILIDADE: %d\n", loc.disponibilidade);
-                        putchar('\n');
-                    }
-                }
-
-                fclose(locais);
-                int id_escolha;
-
-                printf("ID LOCAL: >>> ");
-                scanf("%d", &id_escolha);
-
-                locais2 = fopen("Arquivos\\locais.txt", "rb");
-
-                while(fread(&loc, sizeof(LOCAL), 1, locais2)){
-                    if (loc.ID == id_escolha){
-                        pale.loc = loc;
-                    }
-                }
-
-                fclose(locais2);
-
-                fwrite(&pale, sizeof(PALESTRA), 1, palestras);
-                alterar_disponibilidade(id_escolha, -1);
+            if (quantidade_palestrantes() == 0){
                 fclose(palestras);
+                return -2;
+            } else {
+
+                PALESTRA pale;
+
+                // GERA ID DE PALESTRA
+                pale.ID = gerar_id_valido(1);
+                zerarArray(pale.matriculas, 150);
+
+                //CAPACIDADE
+                printf("CAPACIDADE >>> ");
+                do {
+                    scanf("%d", &pale.capacidade);
+                } while(pale.capacidade < 50 || pale.capacidade > 150);
+
+                setbuf(stdin, NULL);
+
+                // TEMA
+                printf("TEMA: ");
+                fgets(pale.tema, 50, stdin);
+                strcpy(pale.tema, strupr(pale.tema));
+                setbuf(stdin, NULL);
+
+                //ESCOLHER PALESTRANTE
+                listar_palestrantes();
+                int matricula_palestrante;
+                printf("ID DO PALESTRANTE: >>> ");
+
+                do {
+                    scanf("%d", &matricula_palestrante);
+                } while (verificar_ID(7, matricula_palestrante) != 0);
+
+                if (disponibilidade_palestrante_PCO(matricula_palestrante) == -1){
+                    printf("Professor ja ministra um evento.\n");
+                    return -3;
+                }
+
+                pale.professor_palestrante = matricula_palestrante;
+
+                locais = fopen("Arquivos\\locais.txt", "rb");
+
+                if (locais == NULL){
+                    fclose(palestras);
+                    return -1;
+                } else {
+                    LOCAL loc;
+                    while(fread(&loc, sizeof(LOCAL), 1, locais)){
+                        if (loc.tipo_evento == 1 && loc.disponibilidade == 1){
+                            if (pale.capacidade == 50 && (strcmp(loc.local, "AUDITORIO 3") == 0)){
+                                printf("ID: %d\n", loc.ID);
+                                printf("DIA: %d\n", loc.dia);
+                                printf("HORARIO: %s\n", loc.horario);
+                                printf("CARGA HORARIA: %dH\n", loc.carga_horaria);
+                                printf("LOCAL: %s\n", loc.local);
+                                printf("DISPONIBILIDADE: %d\n", loc.disponibilidade);
+                                putchar('\n');
+                                Sleep(1500);
+                            } else {
+                                if ((pale.capacidade > 50 && pale.capacidade <= 100) &&(strcmp(loc.local, "AUDITORIO 2") == 0)){
+                                    printf("ID: %d\n", loc.ID);
+                                    printf("DIA: %d\n", loc.dia);
+                                    printf("HORARIO: %s\n", loc.horario);
+                                    printf("CARGA HORARIA: %dH\n", loc.carga_horaria);
+                                    printf("LOCAL: %s\n", loc.local);
+                                    printf("DISPONIBILIDADE: %d\n", loc.disponibilidade);
+                                    putchar('\n');
+                                    Sleep(1500);
+                                } else {
+                                    if ((pale.capacidade > 100 && pale.capacidade <= 150) &&(strcmp(loc.local, "AUDITORIO 1") == 0)){
+                                            printf("ID: %d\n", loc.ID);
+                                            printf("DIA: %d\n", loc.dia);
+                                            printf("HORARIO: %s\n", loc.horario);
+                                            printf("CARGA HORARIA: %dH\n", loc.carga_horaria);
+                                            printf("LOCAL: %s\n", loc.local);
+                                            printf("DISPONIBILIDADE: %d\n", loc.disponibilidade);
+                                            putchar('\n');
+                                            Sleep(1500);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    fclose(locais);
+
+                    int id_escolha;
+                    printf("ID LOCAL: >>> ");
+                    scanf("%d", &id_escolha);
+
+                    locais = fopen("Arquivos\\locais.txt", "rb");
+                    if (locais == NULL){
+                        fclose(palestras);
+                        return -1;
+                    } else {
+
+                        while(fread(&loc, sizeof(LOCAL), 1, locais)){
+                            if (loc.ID == id_escolha){
+                                pale.loc = loc;
+                                break;
+                            }
+                        }
+                    }
+                    fclose(locais);
+
+                    fwrite(&pale, sizeof(PALESTRA), 1, palestras);
+                    fclose(palestras);
+
+                    alterar_disponibilidade(id_escolha, -1);
+                }
             }
         }
     }
@@ -468,7 +858,7 @@ int remover_palestra(){
     FILE *palestras_aux;
 
     palestras = fopen("Arquivos\\palestras.txt", "rb");
-    palestras_aux = fopen("Arquivos\\tempo.txt", "wb");
+    palestras_aux = fopen("Arquivos\\tempo.txt", "ab");
 
     if (palestras == NULL || palestras_aux == NULL){
         printf("Falha ao carregar o arquivo.\n");
@@ -508,6 +898,155 @@ int remover_palestra(){
 *           CURSO
 *       -----------------------
 */
+
+int listar_cursos(){
+
+    FILE *cursos;
+    cursos = fopen("Arquivos\\cursos.txt", "rb");
+
+    if (cursos == NULL){
+        return -1;
+    } else {
+
+        CURSO cur;
+
+        while(fread(&cur, sizeof(CURSO), 1, cursos)){
+            printf("\nID: %d\n", cur.ID);
+            printf("CAPACIDADE: %d\n", cur.capacidade);
+            printf("TEMA: %s", cur.tema);
+            printf("PROFESSOR: %d\n", cur.professor_palestrante);
+
+        }
+        fclose(cursos);
+    }
+}
+
+int cadastrar_curso(){
+
+    FILE *cursos;
+    cursos = fopen("Arquivos\\cursos.txt", "ab");
+
+    if (cursos == NULL){
+        return -1;
+    } else {
+        if (quantidade_palestrantes() == -1){
+            fclose(cursos);
+            return -1; // ERRO NA INICIALIZAÇÃO
+        } else {
+            if (quantidade_palestrantes() == 0){
+                fclose(cursos); // PALESTRANTES VAZIOS
+                return -2;
+            } else {
+
+                CURSO cur;
+
+                // GERA ID DE PALESTRA
+                cur.ID = gerar_id_valido(3);
+                zerarArray(cur.matriculas, 40);
+
+                //CAPACIDADE
+                printf("CAPACIDADE >>> ");
+                do {
+                    scanf("%d", &cur.capacidade);
+                } while(cur.capacidade < 1 || cur.capacidade > 40);
+
+                setbuf(stdin, NULL);
+
+                // TEMA
+                printf("TEMA: ");
+                fgets(cur.tema, 50, stdin);
+                strcpy(cur.tema, strupr(cur.tema));
+                setbuf(stdin, NULL);
+
+                //ESCOLHER PALESTRANTE
+                listar_palestrantes();
+                int matricula_palestrante;
+                printf("ID DO PALESTRANTE: >>> ");
+
+                do {
+                    scanf("%d", &matricula_palestrante);
+                } while (verificar_ID(7, matricula_palestrante) != 0);
+
+                if (disponibilidade_palestrante_PCO(matricula_palestrante) == -1){
+                    printf("Professor ja ministra um evento.\n");
+                    return -3;
+                }
+
+                cur.professor_palestrante = matricula_palestrante;
+
+                FILE *locais;
+                locais = fopen("Arquivos\\locais.txt", "rb");
+
+                if (locais == NULL){
+                    fclose(cursos);
+                    return -1;
+                } else {
+                    LOCAL loc;
+                    int contador =0;
+
+                    while(fread(&loc, sizeof(LOCAL), 1, locais)){
+                        if (loc.tipo_evento == 3 &&
+                             loc.disponibilidade == 1 &&
+                             strcmp(loc.horario, "13:00-15:00") == 1){
+                            contador++;
+                        }
+                    }
+
+                    if (contador == 0){
+                        return -4; // SALAS INDISPONIVEIS...
+                    }
+                    fseek(locais, 0, 0);
+
+                    while(fread(&loc, sizeof(LOCAL), 1, locais)){
+                        if (loc.tipo_evento == 3 &&
+                             loc.disponibilidade == 1 &&
+                             strcmp(loc.horario, "13:00-15:00") == 1){
+
+                            printf("ID: %d\n", loc.ID);
+                            printf("DIA: %d\n", loc.dia);
+                            printf("HORARIO: %s\n", loc.horario);
+                            printf("CARGA HORARIA: %dH\n", loc.carga_horaria);
+                            printf("LOCAL: %s\n", loc.local);
+                            printf("DISPONIBILIDADE: %d\n", loc.disponibilidade);
+                            putchar('\n');
+                            Sleep(1500);
+                        }
+                    }
+                    fclose(locais);
+
+                    int id_escolha;
+                    printf("ID LOCAL: >>> ");
+                    scanf("%d", &id_escolha);
+
+                    locais = fopen("Arquivos\\locais.txt", "rb");
+                    if (locais == NULL){
+                        fclose(cursos);
+                        return -1;
+                    } else {
+
+                        while(fread(&loc, sizeof(LOCAL), 1, locais)){
+                            if (loc.ID == id_escolha){
+                                cur.loc = loc;
+                                break;
+                            }
+                        }
+                    }
+                    fclose(locais);
+
+                    fwrite(&cur, sizeof(CURSO), 1, cursos);
+                    fclose(cursos);
+
+                    alterar_disponibilidade(id_escolha, -1);
+                }
+
+            // VERIFICAR SE A FUNÇÃO ESTA PEGANDO!
+            // SÓ TROQUEI AS VARIAVEIS E OS NOMES...
+            }
+        }
+    }
+}
+
+
 
 /*
 *       -----------------------

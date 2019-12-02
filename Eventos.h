@@ -27,44 +27,39 @@ typedef struct {
 typedef struct {
 
     int ID; // ID DO GP DE DISCUSSAO
+    int capacidade;
     int matriculas[50];
-    char local[15];
-    int horario;
-    int carga_horaria;
     char tema[50];
     int mesa[5]; // ID's DOS PARTICIPANTES DA MESA
-
+    LOCAL loc;
 
 } GP_DISCUSSOES;
 
 typedef struct {
 
     int ID; // ID DO CURSO
+    int capacidade;
     int matriculas[40];
-    char local[15];
-    int horario;
-    int carga_horaria;
     char tema[50];
-    int professor_palestrante; // ID DO PROFESSOR
-
+    int professor_palestrante; // ID DO PALESTRANTE
+    LOCAL loc;
 
 } CURSO;
 
 typedef struct {
 
-    int ID; // ID DA OFICINA
+    int ID; // ID DA PALESTRA
+    int capacidade;
     int matriculas[20];
-    char local[15];
-    int horario;
-    int carga_horaria;
     char tema[50];
-    int professor_palestrante; // ID DO PROFESSOR
-
+    int professor_palestrante; // ID DO PALESTRANTE
+    LOCAL loc;
 
 } OFICINA;
 
 // LOCAL
 
+int alterar_disponibilidade(int ID, int estado);
 void cadastrar_local();
 
 

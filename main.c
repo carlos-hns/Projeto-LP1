@@ -178,6 +178,17 @@ main(){
     int menu_organizadores_escolha;
     int menu_palestrantes_escolha;
 
+    // Veirifica se os locais já foram criados
+    FILE *locais;
+    locais = fopen("Arquivos\\locais.txt", "rb");
+    if (locais == NULL){
+        gerar_locais_zerados();
+    }
+
+    fclose(locais);
+
+    // Inicia o Programa
+
     do {
         system("cls");
         menu_principal(80);
