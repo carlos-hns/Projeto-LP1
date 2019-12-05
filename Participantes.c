@@ -245,98 +245,167 @@ int editar_congressista(){
     printf("\n==> CONGRESSISTA ALTERADO COM SUCESSO\n");
 }
 
-/*
-int editar_congressista(){
+int *informacoes_cadastro_eventos(int ID){
 
-    FILE *congress;
-    FILE *congress2;
+    FILE *palestras;
+    FILE *cursos;
+    FILE *oficinas;
+    FILE *gp_discussao;
 
-    congress = fopen("Arquivos\\congressistas.txt", "rb");
-    congress2 = fopen("Arquivos\\temp.txt", "ab");
+    palestras = fopen("Arquivos\\palestras.txt", "rb");
+    cursos = fopen("Arquivos\\cursos.txt", "rb");
+    oficinas = fopen("Arquivos\\oficinas.txt", "rb");
+    gp_discussao = fopen("Arquivos\\gp_discussoes", "rb");
 
-    if (congress == NULL || congress2 == NULL){
-        fclose(congress);
-        fclose(congress2);
-        return -1;
-    } else {
-        CONGRESSISTA aux;
-        int editar_escolha;
-        int ID;
-        if (quantidade_congressistas() == 0){
-            fclose(congress);
-            fclose(congress2);
+    if (palestras == NULL ||
+        cursos == NULL ||
+        oficinas == NULL ||
+        gp_discussao == NULL){
             return -1;
-        } else {
+    }
+    // O NÚMERO DE EVENTOS QUE PODEM SER CADASTRADOS == 24 + 4 PARA GUARDAR A QUANTIDADE
+    // TODAS AS INFORMAÇÕES APÓS O INDICE 3 (0,1,2,3) SE TRATA DOS ID's EM QUE ELES ESTÃO CADASTRADOS
+    int *array_informacao = (int *) calloc(28, sizeof(int));
+    if (array_informacao == NULL)
+        return -1;
 
-        listar_congressistas();
-        printf("Digite o ID que Deseja Remover: ");
-        scanf("%d", &ID);
+    // INDICE 0 DO ARRAY GUARDA A QUANTIDADE DE PALESTRAS EM QUE ELE ESTÁ
+    PALESTRA pale;
+    int i;
+    int numero_verificador_cadastro = 0; // Serve para testar se foi inscrito ou não na palestra;
 
-        do {
-            printf("\n|1| - Alterar Nome\n");
-            printf("|2| - Alterar Curso\n");
-            printf("|3| - Alterar Tudo\n");
-            printf("|4| - Voltar\n");
-            printf(">>> ");
-            scanf("%d", &editar_escolha);
-            setbuf(stdin, NULL);
+    while (fread(&pale, sizeof(PALESTRA), 1, palestras)){
 
-            switch(editar_escolha){
-            case 1:
+        for (i=0; i < 150; i++){
+            if (pale.matriculas[i] == ID){
+                numero_verificador_cadastro += 1;
+                array_informacao[0] += 1;
+                // SE O CONGRESSISTA ESTIVER EM ALGUMA PALESTRA ADCIONE +1
+            }
+        }
 
-                while(fread(&aux, sizeof(CONGRESSISTA), 1, congress)){
-                    if (aux.ID != ID){
-                        fwrite(&aux, sizeof(CONGRESSISTA), 1, congress2);
-                    } else {
-                        printf("\nNovo Nome: ");
-                        fgets(aux.nome, 30, stdin);
-                        strcpy(aux.nome, strupr(aux.nome));
-                        fwrite(&aux, sizeof(CONGRESSISTA), 1, congress2);
-                    }
-                }
-                break;
-            case 2:
-                while(fread(&aux, sizeof(CONGRESSISTA), 1, congress)){
-                    if (aux.ID != ID){
-                        fwrite(&aux, sizeof(CONGRESSISTA), 1, congress2);
-                    } else {
-                        printf("\nNovo Curso: ");
-                        fgets(aux.curso, 30, stdin);
-                        strcpy(aux.curso, strupr(aux.curso));
-                        fwrite(&aux, sizeof(CONGRESSISTA), 1, congress2);
-                    }
-                }
-            case 3:
-                while(fread(&aux, sizeof(CONGRESSISTA), 1, congress)){
-                    if (aux.ID != ID){
-                        fwrite(&aux, sizeof(CONGRESSISTA), 1, congress2);
-                    } else {
-                        printf("\nNovo Nome: ");
-                        fgets(aux.nome, 30, stdin);
-                        strcpy(aux.nome, strupr(aux.nome));
-                        setbuf(stdin, NULL);
-
-                        printf("\nNovo Curso: ");
-                        fgets(aux.curso, 30, stdin);
-                        strcpy(aux.curso, strupr(aux.curso));
-                        setbuf(stdin, NULL);
-
-                        fwrite(&aux, sizeof(CONGRESSISTA), 1, congress2);
-                    }
+        // Se foi cadastrado na palestra ele estará != 0 se não, adiciona +1;
+        if (numero_verificador_cadastro != 0){
+            for (i=4; i < 28; i++){
+                if (array_informacao[i] == 0){
+                    array_informacao[i] = pale.ID;
+                    numero_verificador_cadastro = 0;
+                    break;
                 }
             }
-        } while(editar_escolha != 4);
-
         }
     }
-    fclose(congress);
-    fclose(congress2);
-    remove("Arquivos\\congressistas.txt");
-    rename("Arquivos\\temp.txt", "Arquivos\\congressistas.txt");
-    printf("\n==> CONGRESSISTA ALTERADO COM SUCESSO\n");
+
+    fclose(palestras);
+    numero_verificador_cadastro = 0;
+
+    // INDICE 1 GUARDA QNT CURSOS CURSOS
+    CURSO cur;
+    while (fread(&cur, sizeof(CURSO), 1, cursos)){
+
+        for (i=0; i < 40; i++){
+            if (cur.matriculas[i] == ID){
+                numero_verificador_cadastro += 1;
+                array_informacao[1] += 1;
+                // SE O CONGRESSISTA ESTIVER EM ALGUMA PALESTRA ADCIONE +1
+            }
+        }
+
+        // Se foi cadastrado na palestra ele estará != 0 se não, adiciona +1;
+        if (numero_verificador_cadastro != 0){
+            for (i=4; i < 28; i++){
+                if (array_informacao[i] == 0){
+                    array_informacao[i] = cur.ID;
+                    numero_verificador_cadastro = 0;
+                    break;
+                }
+            }
+        }
+    }
+
+    fclose(cursos);
+    numero_verificador_cadastro = 0;
+
+    // INDICE 2 GUARDA QNT CURSOS CURSOS
+    OFICINA ofic;
+    while (fread(&ofic, sizeof(OFICINA), 1, oficinas)){
+
+        for (i=0; i < 20; i++){
+            if (ofic.matriculas[i] == ID){
+                numero_verificador_cadastro += 1;
+                array_informacao[2] += 1;
+                // SE O CONGRESSISTA ESTIVER EM ALGUMA PALESTRA ADCIONE +1
+            }
+        }
+
+        // Se foi cadastrado na palestra ele estará != 0 se não, adiciona +1;
+        if (numero_verificador_cadastro != 0){
+            for (i=4; i < 28; i++){
+                if (array_informacao[i] == 0){
+                    array_informacao[i] = ofic.ID;
+                    numero_verificador_cadastro = 0;
+                    break;
+                }
+            }
+        }
+    }
+
+    fclose(oficinas);
+    numero_verificador_cadastro = 0;
+
+    // INDICE 3 GUARDA QNT GP DE DISCUSSAO
+    GP_DISCUSSOES gp;
+    while (fread(&gp, sizeof(GP_DISCUSSOES), 1, gp_discussao)){
+
+        for (i=0; i < 50; i++){
+            if (gp.matriculas[i] == ID){
+                numero_verificador_cadastro += 1;
+                array_informacao[3] += 1;
+                // SE O CONGRESSISTA ESTIVER EM ALGUMA PALESTRA ADCIONE +1
+            }
+        }
+
+        // Se foi cadastrado na palestra ele estará != 0 se não, adiciona +1;
+        if (numero_verificador_cadastro != 0){
+            for (i=4; i < 28; i++){
+                if (array_informacao[i] == 0){
+                    array_informacao[i] = gp.ID;
+                    numero_verificador_cadastro = 0;
+                    break;
+                }
+            }
+        }
+    }
+
+
+
+
+
 }
 
-*/
+
+
+
+
+
+
+
+
+int cadastrar_congressista_evento(){
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
 /*
 *       -----------------------
 *           ORGANIZADORES

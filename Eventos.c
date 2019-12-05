@@ -987,7 +987,7 @@ int cadastrar_curso(){
                     while(fread(&loc, sizeof(LOCAL), 1, locais)){
                         if (loc.tipo_evento == 3 &&
                              loc.disponibilidade == 1 &&
-                             strcmp(loc.horario, "13:00-15:00") == 1){
+                             strcmp(loc.horario, "13:00-15:00") == 0){ // TAVA 1 ANTES
                             contador++;
                         }
                     }
@@ -1000,7 +1000,7 @@ int cadastrar_curso(){
                     while(fread(&loc, sizeof(LOCAL), 1, locais)){
                         if (loc.tipo_evento == 3 &&
                              loc.disponibilidade == 1 &&
-                             strcmp(loc.horario, "13:00-15:00") == 1){
+                             strcmp(loc.horario, "13:00-15:00") == 0){ // TAVA 1 ANTES
 
                             printf("ID: %d\n", loc.ID);
                             printf("DIA: %d\n", loc.dia);
@@ -1046,10 +1046,226 @@ int cadastrar_curso(){
     }
 }
 
+int remover_cursos(){
 
+    FILE *cursos;
+    FILE *cursos_aux;
+
+    cursos = fopen("Arquivos\\cursos.txt", "rb");
+    cursos_aux = fopen("Arquivos\\temp_cursos.txt", "ab");
+
+    if (cursos == NULL || cursos_aux == NULL){
+        printf("Falha ao carregar o arquivo.\n");
+        return -1;
+    } else {
+
+        CURSO cur;
+        int ID;
+        listar_cursos();
+        printf("ID P/ REMOVER >>> ");
+        scanf("%d", &ID);
+
+        while(fread(&cur, sizeof(CURSO), 1, cursos) == 1){
+            if (ID != cur.ID){
+                fwrite(&cur, sizeof(CURSO), 1, cursos_aux);
+            } else{
+
+                alterar_disponibilidade(cur.loc.ID, 1);
+            }
+        }
+
+        fclose(cursos);
+        fclose(cursos_aux);
+        remove("Arquivos\\cursos.txt");
+        rename("Arquivos\\temp_cursos.txt", "Arquivos\\cursos.txt");
+    }
+}
 
 /*
 *       -----------------------
 *           OFICINA
 *       -----------------------
 */
+
+int listar_oficinas(){
+
+    FILE *oficinas;
+    oficinas = fopen("Arquivos\\oficinas.txt", "rb");
+
+    if (oficinas == NULL){
+        return -1;
+    } else {
+
+        OFICINA ofic;
+
+        while(fread(&ofic, sizeof(OFICINA), 1, oficinas)){
+            printf("\nID: %d\n", ofic.ID);
+            printf("CAPACIDADE: %d\n", ofic.capacidade);
+            printf("TEMA: %s", ofic.tema);
+            printf("PROFESSOR: %d\n", ofic.professor_palestrante);
+
+        }
+        fclose(oficinas);
+    }
+}
+
+
+int remover_oficinas(){
+
+    FILE *oficinas;
+    FILE *oficinas_aux;
+
+    oficinas = fopen("Arquivos\\oficinas.txt", "rb");
+    oficinas_aux = fopen("Arquivos\\oficinas_aux.txt", "ab");
+
+    if (oficinas == NULL || oficinas_aux == NULL){
+        printf("Falha ao carregar o arquivo.\n");
+        return -1;
+    } else {
+
+        OFICINA ofic;
+        int ID;
+        listar_oficinas();
+        printf("ID P/ REMOVER >>> ");
+        scanf("%d", &ID);
+
+        while(fread(&ofic, sizeof(OFICINA), 1, oficinas) == 1){
+            if (ID != ofic.ID){
+                fwrite(&ofic, sizeof(OFICINA), 1, oficinas_aux);
+            } else{
+
+                alterar_disponibilidade(ofic.loc.ID, 1);
+            }
+        }
+
+        fclose(oficinas);
+        fclose(oficinas_aux);
+        remove("Arquivos\\oficinas.txt");
+        rename("Arquivos\\oficinas_aux.txt", "Arquivos\\oficinas.txt");
+    }
+}
+
+int cadastrar_oficina(){
+
+    FILE *oficinas;
+    oficinas = fopen("Arquivos\\oficinas.txt", "ab");
+
+    if (oficinas == NULL){
+        return -1;
+    } else {
+        if (quantidade_palestrantes() == -1){
+            fclose(oficinas);
+            return -1; // ERRO NA INICIALIZAÇÃO
+        } else {
+            if (quantidade_palestrantes() == 0){
+                fclose(oficinas); // PALESTRANTES VAZIOS
+                return -2;
+            } else {
+
+                OFICINA ofic;
+
+                // GERA ID DE PALESTRA
+                ofic.ID = gerar_id_valido(4);
+                zerarArray(ofic.matriculas, 20);
+
+                //CAPACIDADE
+                printf("CAPACIDADE >>> ");
+                do {
+                    scanf("%d", &ofic.capacidade);
+                } while(ofic.capacidade < 1 || ofic.capacidade > 20);
+
+                setbuf(stdin, NULL);
+
+                // TEMA
+                printf("TEMA: ");
+                fgets(ofic.tema, 50, stdin);
+                strcpy(ofic.tema, strupr(ofic.tema));
+                setbuf(stdin, NULL);
+
+                //ESCOLHER PALESTRANTE
+                listar_palestrantes();
+                int matricula_palestrante;
+                printf("ID DO PALESTRANTE: >>> ");
+
+                do {
+                    scanf("%d", &matricula_palestrante);
+                } while (verificar_ID(7, matricula_palestrante) != 0);
+
+                if (disponibilidade_palestrante_PCO(matricula_palestrante) == -1){
+                    printf("Professor ja ministra um evento.\n");
+                    return -3;
+                }
+
+                ofic.professor_palestrante = matricula_palestrante;
+
+                FILE *locais;
+                locais = fopen("Arquivos\\locais.txt", "rb");
+
+                if (locais == NULL){
+                    fclose(oficinas);
+                    return -1;
+                } else {
+                    LOCAL loc;
+                    int contador = 0;
+
+                    while(fread(&loc, sizeof(LOCAL), 1, locais)){
+                        if (loc.tipo_evento == 4 &&
+                             loc.disponibilidade == 1){
+                            contador++;
+                        }
+                    }
+
+                    if (contador == 0){
+                        return -4; // SALAS INDISPONIVEIS...
+                    }
+
+                    fseek(locais, 0, 0);
+
+                    while(fread(&loc, sizeof(LOCAL), 1, locais)){
+                        if (loc.tipo_evento == 4 &&
+                             loc.disponibilidade == 1){
+
+                            printf("ID: %d\n", loc.ID);
+                            printf("DIA: %d\n", loc.dia);
+                            printf("HORARIO: %s\n", loc.horario);
+                            printf("CARGA HORARIA: %dH\n", loc.carga_horaria);
+                            printf("LOCAL: %s\n", loc.local);
+                            printf("DISPONIBILIDADE: %d\n", loc.disponibilidade);
+                            putchar('\n');
+                            Sleep(1500);
+                        }
+                    }
+                    fclose(locais);
+
+                    int id_escolha;
+                    printf("ID LOCAL: >>> ");
+                    scanf("%d", &id_escolha);
+
+                    locais = fopen("Arquivos\\locais.txt", "rb");
+                    if (locais == NULL){
+                        fclose(oficinas);
+                        return -1;
+                    } else {
+
+                        while(fread(&loc, sizeof(LOCAL), 1, locais)){
+                            if (loc.ID == id_escolha){
+                                ofic.loc = loc;
+                                break;
+                            }
+                        }
+                    }
+                    fclose(locais);
+
+                    fwrite(&ofic, sizeof(OFICINA), 1, oficinas);
+                    fclose(oficinas);
+
+                    alterar_disponibilidade(id_escolha, -1);
+                }
+
+            // VERIFICAR SE A FUNÇÃO ESTA PEGANDO!
+            // SÓ TROQUEI AS VARIAVEIS E OS NOMES...
+            }
+        }
+    }
+}
+
