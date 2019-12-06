@@ -245,6 +245,10 @@ int editar_congressista(){
     printf("\n==> CONGRESSISTA ALTERADO COM SUCESSO\n");
 }
 
+
+
+// FALTA TESTAR \/
+
 int *informacoes_cadastro_eventos(int ID){
 
     FILE *palestras;
@@ -255,7 +259,7 @@ int *informacoes_cadastro_eventos(int ID){
     palestras = fopen("Arquivos\\palestras.txt", "rb");
     cursos = fopen("Arquivos\\cursos.txt", "rb");
     oficinas = fopen("Arquivos\\oficinas.txt", "rb");
-    gp_discussao = fopen("Arquivos\\gp_discussoes", "rb");
+    gp_discussao = fopen("Arquivos\\gp_discussoes.txt", "rb");
 
     if (palestras == NULL ||
         cursos == NULL ||
@@ -263,21 +267,24 @@ int *informacoes_cadastro_eventos(int ID){
         gp_discussao == NULL){
             return -1;
     }
-    // O NÚMERO DE EVENTOS QUE PODEM SER CADASTRADOS == 24 + 4 PARA GUARDAR A QUANTIDADE
+    // O NÚMERO DE EVENTOS QUE PODEM SER CADASTRADOS == 32 + 4 PARA GUARDAR A QUANTIDADE
     // TODAS AS INFORMAÇÕES APÓS O INDICE 3 (0,1,2,3) SE TRATA DOS ID's EM QUE ELES ESTÃO CADASTRADOS
-    int *array_informacao = (int *) calloc(28, sizeof(int));
-    if (array_informacao == NULL)
+    int *array_informacao = (int *) calloc(36, sizeof(int));
+    if (array_informacao == NULL){
         return -1;
+    }
 
     // INDICE 0 DO ARRAY GUARDA A QUANTIDADE DE PALESTRAS EM QUE ELE ESTÁ
     PALESTRA pale;
     int i;
     int numero_verificador_cadastro = 0; // Serve para testar se foi inscrito ou não na palestra;
 
-    while (fread(&pale, sizeof(PALESTRA), 1, palestras)){
-
+    while (fread(&pale, sizeof(PALESTRA), 1, palestras) == 1){
         for (i=0; i < 150; i++){
             if (pale.matriculas[i] == ID){
+                //printf("%d\n", pale.matriculas[0]);
+                //printf("teste");
+                //getch();
                 numero_verificador_cadastro += 1;
                 array_informacao[0] += 1;
                 // SE O CONGRESSISTA ESTIVER EM ALGUMA PALESTRA ADCIONE +1
@@ -286,7 +293,7 @@ int *informacoes_cadastro_eventos(int ID){
 
         // Se foi cadastrado na palestra ele estará != 0 se não, adiciona +1;
         if (numero_verificador_cadastro != 0){
-            for (i=4; i < 28; i++){
+            for (i=4; i < 36; i++){
                 if (array_informacao[i] == 0){
                     array_informacao[i] = pale.ID;
                     numero_verificador_cadastro = 0;
@@ -301,7 +308,7 @@ int *informacoes_cadastro_eventos(int ID){
 
     // INDICE 1 GUARDA QNT CURSOS CURSOS
     CURSO cur;
-    while (fread(&cur, sizeof(CURSO), 1, cursos)){
+    while (fread(&cur, sizeof(CURSO), 1, cursos) == 1){
 
         for (i=0; i < 40; i++){
             if (cur.matriculas[i] == ID){
@@ -313,7 +320,7 @@ int *informacoes_cadastro_eventos(int ID){
 
         // Se foi cadastrado na palestra ele estará != 0 se não, adiciona +1;
         if (numero_verificador_cadastro != 0){
-            for (i=4; i < 28; i++){
+            for (i=4; i < 36; i++){
                 if (array_informacao[i] == 0){
                     array_informacao[i] = cur.ID;
                     numero_verificador_cadastro = 0;
@@ -326,9 +333,9 @@ int *informacoes_cadastro_eventos(int ID){
     fclose(cursos);
     numero_verificador_cadastro = 0;
 
-    // INDICE 2 GUARDA QNT CURSOS CURSOS
+    // INDICE 2 GUARDA QNT OFICINAS
     OFICINA ofic;
-    while (fread(&ofic, sizeof(OFICINA), 1, oficinas)){
+    while (fread(&ofic, sizeof(OFICINA), 1, oficinas) == 1){
 
         for (i=0; i < 20; i++){
             if (ofic.matriculas[i] == ID){
@@ -340,7 +347,7 @@ int *informacoes_cadastro_eventos(int ID){
 
         // Se foi cadastrado na palestra ele estará != 0 se não, adiciona +1;
         if (numero_verificador_cadastro != 0){
-            for (i=4; i < 28; i++){
+            for (i=4; i < 36; i++){
                 if (array_informacao[i] == 0){
                     array_informacao[i] = ofic.ID;
                     numero_verificador_cadastro = 0;
@@ -355,7 +362,7 @@ int *informacoes_cadastro_eventos(int ID){
 
     // INDICE 3 GUARDA QNT GP DE DISCUSSAO
     GP_DISCUSSOES gp;
-    while (fread(&gp, sizeof(GP_DISCUSSOES), 1, gp_discussao)){
+    while (fread(&gp, sizeof(GP_DISCUSSOES), 1, gp_discussao) == 1){
 
         for (i=0; i < 50; i++){
             if (gp.matriculas[i] == ID){
@@ -367,7 +374,7 @@ int *informacoes_cadastro_eventos(int ID){
 
         // Se foi cadastrado na palestra ele estará != 0 se não, adiciona +1;
         if (numero_verificador_cadastro != 0){
-            for (i=4; i < 28; i++){
+            for (i=4; i < 36; i++){
                 if (array_informacao[i] == 0){
                     array_informacao[i] = gp.ID;
                     numero_verificador_cadastro = 0;
@@ -377,34 +384,119 @@ int *informacoes_cadastro_eventos(int ID){
         }
     }
 
-
-
-
-
+    fclose(gp_discussao);
+    return array_informacao;
 }
 
 
+// TERMINAR DEPOIS --------------->
+int inserir_aluno_evento(){
+    int i;
+
+    if (quantidade_congressistas() == 0){
+        return -2; // Se não foi cadastrado congressista retorna -2
+    }
+
+    int id_congressista;
+    listar_congressistas();
+    printf("==> ID: ");
+
+    do {
+        scanf("%d", &id_congressista);
+    } while (verificar_ID(5, id_congressista) != 0);
+
+    int *informacoes;
+    informacoes = informacoes_cadastro_eventos(id_congressista);
+
+    if (informacoes[1] == 1 || informacoes[2] == 1){
+        //return -3; // Aluno já participa de Curso/Oficina
+
+        printf("Aluno Já Participa de Curso/Oficina");
+
+        printf("\nSe Inscrever Em: \n");
+        printf("|1| - Palestra\n");
+        printf("|2| - Grupo de Discussao\n");
+        printf("|3| - Voltar\n");
+        printf("==> ");
+
+        int opcao;
+
+        do {
+            scanf("%d", &opcao);
+        } while(opcao < 1 || opcao > 3);
+
+        switch (opcao){
+        case 1:
+            if (quantidade_palestras() == 0){
+                return -3; // Não existem paletras cadastradas
+            } else {
+
+                int id_palestra;
+
+                listar_palestras();
+                printf("==> ID: ");
+
+                do {
+                    scanf("%d", &id_palestra);
+                } while (verificar_ID(1, id_palestra) != 0);
+
+                FILE *palestras;
+                FILE *palestras_aux;
+
+                palestras = fopen("Arquivos\\palestras.txt", "rb");
+                palestras_aux = fopen("Arquivos\\palestras_aux.txt", "ab");
+
+                if (palestras == NULL || palestras_aux == NULL){
+                    return -1; // FALHA AO ABRIR O ARQUIVO
+                }
+
+                PALESTRA pale;
+                while(fread(&pale, sizeof(PALESTRA), 1, palestras)){
+                    if (pale.ID == id_palestra){
+                        for (i=0; i < 150; i++){
+                            if (pale.matriculas[i] == 0){
+                                pale.matriculas[i] = id_congressista;
+                                break;
+                            }
+                        }
+                    fwrite(&pale, sizeof(PALESTRA), 1, palestras_aux);
+                    } else {
+                        fwrite(&pale, sizeof(PALESTRA), 1, palestras_aux);
+                    }
+                }
+
+                fclose(palestras);
+                fclose(palestras_aux);
+                remove("Arquivos\\palestras.txt");
+                rename("Arquivos\\palestras_aux.txt", "Arquivos\\palestras.txt");
+            }
+
+        case 2:
+
+
+        }
 
 
 
 
 
+    } else {
 
+    }
+
+    /*
+    int i;
+    for (i=0; i < 36; i++){
+        printf("%d\n", informacoes[i]);
+        Sleep(1000);
+        getch();
+    }
+    */
+}
 
 int cadastrar_congressista_evento(){
 
-
-
-
-
-
-
-
-
 }
-
-
-
 
 /*
 *       -----------------------
@@ -666,7 +758,8 @@ int listar_palestrantes(){
     return 0;
 }
 
-int cadastrar_palestrante(){
+// O RETORNO DA FUNÇÃO FOI ALTERADO DEVIDO A FUNÇÃO DE GP DE DISCUSSAO
+PALESTRANTE *cadastrar_palestrante(){
 
     FILE *pale;
     pale = fopen("Arquivos\\palestrantes.txt", "ab");
@@ -697,7 +790,7 @@ int cadastrar_palestrante(){
 
     }
     fclose(pale);
-    return 0;
+    return &palest;
 }
 
 int remover_palestrante(){

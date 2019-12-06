@@ -187,6 +187,27 @@ main(){
 
     fclose(locais);
 
+
+    inserir_aluno_evento();
+    Sleep(100000);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // Inicia o Programa
 
     do {
