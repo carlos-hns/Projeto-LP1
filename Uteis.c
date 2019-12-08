@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <windows.h>
 #include "Participantes.h"
 #include "Eventos.h"
 #include "Uteis.h"
@@ -215,4 +216,17 @@ void zerarArray(int *array, int n){
     for (i=0; i < n; i++){
         array[i] = 0;
     }
+}
+
+void gotoxy(int x, int y){
+  COORD coord;
+  coord.X = x;
+  coord.Y = y;
+  SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+
+int calcular_meio(int colunas, char *string){
+
+    int meio = (colunas - strlen(string)) / 2;
+    return meio;
 }

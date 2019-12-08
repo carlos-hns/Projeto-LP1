@@ -7,17 +7,6 @@
 #include "Eventos.h"
 
 /*
-*   ------------------------------------------------------------------------
-*       AVISOS IMPORTANTES PARA MIM MSM!
-*       1º FALTAM AS FUNÇÕES DE MODIFICAÇÃO PALESTRANTE/ORGANIZADOR
-*
-*       2º AS FUNÇÕES ESTÃO SOMENTE NO ESQUELETO (FALTA FAZER AS RESTRIÇÕES DE CADA CLASSE,
-*       OU SEJA, AS CONDIÇÕES NÃO FORAM ANTENDIDAS AINDA (EXEMPLO PALESTRANTE SÓ PODE DAR UMA PALESTRA),
-*       OU AINDA, NÃO É POSSIVEL REMOVER UM MEMBRO SE ELE FAZ PARTE DE UM PROJETO...
-*   -------------------------------------------------------------------------
-*/
-
-/*
 *       -----------------------
 *           CONGRESSISTAS
 *       -----------------------
@@ -26,7 +15,7 @@
 int quantidade_congressistas(){
 
     FILE *congress;
-    int quantidade=0;
+    int quantidade = 0;
     congress = fopen("Arquivos\\congressistas.txt", "rb");
 
     if (congress == NULL){
@@ -53,7 +42,7 @@ int listar_congressistas(){
     } else {
         if (quantidade_congressistas() == 0){
             fclose(congress);
-            return -1;
+            return -2;
         } else {
             CONGRESSISTA cong;
             printf("Listando:\n\n");
@@ -80,10 +69,12 @@ int cadastrar_congressista(){
         fclose(congress);
         return -1;
     } else {
-        CONGRESSISTA cong;
         if (quantidade_congressistas() >= 300){
-            printf("\n\nImpossivel Cadastrar, Limite Alacancado.\n");
+            fclose(congress);
+            return -2;
         } else {
+
+            CONGRESSISTA cong;
             cong.ID = gerar_id_valido(5);
 
             setbuf(stdin, NULL);
@@ -108,9 +99,6 @@ int cadastrar_congressista(){
     return 0;
 }
 
-
-// LEMBRAR DE SÓ REMOVER UM ALUNO SE ELE NÃO ESTIVER CADASTRADO EM NADA;
-// -------------------------------------------------------------------->
 int remover_congressista(){
 
     FILE *congress;
@@ -126,7 +114,9 @@ int remover_congressista(){
     } else {
         CONGRESSISTA cong;
         if (quantidade_congressistas() == 0){
-                printf("\n\n==> NAO EXISTEM CONGRESSISTAS CADASTRADOS\n");
+                fclose(congress);
+                fclose(congress2);
+                return -2; // Congressistas não cadastrados
             } else {
 
                 listar_congressistas();
@@ -146,10 +136,9 @@ int remover_congressista(){
                 fclose(congress);
                 remove("Arquivos\\congressistas.txt");
                 rename("Arquivos\\temp.txt", "Arquivos\\congressistas.txt");
-                printf("\n==> CONGRESSISTA REMOVIDO COM SUCESSO\n");
+                remover_de_todos_eventos(ID);
                 return 0;
         }
-
     }
     fclose(congress2);
     fclose(congress);
@@ -168,14 +157,15 @@ int editar_congressista(){
         fclose(congress2);
         return -1;
     } else {
-        CONGRESSISTA aux;
-        int editar_escolha;
-        int ID;
         if (quantidade_congressistas() == 0){
             fclose(congress);
             fclose(congress2);
-            return -1;
+            return -2;
         } else {
+
+        CONGRESSISTA aux;
+        int editar_escolha;
+        int ID;
 
         listar_congressistas();
         printf("Digite o ID que Deseja Remover: ");
@@ -242,13 +232,109 @@ int editar_congressista(){
     fclose(congress2);
     remove("Arquivos\\congressistas.txt");
     rename("Arquivos\\temp.txt", "Arquivos\\congressistas.txt");
+    return 0;
     printf("\n==> CONGRESSISTA ALTERADO COM SUCESSO\n");
 }
 
+int remover_de_todos_eventos(int ID){
+
+    FILE *palestras;
+    FILE *palestras_aux;
+
+    FILE *gp_discussoes;
+    FILE *gp_discussoes_aux;
+
+    FILE *cursos;
+    FILE *cursos_aux;
+
+    FILE *oficinas;
+    FILE *oficinas_aux;
 
 
-// FALTA TESTAR \/
+    int i;
 
+    PALESTRA pale;
+    palestras = fopen("Arquivos\\palestras.txt", "rb");
+    palestras_aux = fopen("Arquivos\\palestras_aux.txt", "ab");
+
+    while(fread(&pale, sizeof(PALESTRA), 1, palestras) == 1){
+        for(i=0; i < 150; i++){
+            if(pale.matriculas[i] == ID){
+                pale.matriculas[i] = 0;
+            }
+        }
+        fwrite(&pale, sizeof(PALESTRA), 1 , palestras_aux);
+    }
+
+    fclose(palestras);
+    fclose(palestras_aux);
+    remove("Arquivos\\palestras.txt");
+    rename("Arquivos\\palestras_aux.txt", "Arquivos\\palestras.txt");
+
+    // ------------
+
+    GP_DISCUSSOES gp;
+    gp_discussoes = fopen("Arquivos\\gp_discussoes.txt", "rb");
+    gp_discussoes_aux = fopen("Arquivos\\gp_discussoes_aux.txt", "ab");
+
+    while(fread(&gp, sizeof(GP_DISCUSSOES), 1, gp_discussoes) == 1){
+        for(i=0; i < 50; i++){
+            if(gp.matriculas[i] == ID){
+                gp.matriculas[i] = 0;
+            }
+        }
+        fwrite(&gp, sizeof(GP_DISCUSSOES), 1 , gp_discussoes_aux);
+    }
+
+    fclose(gp_discussoes);
+    fclose(gp_discussoes_aux);
+    remove("Arquivos\\gp_discussoes.txt");
+    rename("Arquivos\\gp_discussoes_aux.txt", "Arquivos\\gp_discussoes.txt");
+
+
+    //-------------
+
+    CURSO cur;
+    cursos = fopen("Arquivos\\cursos.txt", "rb");
+    cursos_aux = fopen("Arquivos\\cursos_aux.txt", "ab");
+
+    while(fread(&cur, sizeof(CURSO), 1, cursos) == 1){
+        for(i=0; i < 40; i++){
+            if(cur.matriculas[i] == ID){
+                cur.matriculas[i] = 0;
+            }
+        }
+        fwrite(&cur, sizeof(CURSO), 1 , cursos_aux);
+    }
+
+    fclose(cursos);
+    fclose(cursos_aux);
+    remove("Arquivos\\cursos.txt");
+    rename("Arquivos\\cursos_aux.txt", "Arquivos\\cursos.txt");
+
+    //-------------
+
+
+    OFICINA ofic;
+    oficinas = fopen("Arquivos\\oficinas.txt", "rb");
+    oficinas_aux = fopen("Arquivos\\oficinas_aux.txt", "ab");
+
+    while(fread(&ofic, sizeof(OFICINA), 1, oficinas) == 1){
+        for(i=0; i < 20; i++){
+            if(ofic.matriculas[i] == ID){
+                ofic.matriculas[i] = 0;
+            }
+        }
+        fwrite(&ofic, sizeof(OFICINA), 1 , oficinas_aux);
+    }
+
+    fclose(oficinas);
+    fclose(oficinas_aux);
+    remove("Arquivos\\oficinas.txt");
+    rename("Arquivos\\oficinas_aux.txt", "Arquivos\\oficinas.txt");
+}
+
+// TEM QUE TESTAR QUANDO INSERIR EM ALGUM EVENTO
 int *informacoes_cadastro_eventos(int ID){
 
     FILE *palestras;
@@ -388,13 +474,158 @@ int *informacoes_cadastro_eventos(int ID){
     return array_informacao;
 }
 
+int inserir_congressista_evento(){
 
-// TERMINAR DEPOIS --------------->
+    int i;
+
+    if (quantidade_congressistas() == 0){
+        return -2; // CONGRESSISTA NAO CADASTRADO
+    }
+
+    int id_congressista;
+    listar_congressistas();
+    printf("==> ID: ");
+
+    do {
+        scanf("%d", &id_congressista);
+    } while (verificar_ID(5, id_congressista) != 0);
+
+    int *informacoes;
+    informacoes = informacoes_cadastro_eventos(id_congressista);
+
+    // Aluno já participa de Curso/Oficina
+    if (informacoes[1] == 1 || informacoes[2] == 1){
+
+        printf("\nSe Inscrever Em: \n");
+        printf("|1| - Palestra\n");
+        printf("|2| - Grupo de Discussao\n");
+        printf("|3| - Voltar\n");
+        printf("==> ");
+
+        int opcao;
+
+        do {
+            scanf("%d", &opcao);
+        } while(opcao < 1 || opcao > 3);
+
+        switch (opcao){
+        case 1:
+            if (quantidade_palestras() == 0){
+                return -3; // Não existem paletras cadastradas
+            } else {
+
+                int id_palestra;
+
+                listar_palestras();
+                printf("==> ID: ");
+
+                do {
+                    scanf("%d", &id_palestra);
+                } while (verificar_ID(1, id_palestra) != 0);
+
+                FILE *palestras;
+                FILE *palestras_aux;
+
+                palestras = fopen("Arquivos\\palestras.txt", "rb");
+                palestras_aux = fopen("Arquivos\\palestras_aux.txt", "ab");
+
+                if (palestras == NULL || palestras_aux == NULL){
+                    return -1; // FALHA AO ABRIR O ARQUIVO
+                }
+
+                PALESTRA pale;
+                while(fread(&pale, sizeof(PALESTRA), 1, palestras)){
+                    if (pale.ID == id_palestra){
+                        for (i=0; i < 150; i++){
+                            if (pale.matriculas[i] == 0){
+                                pale.matriculas[i] = id_congressista;
+                                break;
+                            }
+                        }
+                    }
+                    fwrite(&pale, sizeof(PALESTRA), 1, palestras_aux);
+                }
+
+                fclose(palestras);
+                fclose(palestras_aux);
+                remove("Arquivos\\palestras.txt");
+                rename("Arquivos\\palestras_aux.txt", "Arquivos\\palestras.txt");
+            }
+            break;
+        case 2:
+            if (quantidade_gp_discussao() == 0){
+                return -4; // Não existem GP de Discussao cadastradas
+            } else {
+
+                int id_gp;
+
+                listar_gp_discussao();
+                printf("==> ID: ");
+
+                do {
+                    scanf("%d", &id_gp);
+                // ESSE ID VEM DA FUNÇÃO GERAR ID DA BIBLIOTECA UTEIS
+                } while (verificar_ID(2, id_gp) != 0);
+
+                FILE *gp_discussoes;
+                FILE *gp_discussoes_aux;
+
+                gp_discussoes = fopen("Arquivos\\gp_discussoes.txt", "rb");
+                gp_discussoes_aux = fopen("Arquivos\\gp_discussoes_aux.txt", "ab");
+
+                if (gp_discussoes == NULL || gp_discussoes_aux == NULL){
+                    return -1; // FALHA AO ABRIR O ARQUIVO
+                }
+
+                // Aqui faço a varredura do array de matriculas do evento
+                // Se tiver local disponivel ele irá inserir
+                GP_DISCUSSOES gp;
+                while(fread(&gp, sizeof(GP_DISCUSSOES), 1, gp_discussoes)){
+                    if (gp.ID == id_gp){
+                        for (i=0; i < 50; i++){
+                            if (gp.matriculas[i] == 0){
+                                gp.matriculas[i] = id_congressista;
+                                break;
+                            }
+                        }
+                    }
+                    fwrite(&gp, sizeof(GP_DISCUSSOES), 1, gp_discussoes_aux);
+                }
+
+                fclose(gp_discussoes);
+                fclose(gp_discussoes_aux);
+                remove("Arquivos\\gp_discussoes.txt");
+                rename("Arquivos\\gp_discussoes_aux.txt", "Arquivos\\gp_discussoes.txt");
+            }
+            break;
+        case 3:
+            break;
+        }
+    }
+
+
+
+
+    /*
+    printf("ID: %d\n", id_congressista);
+
+    for(i=0; i < 36; i++){
+        printf("%d\n", informacoes[i]);
+        getch();
+    }
+    */
+
+
+}
+
+
+/*
+// TESTAR SE ESTA FUNCIONANDO
 int inserir_congressista_evento(){
     int i;
 
     if (quantidade_congressistas() == 0){
-        return -2; // Se não foi cadastrado congressista retorna -2
+        return -2; // CONGRESSISTA NAO CADASTRADO
     }
 
     int id_congressista;
@@ -546,7 +777,7 @@ int inserir_congressista_evento(){
             printf("|1| - Palestra\n");
             printf("|2| - Grupo de Discussao\n");
             printf("|3| - Curso\n");
-            printf("|4| - Oficina\n")
+            printf("|4| - Oficina\n");
             printf("|5| - Voltar\n");
 
             printf("==> ");
@@ -750,15 +981,16 @@ int inserir_congressista_evento(){
             // FUNCAO INCOMPLETA/ FALTA TESTAR/ FALTA RESOLVER O BANG QUE DEIXEI NO ARQUIVO DE TEXTO
     }
 
-    /*
+
     int i;
     for (i=0; i < 36; i++){
         printf("%d\n", informacoes[i]);
         Sleep(1000);
         getch();
     }
-    */
+
 }
+*/
 
 int remover_congressista_evento(){
 
@@ -784,7 +1016,7 @@ int remover_congressista_evento(){
         if (informacoes[i] >= 0 && informacoes <= 100){
             printf("Palestra: %d\n", informacoes[i]);
         } else {
-            if (informacoes[i] > 100 e informacoes <= 200){
+            if (informacoes[i] > 100 && informacoes <= 200){
                 printf("Grupo de Discussao: %d\n", informacoes[i]);
             } else {
                 if (informacoes[i] > 200 && informacoes[i] <= 300){
@@ -814,15 +1046,25 @@ int remover_congressista_evento(){
         tipo_evento = 0;
     }
 
+
+    FILE *palestras;
+    FILE *palestras_aux;
+    FILE *gp_discussoes;
+    FILE *gp_discussoes_aux;
+    FILE *cursos;
+    FILE *cursos_aux;
+    FILE *oficinas;
+    FILE *oficinas_aux;
+
+
+
     switch(tipo_evento){
     case 0:
-        return;
+        return -100; // Só pra voltar
     case 1:
 
-        FILE *palestras;
-        FILE *palestras_aux;
         palestras = fopen("Arquivos\\palestras.txt", "rb");
-        palestras_aux = fopen("Arquivos\\palestras_aux.txt", "rb");
+        palestras_aux = fopen("Arquivos\\palestras_aux.txt", "ab");
 
         if (palestras == NULL || palestras_aux == NULL){
             return -1;
@@ -848,11 +1090,9 @@ int remover_congressista_evento(){
         rename("Arquivos\\palestras_aux.txt", "Arquivos\\palestras.txt");
         break;
     case 2:
-        FILE *gp_discussoes;
-        FILE *gp_discussoes_aux;
 
-        gp_discussoes = fopen("Arquivos\\gp_discussoes.txt");
-        gp_discussoes_aux = fopen("Arquivos\\gp_discussoes_aux.txt");
+        gp_discussoes = fopen("Arquivos\\gp_discussoes.txt", "rb");
+        gp_discussoes_aux = fopen("Arquivos\\gp_discussoes_aux.txt", "ab");
 
         if (gp_discussoes == NULL || gp_discussoes_aux == NULL){
             return -1;
@@ -878,11 +1118,9 @@ int remover_congressista_evento(){
         rename("Arquivos\\gp_discussoes_aux.txt", "Arquivos\\gp_discussoes.txt");
         break;
     case 3:
-        FILE *cursos;
-        FILE *cursos_aux;
 
-        cursos = fopen("Arquivos\\cursos.txt");
-        cursos_aux = fopen("Arquivos\\cursos_aux.txt");
+        cursos = fopen("Arquivos\\cursos.txt", "rb");
+        cursos_aux = fopen("Arquivos\\cursos_aux.txt", "ab");
 
         if (cursos == NULL || cursos_aux == NULL){
             return -1;
@@ -908,11 +1146,9 @@ int remover_congressista_evento(){
         rename("Arquivos\\cursos_aux.txt", "Arquivos\\cursos.txt");
         break;
     case 4:
-        FILE *oficinas;
-        FILE *oficinas_aux;
 
-        oficinas = fopen("Arquivos\\oficinas.txt");
-        oficinas_aux = fopen("Arquivos\\oficinas_aux.txt");
+        oficinas = fopen("Arquivos\\oficinas.txt", "rb");
+        oficinas_aux = fopen("Arquivos\\oficinas_aux.txt", "ab");
 
         if (oficinas == NULL || oficinas_aux == NULL){
             return -1;
@@ -940,11 +1176,6 @@ int remover_congressista_evento(){
 
     free(informacoes);
 }
-
-
-
-
-
 
 /*
 *       -----------------------
@@ -1212,33 +1443,36 @@ PALESTRANTE *cadastrar_palestrante(){
     FILE *pale;
     pale = fopen("Arquivos\\palestrantes.txt", "ab");
 
+    PALESTRANTE *palest;
+    palest = (PALESTRANTE *) malloc(sizeof(PALESTRANTE));
+
     if (pale == NULL){
         fclose(pale);
+        free(palest);
         return -1;
     } else {
-        PALESTRANTE palest;
 
         // 7 GERA UM ID DO TIPO PALESTRANTE
-        palest.ID = gerar_id_valido(7);
+        palest->ID = gerar_id_valido(7);
 
         setbuf(stdin, NULL);
         printf("\n\n");
 
         printf("Nome: ");
-        fgets(palest.nome, 30, stdin);
-        strcpy(palest.nome, strupr(palest.nome));
+        fgets(palest->nome, 30, stdin);
+        strcpy(palest->nome, strupr(palest->nome));
         setbuf(stdin, NULL);
 
         printf("Formacao: ");
-        fgets(palest.formacao, 30, stdin);
-        strcpy(palest.formacao, strupr(palest.formacao));
+        fgets(palest->formacao, 30, stdin);
+        strcpy(palest->formacao, strupr(palest->formacao));
         setbuf(stdin, NULL);
 
-        fwrite(&palest, sizeof(PALESTRANTE), 1, pale);
+        fwrite(palest, sizeof(PALESTRANTE), 1, pale);
 
     }
     fclose(pale);
-    return &palest;
+    return palest;
 }
 
 int remover_palestrante(){

@@ -8,103 +8,234 @@
 
 void gerar_topo(int colunas, char *frase){
 
-    int i;
-    for (i=0; i<colunas; i++){
-        printf("=");
-    }
+    char *string1 = "*****  ****    **  ******  *****  ******";
+    char *string2 = "**     ** **   **  **      **     **    ";
+    char *string3 = "***    **  **  **  **      ****   **    ";
+    char *string4 = "**     **   ** **  **      **     **    ";
+    char *string5 = "*****  **    ****  ******  *****  ******";
+    char *string6 = "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-";
 
-    int meio = (colunas - (strlen(frase) + strlen("ENEC - "))) / 2;
-    for (i=0; i < meio; i++){
-        printf(" ");
-    }
+    int meio1 = calcular_meio(colunas, string1);
+    int meio2 = calcular_meio(colunas, string2);
+    int meio3 = calcular_meio(colunas, string3);
+    int meio4 = calcular_meio(colunas, string4);
+    int meio5 = calcular_meio(colunas, string5);
+    int meio6 = calcular_meio(colunas, string6);
 
-    printf("ENEC - %s\n", frase);
+    gotoxy(meio1, 2);
+    puts(string1);
 
-    for (i=0; i<colunas; i++){
-        printf("=");
-    }
+    gotoxy(meio2, 3);
+    puts(string2);
+
+    gotoxy(meio3, 4);
+    puts(string3);
+
+    gotoxy(meio4, 5);
+    puts(string4);
+
+    gotoxy(meio5, 6);
+    puts(string5);
+
+    gotoxy(meio6, 9);
+    puts(string6);
+
+    int meio = calcular_meio(colunas, frase);
+    gotoxy(meio, 8);
+    puts(frase);
+
+    gotoxy(0, 11);
 }
 
 void menu_principal(int colunas){
 
-    int i;
-    for (i=0; i<colunas; i++){
-        printf("=");
-    }
+    //ENCEC
 
-    int meio = (colunas - strlen("ENEC - MENU PRINCIPAL")) / 2;
-    for (i=0; i < meio; i++){
-        printf(" ");
-    }
+    char *string1 = "*****  ****    **  ******  *****  ******";
+    char *string2 = "**     ** **   **  **      **     **    ";
+    char *string3 = "***    **  **  **  **      ****   **    ";
+    char *string4 = "**     **   ** **  **      **     **    ";
+    char *string5 = "*****  **    ****  ******  *****  ******";
+    char *string6 = "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-";
 
-    printf("ENEC - MENU PRINCIPAL\n");
+    int meio1 = calcular_meio(colunas, string1);
+    int meio2 = calcular_meio(colunas, string2);
+    int meio3 = calcular_meio(colunas, string3);
+    int meio4 = calcular_meio(colunas, string4);
+    int meio5 = calcular_meio(colunas, string5);
+    int meio6 = calcular_meio(colunas, string6);
 
-    for (i=0; i<colunas; i++){
-        printf("=");
-    }
+    gotoxy(meio1, 2);
+    puts(string1);
 
-    printf("\n\n");
+    gotoxy(meio2, 3);
+    puts(string2);
 
-    printf("|1| - PESSOAS\n");
-    printf("|2| - EVENTOS\n");
-    printf("|3| - SAIR\n");
-    printf(">>> ");
+    gotoxy(meio3, 4);
+    puts(string3);
+
+    gotoxy(meio4, 5);
+    puts(string4);
+
+    gotoxy(meio5, 6);
+    puts(string5);
+
+    gotoxy(meio6, 8);
+    puts(string6);
+
+    int meio;
+    char *string = "1 - PESSOAS";
+    meio = calcular_meio(colunas, string);
+    gotoxy(meio, 12);
+    puts(string);
+
+    string = "2 - EVENTOS";
+    meio = calcular_meio(colunas, string);
+    gotoxy(meio, 13);
+    puts(string);
+
+    string = "3 - SAIR";
+    gotoxy(meio, 14);
+    puts(string);
+
+    string = "BY: CARLOS HENRIQUE";
+    meio = calcular_meio(colunas, string);
+    gotoxy(meio, 25);
+    puts(string);
+
 }
 
 void menu_organizacao(int colunas){
 
-    int i;
-    for (i=0; i<colunas; i++){
-        printf("=");
-    }
+    char *string1 = "*****  ****    **  ******  *****  ******";
+    char *string2 = "**     ** **   **  **      **     **    ";
+    char *string3 = "***    **  **  **  **      ****   **    ";
+    char *string4 = "**     **   ** **  **      **     **    ";
+    char *string5 = "*****  **    ****  ******  *****  ******";
+    char *string6 = "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-";
 
-    int meio = (colunas - strlen("ENEC - ORGANIZACAO")) / 2;
-    for (i=0; i < meio; i++){
-        printf(" ");
-    }
+    int meio1 = calcular_meio(colunas, string1);
+    int meio2 = calcular_meio(colunas, string2);
+    int meio3 = calcular_meio(colunas, string3);
+    int meio4 = calcular_meio(colunas, string4);
+    int meio5 = calcular_meio(colunas, string5);
+    int meio6 = calcular_meio(colunas, string6);
 
-    printf("ENEC - ORGANIZACAO\n");
+    gotoxy(meio1, 2);
+    puts(string1);
 
-    for (i=0; i<colunas; i++){
-        printf("=");
-    }
+    gotoxy(meio2, 3);
+    puts(string2);
 
-    printf("\n\n");
+    gotoxy(meio3, 4);
+    puts(string3);
 
-    printf("|1| - Congressistas\n");
-    printf("|2| - Palestrantes\n");
-    printf("|3| - Organizadores\n");
-    printf("|4| - Voltar\n");
-    printf(">>> ");
+    gotoxy(meio4, 5);
+    puts(string4);
+
+    gotoxy(meio5, 6);
+    puts(string5);
+
+    gotoxy(meio6, 8);
+    puts(string6);
+
+    int meio;
+    char *string = "1 - Congressistas";
+    meio = calcular_meio(colunas, string);
+    gotoxy(meio, 12);
+    puts(string);
+
+    string = "2 - Palestrantes";
+    gotoxy(meio, 13);
+    puts(string);
+
+    string = "3 - Organizadores";
+    gotoxy(meio, 14);
+    puts(string);
+
+    string = "4 - Voltar";
+    gotoxy(meio, 15);
+    puts(string);
+
+
+    string = "BY: CARLOS HENRIQUE";
+    meio = calcular_meio(colunas, string);
+    gotoxy(meio, 25);
+    puts(string);
 }
 
 void menu_congressistas(int colunas){
 
-    int i;
-    for (i=0; i<colunas; i++){
-        printf("=");
-    }
+    char *string1 = "*****  ****    **  ******  *****  ******";
+    char *string2 = "**     ** **   **  **      **     **    ";
+    char *string3 = "***    **  **  **  **      ****   **    ";
+    char *string4 = "**     **   ** **  **      **     **    ";
+    char *string5 = "*****  **    ****  ******  *****  ******";
+    char *string6 = "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-";
 
-    int meio = (colunas - strlen("ENEC - CONGRESSISTAS")) / 2;
-    for (i=0; i < meio; i++){
-        printf(" ");
-    }
+    int meio1 = calcular_meio(colunas, string1);
+    int meio2 = calcular_meio(colunas, string2);
+    int meio3 = calcular_meio(colunas, string3);
+    int meio4 = calcular_meio(colunas, string4);
+    int meio5 = calcular_meio(colunas, string5);
+    int meio6 = calcular_meio(colunas, string6);
 
-    printf("ENEC - CONGRESSISTAS\n");
+    gotoxy(meio1, 2);
+    puts(string1);
 
-    for (i=0; i<colunas; i++){
-        printf("=");
-    }
+    gotoxy(meio2, 3);
+    puts(string2);
 
-    printf("\n\n");
+    gotoxy(meio3, 4);
+    puts(string3);
 
-    printf("|1| - Cadastrar Congressista\n");
-    printf("|2| - Remover Congressista\n");
-    printf("|3| - Alterar Dados de um Congressista\n");
-    printf("|4| - Listar Congresistas\n");
-    printf("|5| - Quantidade Congressistas\n");
-    printf("|6| - Voltar\n");
-    printf(">>> ");
+    gotoxy(meio4, 5);
+    puts(string4);
+
+    gotoxy(meio5, 6);
+    puts(string5);
+
+    gotoxy(meio6, 8);
+    puts(string6);
+
+    int meio;
+    char *string = "1 - Cadastrar Congressista";
+    meio = calcular_meio(colunas, string);
+    gotoxy(meio, 12);
+    puts(string);
+
+    string = "2 - Remover Congressista";
+    gotoxy(meio, 13);
+    puts(string);
+
+    string = "3 - Alterar Dados de um Congressista";
+    gotoxy(meio, 14);
+    puts(string);
+
+    string = "4 - Listar Congresistas";
+    gotoxy(meio, 15);
+    puts(string);
+
+    string = "5 - Quantidade Congressistas";
+    gotoxy(meio, 16);
+    puts(string);
+
+    string = "6 - Inserir Congressista em um Evento";
+    gotoxy(meio, 17);
+    puts(string);
+
+    string = "7 - Remover Congressista de um Evento";
+    gotoxy(meio, 18);
+    puts(string);
+
+    string = "8 - Voltar";
+    gotoxy(meio, 19);
+    puts(string);
+
+    string = "BY: CARLOS HENRIQUE";
+    meio = calcular_meio(colunas, string);
+    gotoxy(meio, 25);
+    puts(string);
 }
 
 void menu_organizadores(int colunas){
@@ -169,16 +300,18 @@ void menu_palestrantes(int colunas){
 
 main(){
 
-    system("Color 3F");
+    // ALTERA A COMPOSIÇÃO DA JANELA (COR/TAMANHO)
+    system("Color 4F");
     system("mode con:cols=80 lines=30");
 
-    int menu_principal_escolha;
-    int menu_organizacao_escolha;
+    // VARIAVEIS RESPONSAVEIS PELA MOVIMENTAÇÃO NO MENU
+    char menu_principal_escolha;
+    char menu_organizacao_escolha;
     int menu_congressista_escolha;
     int menu_organizadores_escolha;
     int menu_palestrantes_escolha;
 
-    // Veirifica se os locais já foram criados
+    // VERIFICACA SE OS ARQUIVOS JÁ FORAM CRIADOS
     FILE *locais;
     locais = fopen("Arquivos\\locais.txt", "rb");
     if (locais == NULL){
@@ -187,100 +320,112 @@ main(){
 
     fclose(locais);
 
+    // LOCAL DE TESTE DA MAIN!
 
-    inserir_aluno_evento();
-    Sleep(100000);
+    //inserir_congressista_evento();
 
+    //Sleep(100000);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // Inicia o Programa
+    // INICIO DO PROGRAMA
 
     do {
         system("cls");
         menu_principal(80);
-        scanf("%d", &menu_principal_escolha);
+        menu_principal_escolha = getch();
 
         switch(menu_principal_escolha){
         // ESCOLHA ORGANIZACAO
-        case 1:
+        case '1':
             do {
                 system("cls");
                 menu_organizacao(80);
-                scanf("%d", &menu_organizacao_escolha);
+                menu_organizacao_escolha = getch();
 
                 switch(menu_organizacao_escolha){
                 // ESCOLHA CONGRESSISTA
-                case 1:
+                case '1':
                     do {
                         system("cls");
                         menu_congressistas(80);
-                        scanf("%d", &menu_congressista_escolha);
+                        menu_congressista_escolha = getch();
+                        int saida;
 
                         switch(menu_congressista_escolha){
-                        case 1:
+                        case '1':
                             system("cls");
                             gerar_topo(80, "CADASTRANDO CONGRESSISTA");
-                            cadastrar_congressista();
-                            printf("\n==> CONGRESSISTA CADASTRADO COM SUCESSO!\n");
+                            saida = cadastrar_congressista();
+
+                            if (saida == -1){
+                                printf("\n==> HOUVE UM ERRO DE ACESSO AO ARQUIVO");
+                            } else if (saida == -2){
+                                printf("\n==> LIMITE DE CONGRESSISTAS ATINGIDO");
+                            } else if(saida == 0){
+                                printf("\n==> CONGRESSISTA CADASTRADO COM SUCESSO");
+                            }
+
                             Sleep(1000);
                             break;
-                        case 2:
+                        case '2':
                             system("cls");
-                            gerar_topo(80, "REMOVER CONGRESSISTA");
-                             if (remover_congressista() == -1){
-                                printf("\n\n==> CONGRESSISTAS NAO CADASTRADOS!");
-                             }
+                            gerar_topo(80, "REMOVENDO CONGRESSISTA");
+                            saida = remover_congressista();
+
+                            if (saida == -1){
+                                printf("\n\n==> HOUVE UM ERRO DE ACESSO AO ARQUIVO");
+                            } else if (saida == -2){
+                                printf("\n==> CONGRESSISTAS NAO CADASTRADOS");
+                            } else if (saida == 0){
+                                printf("\n==> CONGRESSSISTA REMOVIDO COM SUCESSO");
+                            }
+
                             Sleep(1000);
                             break;
-                        case 3:
+                        case '3':
                             system("cls");
-                            gerar_topo(80, "EDITAR CONGRESSISTA");
-                             if (editar_congressista() == -1){
-                                printf("\n\n==> CONGRESSISTAS NAO CADASTRADOS!");
-                             }
-                             setbuf(stdin, NULL);
-                             getchar();
+                            gerar_topo(80, "EDITANDO CONGRESSISTA");
+                            saida = editar_congressista();
+
+                            if (saida == -1){
+                                printf("\n\n==> HOUVE UM ERRO DE ACESSO AO ARQUIVO");
+                            } else if (saida == -2){
+                                printf("\n==> CONGRESSISTAS NAO CADASTRADOS");
+                            } else if (saida == 0){
+                                printf("\n==> CONGRESSSISTA EDITADO COM SUCESSO");
+                            }
+
+                            setbuf(stdin, NULL);
+                            getchar();
                             break;
-                        case 4:
+                        case '4':
                             system("cls");
                             gerar_topo(80, "LISTANDO CONGRESSISTAS");
                              if (listar_congressistas() == -1){
-                                printf("\n\n==> CONGRESSISTAS NAO CADASTRADOS!");
+                                printf("\n\n==> CONGRESSISTAS NAO CADASTRADOS");
                              }
                              setbuf(stdin, NULL);
                              getchar();
                              break;
-                        case 5:
+                        case '5':
                             system("cls");
                             gerar_topo(80, "CONGRESSISTAS CADASTRADOS");
                             if (quantidade_congressistas() == 0 || quantidade_congressistas() == -1){
-                                printf("\n\n==> CONGRESSISTAS NAO CADASTRADOS!");
+                                printf("\n\n==> CONGRESSISTAS NAO CADASTRADOS");
                             } else {
-                                printf("\n\n==> %d CONGRESSISTA(S) CADASTRADOS!", quantidade_congressistas());
+                                printf("\n\n==> %d CONGRESSISTA(S) CADASTRADO(S)", quantidade_congressistas());
                             }
                             setbuf(stdin, NULL);
                             getchar();
                             break;
+                        case '6':
+                            printf("OXI");
+                        case '7':
+                            printf("OXIII");
                         }
-                    } while(menu_congressista_escolha != 6);
+                    } while(menu_congressista_escolha != '8');
                     break;
                 // ESCOLHA PALESTRANTE
-                case 2:
+                case '2':
                     do {
                         system("cls");
                         menu_palestrantes(80);
@@ -344,7 +489,7 @@ main(){
                     } while(menu_palestrantes_escolha != 6);
                     break;
                 // ESCOLHA ORGANIZADOR
-                case 3:
+                case '3':
                     do {
                         system("cls");
                         menu_organizadores(80);
@@ -401,9 +546,9 @@ main(){
                     } while(menu_organizadores_escolha != 6);
                     break;
                 }
-            } while (menu_organizacao_escolha != 4);
+            } while (menu_organizacao_escolha != '4');
         }
-    } while (menu_principal_escolha != 3);
+    } while (menu_principal_escolha != '3');
 
 
 

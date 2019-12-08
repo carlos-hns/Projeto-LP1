@@ -1012,9 +1012,9 @@ int criar_gp_discussoes(){
                     LOCAL loc;
                     while(fread(&loc, sizeof(LOCAL), 1, locais) == 1){
                         if (loc.tipo_evento == 2 && loc.disponibilidade == 1){
-                            if (gp.capacidade >= 1 &&
-                                gp.capacidade <= 30) &&
-                                (strcmp(loc.local, "SALA 3") == 0)){
+                            if ((gp.capacidade >= 1) &&
+                                (gp.capacidade <= 30) &&
+                                ((strcmp(loc.local, "SALA 3") == 0))){
 
                                 printf("ID: %d\n", loc.ID);
                                 printf("DIA: %d\n", loc.dia);
@@ -1025,8 +1025,8 @@ int criar_gp_discussoes(){
                                 putchar('\n');
                                 Sleep(1500);
                             } else {
-                                if ((pale.capacidade > 30) &&
-                                    (pale.capacidade <= 50) &&
+                                if ((gp.capacidade > 30) &&
+                                    (gp.capacidade <= 50) &&
                                     (strcmp(loc.local, "SALA 1")) == 0 &&
                                     (strcmp(loc.horario, "15:00-16:00")) == 0){
 
@@ -1039,10 +1039,10 @@ int criar_gp_discussoes(){
                                     putchar('\n');
                                     Sleep(1500);
                                 } else {
-                                    if ((pale.capacidade > 30) &&
-                                    (pale.capacidade <= 50) &&
-                                    (strcmp(loc.local, "SALA 2")) == 0 &&
-                                    (strcmp(loc.horario, "15:00-16:00")) == 0)){
+                                    if ((gp.capacidade > 30) &&
+                                    (gp.capacidade <= 50) &&
+                                    (strcmp(loc.local, "SALA 2") == 0) &&
+                                    (strcmp(loc.horario, "15:00-16:00") == 0)){
 
                                             printf("ID: %d\n", loc.ID);
                                             printf("DIA: %d\n", loc.dia);
@@ -1108,11 +1108,11 @@ int remover_gp_discussoes(){
         scanf("%d", &ID);
 
         while(fread(&gp, sizeof(GP_DISCUSSOES), 1, gp_discussoes) == 1){
-            if (ID != cur.ID){
+            if (ID != gp.ID){
                 fwrite(&gp, sizeof(GP_DISCUSSOES), 1, gp_discussoes_aux);
             } else{
 
-                alterar_disponibilidade(cur.loc.ID, 1);
+                alterar_disponibilidade(gp.loc.ID, 1);
             }
         }
 

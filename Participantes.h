@@ -26,6 +26,17 @@ typedef struct {
 
 } PALESTRANTE;
 
+// CONGRESSISTAS
+int quantidade_congressistas();
+
+
+
+
+
+
+
+
+
 // CONGRESSSISTAS
 int quantidade_congressistas();
 int listar_congressistas();
@@ -41,7 +52,8 @@ int remover_organizador();
 // PALESTRANTES
 int quantidade_palestrantes();
 int listar_palestrantes();
-int cadastrar_palestrante();
+PALESTRANTE *cadastrar_palestrante();
+//int cadastrar_palestrante();
 int remover_palestrante();
 
 #endif
