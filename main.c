@@ -435,6 +435,277 @@ void menu_eventos(int colunas){
     puts(string);
 }
 
+void menu_palestras(int colunas){
+
+    char *string1 = "*****  ****    **  ******  *****  ******";
+    char *string2 = "**     ** **   **  **      **     **    ";
+    char *string3 = "***    **  **  **  **      ****   **    ";
+    char *string4 = "**     **   ** **  **      **     **    ";
+    char *string5 = "*****  **    ****  ******  *****  ******";
+    char *string6 = "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-";
+
+    int meio1 = calcular_meio(colunas, string1);
+    int meio2 = calcular_meio(colunas, string2);
+    int meio3 = calcular_meio(colunas, string3);
+    int meio4 = calcular_meio(colunas, string4);
+    int meio5 = calcular_meio(colunas, string5);
+    int meio6 = calcular_meio(colunas, string6);
+
+    gotoxy(meio1, 2);
+    puts(string1);
+
+    gotoxy(meio2, 3);
+    puts(string2);
+
+    gotoxy(meio3, 4);
+    puts(string3);
+
+    gotoxy(meio4, 5);
+    puts(string4);
+
+    gotoxy(meio5, 6);
+    puts(string5);
+
+    gotoxy(meio6, 8);
+    puts(string6);
+
+    int meio;
+    char *string = "1 - Cadastrar Palestra";
+    meio = calcular_meio(colunas, string);
+    gotoxy(meio-3, 12);
+    puts(string);
+
+    string = "2 - Remover Palestra";
+    gotoxy(meio-3, 13);
+    puts(string);
+
+    string = "3 - Alterar Dados de uma Palestra";
+    gotoxy(meio-3, 14);
+    puts(string);
+
+    string = "4 - Listar Palestras";
+    gotoxy(meio-3, 15);
+    puts(string);
+
+    string = "5 - Quantidade Palestras";
+    gotoxy(meio-3, 16);
+    puts(string);
+
+    string = "6 - Voltar";
+    gotoxy(meio-3, 17);
+    puts(string);
+
+
+    string = "BY: CARLOS HENRIQUE";
+    meio = calcular_meio(colunas, string);
+    gotoxy(meio, 25);
+    puts(string);
+}
+
+void menu_gp_discussao(int colunas){
+
+    char *string1 = "*****  ****    **  ******  *****  ******";
+    char *string2 = "**     ** **   **  **      **     **    ";
+    char *string3 = "***    **  **  **  **      ****   **    ";
+    char *string4 = "**     **   ** **  **      **     **    ";
+    char *string5 = "*****  **    ****  ******  *****  ******";
+    char *string6 = "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-";
+
+    int meio1 = calcular_meio(colunas, string1);
+    int meio2 = calcular_meio(colunas, string2);
+    int meio3 = calcular_meio(colunas, string3);
+    int meio4 = calcular_meio(colunas, string4);
+    int meio5 = calcular_meio(colunas, string5);
+    int meio6 = calcular_meio(colunas, string6);
+
+    gotoxy(meio1, 2);
+    puts(string1);
+
+    gotoxy(meio2, 3);
+    puts(string2);
+
+    gotoxy(meio3, 4);
+    puts(string3);
+
+    gotoxy(meio4, 5);
+    puts(string4);
+
+    gotoxy(meio5, 6);
+    puts(string5);
+
+    gotoxy(meio6, 8);
+    puts(string6);
+
+    int meio;
+    char *string = "1 - Cadastrar Grupo de Discussao";
+    meio = calcular_meio(colunas, string);
+    gotoxy(meio-3, 12);
+    puts(string);
+
+    string = "2 - Remover Grupo de Discussao";
+    gotoxy(meio-3, 13);
+    puts(string);
+
+    string = "3 - Alterar Dados de uma Grupo de Discussao";
+    gotoxy(meio-3, 14);
+    puts(string);
+
+    string = "4 - Listar Grupos de Discussoes";
+    gotoxy(meio-3, 15);
+    puts(string);
+
+    string = "5 - Quantidade Grupos de Discussoes";
+    gotoxy(meio-3, 16);
+    puts(string);
+
+    string = "6 - Voltar";
+    gotoxy(meio-3, 17);
+    puts(string);
+
+
+    string = "BY: CARLOS HENRIQUE";
+    meio = calcular_meio(colunas, string);
+    gotoxy(meio, 25);
+    puts(string);
+
+
+}
+
+void menu_curso(int colunas){
+
+
+    char *string1 = "*****  ****    **  ******  *****  ******";
+    char *string2 = "**     ** **   **  **      **     **    ";
+    char *string3 = "***    **  **  **  **      ****   **    ";
+    char *string4 = "**     **   ** **  **      **     **    ";
+    char *string5 = "*****  **    ****  ******  *****  ******";
+    char *string6 = "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-";
+
+    int meio1 = calcular_meio(colunas, string1);
+    int meio2 = calcular_meio(colunas, string2);
+    int meio3 = calcular_meio(colunas, string3);
+    int meio4 = calcular_meio(colunas, string4);
+    int meio5 = calcular_meio(colunas, string5);
+    int meio6 = calcular_meio(colunas, string6);
+
+    gotoxy(meio1, 2);
+    puts(string1);
+
+    gotoxy(meio2, 3);
+    puts(string2);
+
+    gotoxy(meio3, 4);
+    puts(string3);
+
+    gotoxy(meio4, 5);
+    puts(string4);
+
+    gotoxy(meio5, 6);
+    puts(string5);
+
+    gotoxy(meio6, 8);
+    puts(string6);
+
+    int meio;
+    char *string = "1 - Cadastrar Curso";
+    meio = calcular_meio(colunas, string);
+    gotoxy(meio-3, 12);
+    puts(string);
+
+    string = "2 - Remover Curso";
+    gotoxy(meio-3, 13);
+    puts(string);
+
+    string = "3 - Alterar Dados de um Curso";
+    gotoxy(meio-3, 14);
+    puts(string);
+
+    string = "4 - Listar Cursos";
+    gotoxy(meio-3, 15);
+    puts(string);
+
+    string = "5 - Quantidade Cursos";
+    gotoxy(meio-3, 16);
+    puts(string);
+
+    string = "6 - Voltar";
+    gotoxy(meio-3, 17);
+    puts(string);
+
+
+    string = "BY: CARLOS HENRIQUE";
+    meio = calcular_meio(colunas, string);
+    gotoxy(meio, 25);
+    puts(string);
+}
+
+void menu_oficina(int colunas){
+
+    char *string1 = "*****  ****    **  ******  *****  ******";
+    char *string2 = "**     ** **   **  **      **     **    ";
+    char *string3 = "***    **  **  **  **      ****   **    ";
+    char *string4 = "**     **   ** **  **      **     **    ";
+    char *string5 = "*****  **    ****  ******  *****  ******";
+    char *string6 = "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-";
+
+    int meio1 = calcular_meio(colunas, string1);
+    int meio2 = calcular_meio(colunas, string2);
+    int meio3 = calcular_meio(colunas, string3);
+    int meio4 = calcular_meio(colunas, string4);
+    int meio5 = calcular_meio(colunas, string5);
+    int meio6 = calcular_meio(colunas, string6);
+
+    gotoxy(meio1, 2);
+    puts(string1);
+
+    gotoxy(meio2, 3);
+    puts(string2);
+
+    gotoxy(meio3, 4);
+    puts(string3);
+
+    gotoxy(meio4, 5);
+    puts(string4);
+
+    gotoxy(meio5, 6);
+    puts(string5);
+
+    gotoxy(meio6, 8);
+    puts(string6);
+
+    int meio;
+    char *string = "1 - Cadastrar Oficina";
+    meio = calcular_meio(colunas, string);
+    gotoxy(meio-3, 12);
+    puts(string);
+
+    string = "2 - Remover Oficina";
+    gotoxy(meio-3, 13);
+    puts(string);
+
+    string = "3 - Alterar Dados de uma Oficina";
+    gotoxy(meio-3, 14);
+    puts(string);
+
+    string = "4 - Listar Oficinas";
+    gotoxy(meio-3, 15);
+    puts(string);
+
+    string = "5 - Quantidade Oficinas";
+    gotoxy(meio-3, 16);
+    puts(string);
+
+    string = "6 - Voltar";
+    gotoxy(meio-3, 17);
+    puts(string);
+
+
+    string = "BY: CARLOS HENRIQUE";
+    meio = calcular_meio(colunas, string);
+    gotoxy(meio, 25);
+    puts(string);
+}
+
 main(){
 
     // ALTERA A COMPOSI플O DA JANELA (COR/TAMANHO)
@@ -450,6 +721,9 @@ main(){
 
     char menu_evento_escolha;
     char menu_palestra_escolha;
+    char menu_gp_discussao_escolha;
+    char menu_curso_escolha;
+    char menu_oficina_escolha;
 
     // VERIFICACA SE OS ARQUIVOS J� FORAM CRIADOS
     FILE *locais;
@@ -665,7 +939,7 @@ main(){
                             } else if (saida == 0){
                                 printf("\n==> NAO EXISTEM PALESTRANTES CADASTRADOS\n");
                             } else {
-                                printf("\n\n==> %d PALESTRANTE(S) CADASTRADO(S)", quantidade_palestrantes());
+                                printf("\n\n==> %d PALESTRANTE(S) CADASTRADO(S)", saida);
                             }
 
                             setbuf(stdin, NULL);
@@ -750,7 +1024,7 @@ main(){
                             } else if (saida == -1){
                                 printf("\n==> HOUVE UM ERRO DE ACESSO AO ARQUIVO\n");
                             } else {
-                                printf("\n\n==> %d ORGANIZADOR(ES) CADASTRADO(S)", quantidade_organizadores());
+                                printf("\n\n==> %d ORGANIZADOR(ES) CADASTRADO(S)", saida);
                             }
 
                             setbuf(stdin, NULL);
@@ -769,33 +1043,304 @@ main(){
                 menu_evento_escolha = getch();
 
                 switch(menu_evento_escolha){
+                // ESCOLHA PALESTRA
                 case '1':
-                    system("cls");
-                    gerar_topo(80, "CADASTRANDO PALESTRA");
-                    saida = cadastrar_palestra();
+                    do {
+                        system("cls");
+                        menu_palestras(80);
+                        menu_palestra_escolha = getch();
 
-                    if (saida == -1){
-                        printf("\n==> HOUVE UM ERRO DE ACESSO AO ARQUIVO");
-                    } else if (saida == -2){
-                        printf("\n==> LIMITE DE CONGRESSISTAS ATINGIDO");
-                    } else if(saida == 0){
-                        printf("\n==> CONGRESSISTA CADASTRADO COM SUCESSO");
-                    }
+                        switch(menu_palestra_escolha){
+                        case '1':
+                            system("cls");
+                            gerar_topo(80, "CADASTRANDO PALESTRA");
+                            saida = cadastrar_palestra();
 
-                    Sleep(1000);
+                            if (saida == -1){
+                                printf("\n ==> HOUVE UM ERRO DE ACESSO AO ARQUIVO\n");
+                            } else if (saida == -2){
+                                printf("\n==> PALESTRANTES NAO CADASTRADOS\n");
+                            } else if (saida == -3){
+                                printf("\n==> PROFESSOR J� MINISTRA UM EVENTO");
+                            } else if (saida == 0){
+                                printf("==> PALESTRA CADASTRADA COM SUCESSO");
+                            }
+
+                            Sleep(1000);
+                            break;
+                        case '2':
+                            system("cls");
+                            gerar_topo(80, "REMOVENDO PALESTRA");
+                            saida = remover_palestra();
+
+                            if (saida == -1){
+                                printf("\n==> HOUVE UM ERRO DE ACESSO AO ARQUIVO\n");
+                            } else if (saida == -2){
+                                printf("\n==> NAO EXISTEM PALESTRAS CADASTRADAS");
+                            } else if (saida == 0){
+                                printf("\n==> PALESTRA REMOVIDA COM SUCESSO");
+                            }
+
+                            Sleep(1000);
+                            break;
+                        case '3':
+                            break;
+                        case '4':
+                            system("cls");
+                            gerar_topo(80, "LISTAR PALESTRAS");
+
+                            saida = listar_palestras();
+
+                            if (saida == -1){
+                                printf("\n==> HOUVE UM ERRO DE ACESSO AO ARQUIVO\n");
+                            } else if (saida == -2){
+                                printf("\n==> NAO EXISTEM PALESTRAS CADASTRADAS");
+                            }
+                            getch();
+                            break;
+                        case '5':
+                            system("cls");
+                            gerar_topo(80, "QUANTIDADE DE PALESTRAS");
+                            saida = quantidade_palestras();
+
+                            if (saida == -1){
+                                printf("\n==> HOUVE UM ERRO DE ACESSO AO ARQUIVO\n");
+                            } else if (saida == 0){
+                                printf("\n==> NAO EXISTEM PALESTRAS CADASTRADAS");
+                            } else {
+                                printf("\n\n==> %d PALESTRA(S) CADASTRADA(S)", saida);
+                            }
+                            getch();
+                            break;
+                        }
+
+
+                    } while(menu_palestra_escolha != '6');
                     break;
+                // ESCOLHA GP DE DISCUSSAO
                 case '2':
-                    printf("a");
+                    do {
+                        system("cls");
+                        menu_gp_discussao(80);
+                        menu_gp_discussao_escolha = getch();
+
+                        switch(menu_gp_discussao_escolha){
+                        case '1':
+                            system("cls");
+                            gerar_topo(80, "CADASTRANDO GRUPO DE DISCUSSAO");
+                            saida = criar_gp_discussoes();
+
+                            if (saida == -1){
+                                printf("\n ==> HOUVE UM ERRO DE ACESSO AO ARQUIVO\n");
+                            } else if (saida == -2){
+                                printf("\n==> PALESTRANTES NAO CADASTRADOS\n");
+                            } else if (saida == 0){
+                                printf("==> GRUPO DE DISCUSSAO CADASTRADO COM SUCESSO");
+                            }
+
+                            Sleep(1000);
+                            break;
+                        case '2':
+                            system("cls");
+                            gerar_topo(80, "REMOVENDO GRUPO DE DISCUSSAO");
+                            saida = remover_gp_discussoes();
+
+                            if (saida == -1){
+                                printf("\n==> HOUVE UM ERRO DE ACESSO AO ARQUIVO\n");
+                            } else if (saida == -2){
+                                printf("\n==> NAO EXISTEM GP DE DISCUSSOES CADASTRADOS");
+                            } else if (saida == 0){
+                                printf("\n==> GRUPO DE DISCUSSAO REMOVIDO COM SUCESSO");
+                            }
+
+                            Sleep(1000);
+                            break;
+                        case '3':
+                            break;
+                        case '4':
+                            system("cls");
+                            gerar_topo(80, "LISTAR GRUPOS DE DISCUSSAO");
+
+                            saida = listar_gp_discussao();
+
+                            if (saida == -1){
+                                printf("\n==> HOUVE UM ERRO DE ACESSO AO ARQUIVO\n");
+                            } else if (saida == -2){
+                                printf("\n==> NAO EXISTEM GRUPOS DE DISCUSSAO CADASTRADOS");
+                            }
+
+                            getch();
+                            break;
+                        case '5':
+                            system("cls");
+                            gerar_topo(80, "QUANTIDADE DE PALESTRAS");
+                            saida = quantidade_gp_discussao();
+
+                            if (saida == -1){
+                                printf("\n==> HOUVE UM ERRO DE ACESSO AO ARQUIVO\n");
+                            } else if (saida == 0){
+                                printf("\n==> NAO EXISTEM GRUPO(S) DE DISCUSSAO(ES) CADASTRADOS");
+                            } else {
+                                printf("\n\n==> %d GRUPO(S) DE DISCUSSAO(ES) CADASTRADO(S)", saida);
+                            }
+                            getch();
+                            break;
+                        }
 
 
+                    } while(menu_gp_discussao_escolha != '6');
+                    break;
+                    // ESCOLHA CURSO
+                case '3':
+                    do {
+                        system("cls");
+                        menu_curso(80);
+                        menu_curso_escolha = getch();
+
+                        switch(menu_curso_escolha){
+                        case '1':
+                            system("cls");
+                            gerar_topo(80, "CADASTRANDO CURSO");
+                            saida = cadastrar_curso();
+
+                            if (saida == -1){
+                                printf("\n ==> HOUVE UM ERRO DE ACESSO AO ARQUIVO\n");
+                            } else if (saida == -2){
+                                printf("\n==> PALESTRANTES NAO CADASTRADOS\n");
+                            } else if (saida == -3){
+                                printf("\n==> PROFESSOR J� MINISTRA UM EVENTO");
+                            } else if (saida == 0){
+                                printf("==> CURSO CADASTRADO COM SUCESSO");
+                            }
+
+                            Sleep(1000);
+                            break;
+                        case '2':
+                            system("cls");
+                            gerar_topo(80, "REMOVENDO CURSO");
+                            saida = remover_cursos();
+
+                            if (saida == -1){
+                                printf("\n==> HOUVE UM ERRO DE ACESSO AO ARQUIVO\n");
+                            } else if (saida == -2){
+                                printf("\n==> NAO EXISTEM PALESTRAS CADASTRADAS");
+                            } else if (saida == 0){
+                                printf("\n==> CURSO REMOVIDO COM SUCESSO");
+                            }
+
+                            Sleep(1000);
+                            break;
+                        case '3':
+                            break;
+                        case '4':
+                            system("cls");
+                            gerar_topo(80, "LISTAR CURSOS");
+
+                            saida = listar_cursos();
+
+                            if (saida == -1){
+                                printf("\n==> HOUVE UM ERRO DE ACESSO AO ARQUIVO\n");
+                            } else if (saida == -2){
+                                printf("\n==> NAO EXISTEM PALESTRAS CADASTRADAS");
+                            }
+                            getch();
+                            break;
+                        case '5':
+                            system("cls");
+                            gerar_topo(80, "QUANTIDADE DE CURSOS");
+                            saida = quantidade_cursos();
+
+                            if (saida == -1){
+                                printf("\n==> HOUVE UM ERRO DE ACESSO AO ARQUIVO\n");
+                            } else if (saida == 0){
+                                printf("\n==> NAO EXISTEM PALESTRAS CADASTRADAS");
+                            } else {
+                                printf("\n\n==> %d CURSO(S) CADASTRADA(S)", saida);
+                            }
+                            getch();
+                            break;
+                        }
+
+                    } while(menu_curso_escolha != '6');
+                    break;
+                    // ESCOLHA OFICINA
+                case '4':
+                    do {
+                        system("cls");
+                        menu_oficina(80);
+                        menu_oficina_escolha = getch();
+
+                        switch(menu_oficina_escolha){
+                        case '1':
+                            system("cls");
+                            gerar_topo(80, "CADASTRANDO OFICINA");
+                            saida = cadastrar_oficina();
+
+                            if (saida == -1){
+                                printf("\n ==> HOUVE UM ERRO DE ACESSO AO ARQUIVO\n");
+                            } else if (saida == -2){
+                                printf("\n==> PALESTRANTES NAO CADASTRADOS\n");
+                            } else if (saida == -3){
+                                printf("\n==> PROFESSOR J� MINISTRA UM EVENTO");
+                            } else if (saida == 4){
+                                printf("==> NAO EXISTEM MAIS VAGAS P/ LOCAIS");
+                            } else if (saida == 0){
+                                printf("==> OFICINA CADASTRADA COM SUCESSO");
+                            }
+
+                            Sleep(1000);
+                            break;
+                        case '2':
+                            system("cls");
+                            gerar_topo(80, "REMOVENDO OFICINA");
+                            saida = remover_oficinas();
+
+                            if (saida == -1){
+                                printf("\n==> HOUVE UM ERRO DE ACESSO AO ARQUIVO\n");
+                            } else if (saida == -2){
+                                printf("\n==> NAO EXISTEM OFICINAS CADASTRADAS");
+                            } else if (saida == 0){
+                                printf("\n==> OFICINA REMOVIDA COM SUCESSO");
+                            }
+
+                            Sleep(1000);
+                            break;
+                        case '3':
+                            break;
+                        case '4':
+                            system("cls");
+                            gerar_topo(80, "LISTAR OFICINAS");
+
+                            saida = listar_oficinas();
+
+                            if (saida == -1){
+                                printf("\n==> HOUVE UM ERRO DE ACESSO AO ARQUIVO\n");
+                            } else if (saida == -2){
+                                printf("\n==> NAO EXISTEM OFICINAS CADASTRADAS");
+                            }
+                            getch();
+                            break;
+                        case '5':
+                            system("cls");
+                            gerar_topo(80, "QUANTIDADE DE OFICINAS");
+                            saida = quantidade_oficinas();
+
+                            if (saida == -1){
+                                printf("\n==> HOUVE UM ERRO DE ACESSO AO ARQUIVO\n");
+                            } else if (saida == 0){
+                                printf("\n==> NAO EXISTEM OFICINAS CADASTRADAS");
+                            } else {
+                                printf("\n\n==> %d OFICINA(S) CADASTRADA(S)", saida);
+                            }
+                            getch();
+                            break;
+                        }
+
+                    } while(menu_oficina_escolha != '6');
+                    break;
                 }
-
-
-
-
-
             } while (menu_evento_escolha != '5');
+            break;
         }
-        break;
     } while (menu_principal_escolha != '3');
 }

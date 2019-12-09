@@ -230,3 +230,21 @@ int calcular_meio(int colunas, char *string){
     int meio = (colunas - strlen(string)) / 2;
     return meio;
 }
+
+char *retornar_nome_palestrante(int ID){
+
+    FILE *palestrantes;
+    palestrantes = fopen("Arquivos\\palestrantes.txt", "rb");
+
+    char *nome;
+
+    PALESTRANTE pale;
+    while (fread(&pale, sizeof(PALESTRANTE), 1, palestrantes)){
+        if (pale.ID == ID){
+            strcpy(nome, pale.nome);
+            fclose(palestrantes);
+            return nome;
+        }
+    }
+
+}

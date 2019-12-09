@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1575890196 source:c:\users\usuário\documents\c\projeto final  lp1\main.c
+1575930372 source:c:\users\usuário\documents\c\projeto final  lp1\main.c
 	<stdio.h>
 	<stdlib.h>
 	<windows.h>
@@ -19,7 +19,7 @@
 	"Uteis.h"
 	"Eventos.h"
 
-1575800023 source:c:\users\usuário\documents\c\projeto final  lp1\uteis.c
+1575913078 source:c:\users\usuário\documents\c\projeto final  lp1\uteis.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -30,7 +30,7 @@
 
 1573997641 c:\users\usuário\documents\c\projeto final  lp1\uteis.h
 
-1575800273 source:c:\users\usuário\documents\c\projeto final  lp1\eventos.c
+1575930603 source:c:\users\usuário\documents\c\projeto final  lp1\eventos.c
 	<stdio.h>
 	<stdlib.h>
 	<windows.h>

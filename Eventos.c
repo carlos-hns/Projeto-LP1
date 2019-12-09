@@ -681,6 +681,7 @@ int quantidade_palestras(){
     palestras = fopen("Arquivos\\palestras.txt", "rb");
 
     if (palestras == NULL){
+        fclose(palestras);
         return -1;
     }
 
@@ -695,25 +696,32 @@ int quantidade_palestras(){
     return contador;
 }
 
-void listar_palestras(){
+int listar_palestras(){
 
     FILE *palestras;
     palestras = fopen("Arquivos\\palestras.txt", "rb");
 
     if (palestras == NULL){
         fclose(palestras);
-        printf("Falha ao carregar o arquivo.\n");
+        return -1;
     } else {
+
+        if (quantidade_palestras() == 0){
+            fclose(palestras);
+            return -2;
+        }
+
         PALESTRA pale;
 
         while(fread(&pale, sizeof(PALESTRA), 1, palestras)){
             printf("\nID: %d\n", pale.ID);
             printf("CAPACIDADE: %d\n", pale.capacidade);
             printf("TEMA: %s", pale.tema);
-            printf("PROFESSOR: %d\n", pale.professor_palestrante);
+            printf("PROFESSOR: %s\n", retornar_nome_palestrante(pale.professor_palestrante));
 
         }
         fclose(palestras);
+        return 0;
     }
 }
 
@@ -731,7 +739,7 @@ int disponibilidade_palestrante_PCO(int ID){
     } else {
         PALESTRA pale;
         while(fread(&pale, sizeof(PALESTRA), 1, palestras) == 1){
-            printf("ID PROFESSORES: %d\n", pale.professor_palestrante);
+            //printf("ID PROFESSORES: %d\n", pale.professor_palestrante);
             if (ID == pale.professor_palestrante){
                 fclose(palestras);
                 return -1; // PROFESSOR JÁ PARTICIPA DE ALGO
@@ -792,7 +800,7 @@ int cadastrar_palestra(){
                 } while (verificar_ID(7, matricula_palestrante) != 0);
 
                 if (disponibilidade_palestrante_PCO(matricula_palestrante) == -1){
-                    printf("Professor ja ministra um evento.\n");
+                    fclose(palestras);
                     return -3;
                 }
 
@@ -808,32 +816,32 @@ int cadastrar_palestra(){
                     while(fread(&loc, sizeof(LOCAL), 1, locais)){
                         if (loc.tipo_evento == 1 && loc.disponibilidade == 1){
                             if (pale.capacidade == 50 && (strcmp(loc.local, "AUDITORIO 3") == 0)){
-                                printf("ID: %d\n", loc.ID);
-                                printf("DIA: %d\n", loc.dia);
-                                printf("HORARIO: %s\n", loc.horario);
-                                printf("CARGA HORARIA: %dH\n", loc.carga_horaria);
-                                printf("LOCAL: %s\n", loc.local);
-                                printf("DISPONIBILIDADE: %d\n", loc.disponibilidade);
+                                printf("\tID: %d\n", loc.ID);
+                                printf("\tDIA: %d\n", loc.dia);
+                                printf("\tHORARIO: %s\n", loc.horario);
+                                printf("\tCARGA HORARIA: %dH\n", loc.carga_horaria);
+                                printf("\tLOCAL: %s\n", loc.local);
+                                printf("\tDISPONIBILIDADE: %d\n", loc.disponibilidade);
                                 putchar('\n');
                                 Sleep(1500);
                             } else {
                                 if ((pale.capacidade > 50 && pale.capacidade <= 100) &&(strcmp(loc.local, "AUDITORIO 2") == 0)){
-                                    printf("ID: %d\n", loc.ID);
-                                    printf("DIA: %d\n", loc.dia);
-                                    printf("HORARIO: %s\n", loc.horario);
-                                    printf("CARGA HORARIA: %dH\n", loc.carga_horaria);
-                                    printf("LOCAL: %s\n", loc.local);
-                                    printf("DISPONIBILIDADE: %d\n", loc.disponibilidade);
+                                    printf("\tID: %d\n", loc.ID);
+                                    printf("\tDIA: %d\n", loc.dia);
+                                    printf("\tHORARIO: %s\n", loc.horario);
+                                    printf("\tCARGA HORARIA: %dH\n", loc.carga_horaria);
+                                    printf("\tLOCAL: %s\n", loc.local);
+                                    printf("\tDISPONIBILIDADE: %d\n", loc.disponibilidade);
                                     putchar('\n');
                                     Sleep(1500);
                                 } else {
                                     if ((pale.capacidade > 100 && pale.capacidade <= 150) &&(strcmp(loc.local, "AUDITORIO 1") == 0)){
-                                            printf("ID: %d\n", loc.ID);
-                                            printf("DIA: %d\n", loc.dia);
-                                            printf("HORARIO: %s\n", loc.horario);
-                                            printf("CARGA HORARIA: %dH\n", loc.carga_horaria);
-                                            printf("LOCAL: %s\n", loc.local);
-                                            printf("DISPONIBILIDADE: %d\n", loc.disponibilidade);
+                                            printf("\tID: %d\n", loc.ID);
+                                            printf("\tDIA: %d\n", loc.dia);
+                                            printf("\tHORARIO: %s\n", loc.horario);
+                                            printf("\tCARGA HORARIA: %dH\n", loc.carga_horaria);
+                                            printf("\tLOCAL: %s\n", loc.local);
+                                            printf("\tDISPONIBILIDADE: %d\n", loc.disponibilidade);
                                             putchar('\n');
                                             Sleep(1500);
                                     }
@@ -870,6 +878,7 @@ int cadastrar_palestra(){
             }
         }
     }
+    return 0;
 }
 
 int remover_palestra(){
@@ -881,8 +890,16 @@ int remover_palestra(){
     palestras_aux = fopen("Arquivos\\tempo.txt", "ab");
 
     if (palestras == NULL || palestras_aux == NULL){
-        printf("Falha ao carregar o arquivo.\n");
+        fclose(palestras);
+        fclose(palestras_aux);
+        return -1;
     } else {
+
+        if (quantidade_palestras() == 0){
+            fclose(palestras);
+            fclose(palestras_aux);
+            return -2;
+        }
 
         PALESTRA pale;
         int ID;
@@ -894,7 +911,6 @@ int remover_palestra(){
             if (ID != pale.ID){
                 fwrite(&pale, sizeof(PALESTRA), 1, palestras_aux);
             } else{
-
                 alterar_disponibilidade(pale.loc.ID, 1);
             }
         }
@@ -903,6 +919,7 @@ int remover_palestra(){
         fclose(palestras_aux);
         remove("Arquivos\\palestras.txt");
         rename("Arquivos\\tempo.txt", "Arquivos\\palestras.txt");
+        return 0;
     }
 }
 
@@ -918,6 +935,7 @@ int quantidade_gp_discussao(){
     gp_discussoes = fopen("Arquivos\\gp_discussoes.txt", "rb");
 
     if (gp_discussoes == NULL){
+        fclose(gp_discussoes);
         return -1;
     }
 
@@ -938,23 +956,30 @@ int listar_gp_discussao(){
     gp_discussoes = fopen("Arquivos\\gp_discussoes.txt", "rb");
 
     if (gp_discussoes == NULL){
+        fclose(gp_discussoes);
         return -1;
+    }
+
+    if (quantidade_gp_discussao() == 0){
+        fclose(gp_discussoes);
+        return -2;
     }
 
     GP_DISCUSSOES gp;
     int i;
 
     while(fread(&gp, sizeof(GP_DISCUSSOES), 1, gp_discussoes) == 1){
-        printf("\nID: %d\n", gp.ID);
-        printf("CAPACIDADE: %d\n", gp.capacidade);
-        printf("TEMA: %s", gp.tema);
-        printf("PARTICIPANTES:\n");
+        printf("\n\tID: %d\n", gp.ID);
+        printf("\tCAPACIDADE: %d\n", gp.capacidade);
+        printf("\tTEMA: %s", gp.tema);
+        printf("\tMESA:\n");
         for (i=0; i < 5; i++){
-            printf("\t%d", &gp.mesa[i]);
+            printf("\t\t- %s", retornar_nome_palestrante(gp.mesa[i]));
         }
     }
 
     fclose(gp_discussoes);
+    return 0;
 }
 
 int criar_gp_discussoes(){
@@ -997,7 +1022,7 @@ int criar_gp_discussoes(){
                 setbuf(stdin, NULL);
 
                 int i;
-                printf("MEMBROS DA MESA: \n\n");
+                printf("MEMBROS DA MESA:");
                 for (i=0; i < 5; i++){
                     PALESTRANTE *novo = cadastrar_palestrante();
                     gp.mesa[i] = novo->ID;
@@ -1010,18 +1035,19 @@ int criar_gp_discussoes(){
                     return -1;
                 } else {
                     LOCAL loc;
+                    printf("\nLOCAIS DISPONIVEIS:\n");
                     while(fread(&loc, sizeof(LOCAL), 1, locais) == 1){
                         if (loc.tipo_evento == 2 && loc.disponibilidade == 1){
                             if ((gp.capacidade >= 1) &&
                                 (gp.capacidade <= 30) &&
                                 ((strcmp(loc.local, "SALA 3") == 0))){
 
-                                printf("ID: %d\n", loc.ID);
-                                printf("DIA: %d\n", loc.dia);
-                                printf("HORARIO: %s\n", loc.horario);
-                                printf("CARGA HORARIA: %dH\n", loc.carga_horaria);
-                                printf("LOCAL: %s\n", loc.local);
-                                printf("DISPONIBILIDADE: %d\n", loc.disponibilidade);
+                                printf("\tID: %d\n", loc.ID);
+                                printf("\tDIA: %d\n", loc.dia);
+                                printf("\tHORARIO: %s\n", loc.horario);
+                                printf("\tCARGA HORARIA: %dH\n", loc.carga_horaria);
+                                printf("\tLOCAL: %s\n", loc.local);
+                                printf("\tDISPONIBILIDADE: %d\n", loc.disponibilidade);
                                 putchar('\n');
                                 Sleep(1500);
                             } else {
@@ -1030,12 +1056,12 @@ int criar_gp_discussoes(){
                                     (strcmp(loc.local, "SALA 1")) == 0 &&
                                     (strcmp(loc.horario, "15:00-16:00")) == 0){
 
-                                    printf("ID: %d\n", loc.ID);
-                                    printf("DIA: %d\n", loc.dia);
-                                    printf("HORARIO: %s\n", loc.horario);
-                                    printf("CARGA HORARIA: %dH\n", loc.carga_horaria);
-                                    printf("LOCAL: %s\n", loc.local);
-                                    printf("DISPONIBILIDADE: %d\n", loc.disponibilidade);
+                                    printf("\tID: %d\n", loc.ID);
+                                    printf("\tDIA: %d\n", loc.dia);
+                                    printf("\tHORARIO: %s\n", loc.horario);
+                                    printf("\tCARGA HORARIA: %dH\n", loc.carga_horaria);
+                                    printf("\tLOCAL: %s\n", loc.local);
+                                    printf("\tDISPONIBILIDADE: %d\n", loc.disponibilidade);
                                     putchar('\n');
                                     Sleep(1500);
                                 } else {
@@ -1044,12 +1070,12 @@ int criar_gp_discussoes(){
                                     (strcmp(loc.local, "SALA 2") == 0) &&
                                     (strcmp(loc.horario, "15:00-16:00") == 0)){
 
-                                            printf("ID: %d\n", loc.ID);
-                                            printf("DIA: %d\n", loc.dia);
-                                            printf("HORARIO: %s\n", loc.horario);
-                                            printf("CARGA HORARIA: %dH\n", loc.carga_horaria);
-                                            printf("LOCAL: %s\n", loc.local);
-                                            printf("DISPONIBILIDADE: %d\n", loc.disponibilidade);
+                                            printf("\tID: %d\n", loc.ID);
+                                            printf("\tDIA: %d\n", loc.dia);
+                                            printf("\tHORARIO: %s\n", loc.horario);
+                                            printf("\tCARGA HORARIA: %dH\n", loc.carga_horaria);
+                                            printf("\tLOCAL: %s\n", loc.local);
+                                            printf("\tDISPONIBILIDADE: %d\n", loc.disponibilidade);
                                             putchar('\n');
                                             Sleep(1500);
                                     }
@@ -1081,12 +1107,12 @@ int criar_gp_discussoes(){
                     fclose(gp_discussoes);
 
                     alterar_disponibilidade(id_escolha, -1);
+                    return 0;
                 }
             }
         }
     }
 }
-
 
 int remover_gp_discussoes(){
 
@@ -1097,13 +1123,18 @@ int remover_gp_discussoes(){
     gp_discussoes_aux = fopen("Arquivos\\gp_discussoes_aux.txt", "ab");
 
     if (gp_discussoes == NULL || gp_discussoes_aux == NULL){
-        printf("Falha ao carregar o arquivo.\n");
         return -1;
     } else {
 
+        if (quantidade_gp_discussao() == 0){
+            fclose(gp_discussoes);
+            fclose(gp_discussoes_aux);
+            return -2;
+        }
+
         GP_DISCUSSOES gp;
         int ID;
-        listar_cursos();
+        listar_gp_discussao();
         printf("ID P/ REMOVER >>> ");
         scanf("%d", &ID);
 
@@ -1120,6 +1151,7 @@ int remover_gp_discussoes(){
         fclose(gp_discussoes_aux);
         remove("Arquivos\\gp_discussoes.txt");
         rename("Arquivos\\gp_discussoes_aux.txt", "Arquivos\\gp_discussoes.txt");
+        return 0;
     }
 }
 
@@ -1158,16 +1190,22 @@ int listar_cursos(){
         return -1;
     } else {
 
+        if (quantidade_cursos() == 0){
+            fclose(cursos);
+            return -2;
+        }
+
         CURSO cur;
 
         while(fread(&cur, sizeof(CURSO), 1, cursos)){
-            printf("\nID: %d\n", cur.ID);
-            printf("CAPACIDADE: %d\n", cur.capacidade);
-            printf("TEMA: %s", cur.tema);
-            printf("PROFESSOR: %d\n", cur.professor_palestrante);
+            printf("\n\n\tID: %d\n", cur.ID);
+            printf("\tCAPACIDADE: %d\n", cur.capacidade);
+            printf("\tTEMA: %s", cur.tema);
+            printf("\tPROFESSOR: %d\n", cur.professor_palestrante);
 
         }
         fclose(cursos);
+        return 0;
     }
 }
 
@@ -1218,7 +1256,7 @@ int cadastrar_curso(){
                 } while (verificar_ID(7, matricula_palestrante) != 0);
 
                 if (disponibilidade_palestrante_PCO(matricula_palestrante) == -1){
-                    printf("Professor ja ministra um evento.\n");
+                    fclose(cursos);
                     return -3;
                 }
 
@@ -1287,10 +1325,8 @@ int cadastrar_curso(){
                     fclose(cursos);
 
                     alterar_disponibilidade(id_escolha, -1);
+                    return 0;
                 }
-
-            // VERIFICAR SE A FUNÇÃO ESTA PEGANDO!
-            // SÓ TROQUEI AS VARIAVEIS E OS NOMES...
             }
         }
     }
@@ -1309,6 +1345,12 @@ int remover_cursos(){
         return -1;
     } else {
 
+        if (quantidade_cursos() == 0){
+            fclose(cursos);
+            fclose(cursos_aux);
+            return -2;
+        }
+
         CURSO cur;
         int ID;
         listar_cursos();
@@ -1319,7 +1361,6 @@ int remover_cursos(){
             if (ID != cur.ID){
                 fwrite(&cur, sizeof(CURSO), 1, cursos_aux);
             } else{
-
                 alterar_disponibilidade(cur.loc.ID, 1);
             }
         }
@@ -1328,6 +1369,7 @@ int remover_cursos(){
         fclose(cursos_aux);
         remove("Arquivos\\cursos.txt");
         rename("Arquivos\\temp_cursos.txt", "Arquivos\\cursos.txt");
+        return 0;
     }
 }
 
@@ -1337,13 +1379,13 @@ int remover_cursos(){
 *       -----------------------
 */
 
-
 int quantidade_oficinas(){
 
     FILE *oficinas;
     oficinas = fopen("Arquivos\\oficinas.txt", "rb");
 
     if (oficinas == NULL){
+        fclose(oficinas);
         return -1;
     }
 
@@ -1370,10 +1412,10 @@ int listar_oficinas(){
         OFICINA ofic;
 
         while(fread(&ofic, sizeof(OFICINA), 1, oficinas)){
-            printf("\nID: %d\n", ofic.ID);
-            printf("CAPACIDADE: %d\n", ofic.capacidade);
-            printf("TEMA: %s", ofic.tema);
-            printf("PROFESSOR: %d\n", ofic.professor_palestrante);
+            printf("\n\tID: %d\n", ofic.ID);
+            printf("\tCAPACIDADE: %d\n", ofic.capacidade);
+            printf("\tTEMA: %s", ofic.tema);
+            printf("\tPROFESSOR: %s\n", retornar_nome_palestrante(ofic.professor_palestrante));
 
         }
         fclose(oficinas);
@@ -1389,9 +1431,14 @@ int remover_oficinas(){
     oficinas_aux = fopen("Arquivos\\oficinas_aux.txt", "ab");
 
     if (oficinas == NULL || oficinas_aux == NULL){
-        printf("Falha ao carregar o arquivo.\n");
         return -1;
     } else {
+
+        if (quantidade_oficinas() == 0){
+            fclose(oficinas);
+            fclose(oficinas_aux);
+            return -2;
+        }
 
         OFICINA ofic;
         int ID;
@@ -1403,7 +1450,6 @@ int remover_oficinas(){
             if (ID != ofic.ID){
                 fwrite(&ofic, sizeof(OFICINA), 1, oficinas_aux);
             } else{
-
                 alterar_disponibilidade(ofic.loc.ID, 1);
             }
         }
@@ -1412,6 +1458,7 @@ int remover_oficinas(){
         fclose(oficinas_aux);
         remove("Arquivos\\oficinas.txt");
         rename("Arquivos\\oficinas_aux.txt", "Arquivos\\oficinas.txt");
+        return 0;
     }
 }
 
@@ -1462,7 +1509,7 @@ int cadastrar_oficina(){
                 } while (verificar_ID(7, matricula_palestrante) != 0);
 
                 if (disponibilidade_palestrante_PCO(matricula_palestrante) == -1){
-                    printf("Professor ja ministra um evento.\n");
+                    fclose(oficinas);
                     return -3;
                 }
 
@@ -1486,6 +1533,8 @@ int cadastrar_oficina(){
                     }
 
                     if (contador == 0){
+                        fclose(locais);
+                        fclose(oficinas);
                         return -4; // SALAS INDISPONIVEIS...
                     }
 
@@ -1495,12 +1544,12 @@ int cadastrar_oficina(){
                         if (loc.tipo_evento == 4 &&
                              loc.disponibilidade == 1){
 
-                            printf("ID: %d\n", loc.ID);
-                            printf("DIA: %d\n", loc.dia);
-                            printf("HORARIO: %s\n", loc.horario);
-                            printf("CARGA HORARIA: %dH\n", loc.carga_horaria);
-                            printf("LOCAL: %s\n", loc.local);
-                            printf("DISPONIBILIDADE: %d\n", loc.disponibilidade);
+                            printf("\n\n\tID: %d\n", loc.ID);
+                            printf("\tDIA: %d\n", loc.dia);
+                            printf("\tHORARIO: %s\n", loc.horario);
+                            printf("\tCARGA HORARIA: %dH\n", loc.carga_horaria);
+                            printf("\tLOCAL: %s\n", loc.local);
+                            printf("\tDISPONIBILIDADE: %d\n", loc.disponibilidade);
                             putchar('\n');
                             Sleep(1500);
                         }
@@ -1530,10 +1579,8 @@ int cadastrar_oficina(){
                     fclose(oficinas);
 
                     alterar_disponibilidade(id_escolha, -1);
+                    return 0;
                 }
-
-            // VERIFICAR SE A FUNÇÃO ESTA PEGANDO!
-            // SÓ TROQUEI AS VARIAVEIS E OS NOMES...
             }
         }
     }
