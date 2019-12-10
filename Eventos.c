@@ -923,6 +923,71 @@ int remover_palestra(){
     }
 }
 
+int editar_palestra(){
+
+    FILE *palestras;
+    FILE *palestras_aux;
+
+    if(quantidade_palestras() == 0){
+        return -2;
+    }
+
+    palestras = fopen("Arquivos\\palestras.txt", "rb");
+    palestras_aux = fopen("Arquivos\\palestras_aux.txt", "ab");
+
+    if (palestras == NULL || palestras_aux == NULL){
+        return -1;
+    }
+
+    int ID;
+
+    PALESTRA pale;
+    listar_palestras();
+    printf("ID P/ EDITAR >>> ");
+    scanf("%d", &ID);
+
+    int opcao;
+    printf("\n\n|1| - Alterar Tema");
+    printf("\n|2| - Alterar Professor/Palestrante\n");
+    printf("==> ");
+    do {
+        scanf("%d", &opcao);
+    } while (opcao < 1 || opcao > 2);
+
+    switch(opcao){
+    case 1:
+
+        setbuf(stdin, NULL);
+        while(fread(&pale, sizeof(PALESTRA), 1, palestras)==1){
+            if (pale.ID == ID){
+                printf("\nTema: ");
+                fgets(pale.tema, 50, stdin);
+                strcpy(pale.tema, strupr(pale.tema));
+            }
+            fwrite(&pale, sizeof(PALESTRA), 1, palestras_aux);
+        }
+        break;
+    case 2:
+        setbuf(stdin, NULL);
+        while(fread(&pale, sizeof(PALESTRA), 1, palestras)==1){
+            if (pale.ID == ID){
+                printf("\nPalestrante: ");
+                listar_palestrantes();
+                scanf("%d", &pale.professor_palestrante);
+            }
+            fwrite(&pale, sizeof(PALESTRA), 1, palestras_aux);
+        }
+        break;
+    }
+
+    fclose(palestras);
+    fclose(palestras_aux);
+    remove("Arquivos\\palestras.txt");
+    rename("Arquivos\\palestras_aux.txt", "Arquivos\\palestras.txt");
+    return 0;
+}
+
+
 /*
 *       -----------------------
 *           GP DE DISCUSSÃO
@@ -1155,6 +1220,70 @@ int remover_gp_discussoes(){
     }
 }
 
+int editar_gp_discussoes(){
+
+    FILE *gp_discussoes;
+    FILE *gp_discussoes_aux;
+
+    if(quantidade_gp_discussoes() == 0){
+        return -2;
+    }
+
+    gp_discussoes = fopen("Arquivos\\gp_discussoes.txt", "rb");
+    gp_discussoes_aux = fopen("Arquivos\\gp_discussoes_aux.txt", "ab");
+
+    if (gp_discussoes == NULL || gp_discussoes_aux == NULL){
+        return -1;
+    }
+
+    int ID;
+
+    GP_DISCUSSOES gp;
+    listar_gp_discussoes();
+    printf("ID P/ EDITAR >>> ");
+    scanf("%d", &ID);
+
+    int opcao;
+    printf("\n\n|1| - Alterar Tema");
+    printf("\n|2| - Alterar Professor/Palestrante\n");
+    printf("==> ");
+    do {
+        scanf("%d", &opcao);
+    } while (opcao < 1 || opcao > 2);
+
+    switch(opcao){
+    case 1:
+
+        setbuf(stdin, NULL);
+        while(fread(&gp, sizeof(GP_DISCUSSOES), 1, gp_discussoes)==1){
+            if (gp.ID == ID){
+                printf("\nTema: ");
+                fgets(gp.tema, 50, stdin);
+                strcpy(gp.tema, strupr(gp.tema));
+            }
+            fwrite(&gp, sizeof(GP_DISCUSSOES), 1, gp_discussoes_aux);
+        }
+        break;
+    case 2:
+        setbuf(stdin, NULL);
+        while(fread(&gp, sizeof(GP_DISCUSSOES), 1, gp_discussoes)==1){
+            if (gp.ID == ID){
+                printf("\nPalestrante: ");
+                listar_palestrantes();
+                scanf("%d", &gp.professor_palestrante);
+            }
+            fwrite(&gp, sizeof(GP_DISCUSSOES), 1, gp_discussoes_aux);
+        }
+        break;
+    }
+
+    fclose(gp_discussoes);
+    fclose(gp_discussoes_aux);
+    remove("Arquivos\\gp_discussoes.txt");
+    rename("Arquivos\\gp_discussoes_aux.txt", "Arquivos\\gp_discussoes.txt");
+    return 0;
+}
+
 /*
 *       -----------------------
 *           CURSO
@@ -1373,6 +1502,70 @@ int remover_cursos(){
     }
 }
 
+int editar_curos(){
+
+    FILE *cursos;
+    FILE *cursos_aux;
+
+    if(quantidade_cursos() == 0){
+        return -2;
+    }
+
+    cursos = fopen("Arquivos\\cursos.txt", "rb");
+    cursos_aux = fopen("Arquivos\\cursos_aux.txt", "ab");
+
+    if (cursos == NULL || cursos_aux == NULL){
+        return -1;
+    }
+
+    int ID;
+
+    CURSO cur;
+    listar_cursos();
+    printf("ID P/ EDITAR >>> ");
+    scanf("%d", &ID);
+
+    int opcao;
+    printf("\n\n|1| - Alterar Tema");
+    printf("\n|2| - Alterar Professor/Palestrante\n");
+    printf("==> ");
+    do {
+        scanf("%d", &opcao);
+    } while (opcao < 1 || opcao > 2);
+
+    switch(opcao){
+    case 1:
+
+        setbuf(stdin, NULL);
+        while(fread(&cur, sizeof(CURSO), 1, cursos)==1){
+            if (cur.ID == ID){
+                printf("\nTema: ");
+                fgets(cur.tema, 50, stdin);
+                strcpy(cur.tema, strupr(cur.tema));
+            }
+            fwrite(&cur, sizeof(CURSO), 1, cursos_aux);
+        }
+        break;
+    case 2:
+        setbuf(stdin, NULL);
+        while(fread(&cur, sizeof(CURSO), 1, cursos)==1){
+            if (cur.ID == ID){
+                printf("\nPalestrante: ");
+                listar_palestrantes();
+                scanf("%d", &cur.professor_palestrante);
+            }
+            fwrite(&cur, sizeof(CURSO), 1, cursos_aux);
+        }
+        break;
+    }
+
+    fclose(cursos);
+    fclose(cursos_aux);
+    remove("Arquivos\\cursos.txt");
+    rename("Arquivos\\cursos_aux.txt", "Arquivos\\cursos.txt");
+    return 0;
+}
+
 /*
 *       -----------------------
 *           OFICINA
@@ -1584,4 +1777,68 @@ int cadastrar_oficina(){
             }
         }
     }
+}
+
+int editar_oficinas(){
+
+    FILE *oficinas;
+    FILE *oficinas_aux;
+
+    if(quantidade_oficinas() == 0){
+        return -2;
+    }
+
+    oficinas = fopen("Arquivos\\oficinas.txt", "rb");
+    oficinas_aux = fopen("Arquivos\\oficinas_aux.txt", "ab");
+
+    if (oficinas == NULL || oficinas_aux == NULL){
+        return -1;
+    }
+
+    int ID;
+
+    OFICINA ofic;
+    listar_cursos();
+    printf("ID P/ EDITAR >>> ");
+    scanf("%d", &ID);
+
+    int opcao;
+    printf("\n\n|1| - Alterar Tema");
+    printf("\n|2| - Alterar Professor/Palestrante\n");
+    printf("==> ");
+    do {
+        scanf("%d", &opcao);
+    } while (opcao < 1 || opcao > 2);
+
+    switch(opcao){
+    case 1:
+
+        setbuf(stdin, NULL);
+        while(fread(&ofic, sizeof(OFICINA), 1, oficinas)==1){
+            if (ofic.ID == ID){
+                printf("\nTema: ");
+                fgets(ofic.tema, 50, stdin);
+                strcpy(ofic.tema, strupr(ofic.tema));
+            }
+            fwrite(&ofic, sizeof(OFICINA), 1, oficinas_aux);
+        }
+        break;
+    case 2:
+        setbuf(stdin, NULL);
+        while(fread(&ofic, sizeof(OFICINA), 1, oficinas)==1){
+            if (ofic.ID == ID){
+                printf("\nPalestrante: ");
+                listar_palestrantes();
+                scanf("%d", &ofic.professor_palestrante);
+            }
+            fwrite(&ofic, sizeof(OFICINA), 1, oficinas_aux);
+        }
+        break;
+    }
+
+    fclose(oficinas);
+    fclose(oficinas_aux);
+    remove("Arquivos\\oficinas.txt");
+    rename("Arquivos\\oficinas_aux.txt", "Arquivos\\oficinas.txt");
+    return 0;
 }

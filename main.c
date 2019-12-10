@@ -1084,7 +1084,19 @@ main(){
                             Sleep(1000);
                             break;
                         case '3':
+                            system("cls");
+                            gerar_topo(80, "ALTERANDO PALESTRA");
+                            saida = editar_palestra();
+
+                            if (saida == -1){
+                                printf("\n==> HOUVE UM ERRO DE ACESSO AO ARQUIVO\n");
+                            } else if (saida == -2){
+                                printf("\n==> NAO EXISTEM PALESTRAS CADASTRADAS");
+                            } else if (saida == 0){
+                                printf("\n==> PALESTRA ALTERADA COM SUCESSO");
+                            }
                             break;
+
                         case '4':
                             system("cls");
                             gerar_topo(80, "LISTAR PALESTRAS");
@@ -1156,6 +1168,17 @@ main(){
                             Sleep(1000);
                             break;
                         case '3':
+                            system("cls");
+                            gerar_topo(80, "ALTERANDO GRUPO DE DISCUSSAO");
+                            saida = editar_gp_discussoes();
+
+                            if (saida == -1){
+                                printf("\n==> HOUVE UM ERRO DE ACESSO AO ARQUIVO\n");
+                            } else if (saida == -2){
+                                printf("\n==> NAO EXISTEM GRUPO DE DISCUSSAO CADASTRADO");
+                            } else if (saida == 0){
+                                printf("\n==> GRUPO DE DISCUSSAO ALTERADA COM SUCESSO");
+                            }
                             break;
                         case '4':
                             system("cls");
@@ -1231,6 +1254,17 @@ main(){
                             Sleep(1000);
                             break;
                         case '3':
+                            system("cls");
+                            gerar_topo(80, "ALTERANDO CURSO");
+                            saida = editar_curos();
+
+                            if (saida == -1){
+                                printf("\n==> HOUVE UM ERRO DE ACESSO AO ARQUIVO\n");
+                            } else if (saida == -2){
+                                printf("\n==> NAO EXISTEM CURSOS CADASTRADOS");
+                            } else if (saida == 0){
+                                printf("\n==> CURSO ALTERADO COM SUCESSO");
+                            }
                             break;
                         case '4':
                             system("cls");
@@ -1306,6 +1340,17 @@ main(){
                             Sleep(1000);
                             break;
                         case '3':
+                            system("cls");
+                            gerar_topo(80, "ALTERANDO OFICINA");
+                            saida = editar_oficinas();
+
+                            if (saida == -1){
+                                printf("\n==> HOUVE UM ERRO DE ACESSO AO ARQUIVO\n");
+                            } else if (saida == -2){
+                                printf("\n==> NAO EXISTEM OFICINAS CADASTRADAS");
+                            } else if (saida == 0){
+                                printf("\n==> OFICINA ALTERADA COM SUCESSO");
+                            }
                             break;
                         case '4':
                             system("cls");

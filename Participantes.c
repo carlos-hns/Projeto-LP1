@@ -1325,9 +1325,8 @@ int remover_palestrante(){
         fclose(pale_aux);
         remove("Arquivos\\palestrantes.txt");
         rename("Arquivos\\temp.txt", "Arquivos\\palestrantes.txt");
+        remover_eventos_de_um_palestrante(ID);
         }
-
-    remover_eventos_de_um_palestrante(ID);
     fclose(pale);
     fclose(pale_aux);
     return 0;
