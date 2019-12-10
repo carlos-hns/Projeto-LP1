@@ -10,4 +10,4 @@ O Projeto Consiste em um CRUD responsável por organizar um evento (ENCEC - Enco
 sendo seu papel, criar, remover, editar, listar e cadastrar eventos e participantes.
 
 
-LINK DO VIDEO: https://youtu.be/4dZzX-z9NMc
+LINK DO VIDEO: https://youtu.be/xuWD-DGRf5A
