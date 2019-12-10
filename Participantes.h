@@ -31,6 +31,11 @@ int quantidade_congressistas();
 int listar_congressistas();
 int cadastrar_congressista();
 int remover_congressista();
+int editar_congressista();
+int remover_de_todos_eventos(int ID);
+int *informacoes_cadastro_eventos(int ID);
+int inserir_congressista_evento();
+int remover_congressista_evento();
 
 // ORGANIZADORES
 int quantidade_organizadores();
@@ -42,7 +47,8 @@ int remover_organizador();
 int quantidade_palestrantes();
 int listar_palestrantes();
 PALESTRANTE *cadastrar_palestrante();
-//int cadastrar_palestrante();
 int remover_palestrante();
+int editar_palestrante();
+int remover_eventos_de_um_palestrante(int ID);
 
 #endif

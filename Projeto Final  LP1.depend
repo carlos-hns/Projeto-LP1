@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1575969749 source:c:\users\usuário\documents\c\projeto final  lp1\main.c
+1575976283 source:c:\users\usuário\documents\c\projeto final  lp1\main.c
 	<stdio.h>
 	<stdlib.h>
 	<windows.h>
@@ -8,9 +8,9 @@
 	"Uteis.h"
 	"Eventos.h"
 
-1575933664 c:\users\usuário\documents\c\projeto final  lp1\participantes.h
+1575975658 c:\users\usuário\documents\c\projeto final  lp1\participantes.h
 
-1575969791 source:c:\users\usuário\documents\c\projeto final  lp1\participantes.c
+1575976178 source:c:\users\usuário\documents\c\projeto final  lp1\participantes.c
 	<stdio.h>
 	<stdlib.h>
 	<windows.h>
@@ -19,7 +19,7 @@
 	"Uteis.h"
 	"Eventos.h"
 
-1575913078 source:c:\users\usuário\documents\c\projeto final  lp1\uteis.c
+1575976201 source:c:\users\usuário\documents\c\projeto final  lp1\uteis.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -28,7 +28,7 @@
 	"Eventos.h"
 	"Uteis.h"
 
-1573997641 c:\users\usuário\documents\c\projeto final  lp1\uteis.h
+1575976821 c:\users\usuário\documents\c\projeto final  lp1\uteis.h
 
 1575969872 source:c:\users\usuário\documents\c\projeto final  lp1\eventos.c
 	<stdio.h>
@@ -40,5 +40,5 @@
 	"Uteis.h"
 	"Eventos.h"
 
-1574604209 c:\users\usuário\documents\c\projeto final  lp1\eventos.h
+1575976451 c:\users\usuário\documents\c\projeto final  lp1\eventos.h
 

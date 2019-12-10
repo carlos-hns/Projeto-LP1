@@ -6,6 +6,9 @@
 #include "Uteis.h"
 #include "Eventos.h"
 
+// PROJETO CONCLUIDO
+
+
 void gerar_topo(int colunas, char *frase){
 
     char *string1 = "*****  ****    **  ******  *****  ******";

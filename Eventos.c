@@ -7,6 +7,8 @@
 #include "Uteis.h"
 #include "Eventos.h"
 
+// CONCLUIDO
+
 /*
 *       -----------------------
 *           LOCAIS
@@ -1225,7 +1227,7 @@ int editar_gp_discussoes(){
     FILE *gp_discussoes;
     FILE *gp_discussoes_aux;
 
-    if(quantidade_gp_discussoes() == 0){
+    if(quantidade_gp_discussao() == 0){
         return -2;
     }
 
@@ -1239,7 +1241,7 @@ int editar_gp_discussoes(){
     int ID;
 
     GP_DISCUSSOES gp;
-    listar_gp_discussoes();
+    listar_gp_discussao();
     printf("ID P/ EDITAR >>> ");
     scanf("%d", &ID);
 
@@ -1251,6 +1253,7 @@ int editar_gp_discussoes(){
         scanf("%d", &opcao);
     } while (opcao < 1 || opcao > 2);
 
+    int i;
     switch(opcao){
     case 1:
 
@@ -1268,9 +1271,19 @@ int editar_gp_discussoes(){
         setbuf(stdin, NULL);
         while(fread(&gp, sizeof(GP_DISCUSSOES), 1, gp_discussoes)==1){
             if (gp.ID == ID){
-                printf("\nPalestrante: ");
+                int escolha_palestrante;
                 listar_palestrantes();
-                scanf("%d", &gp.professor_palestrante);
+                printf("\nPalestrante: ");
+                scanf("%d", &escolha_palestrante);
+
+                for (i=0; i < 5; i++){
+                    printf("|%d| - %d", i, gp.mesa[i]);
+                }
+                int escolha;
+                scanf("%d", &escolha);
+                gp.mesa[escolha] = escolha_palestrante;
+
+
             }
             fwrite(&gp, sizeof(GP_DISCUSSOES), 1, gp_discussoes_aux);
         }

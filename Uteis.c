@@ -6,6 +6,8 @@
 #include "Eventos.h"
 #include "Uteis.h"
 
+// CONCLUIDO
+
 int gerar_id(int tipo){
     switch(tipo){
     // Gera um ID para Palestra
