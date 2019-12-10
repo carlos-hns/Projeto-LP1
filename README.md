@@ -8,3 +8,6 @@ Projeto Acadêmico: com o objetivo de compor a nota da disciplina de Laboratóri
 
 O Projeto Consiste em um CRUD responsável por organizar um evento (ENCEC - Encontro Campinense dos Estudantes de Computação),
 sendo seu papel, criar, remover, editar, listar e cadastrar eventos e participantes.
+
+
+LINK DO VIDEO: https://youtu.be/4dZzX-z9NMc
