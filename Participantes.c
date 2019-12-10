@@ -1327,6 +1327,7 @@ int remover_palestrante(){
         rename("Arquivos\\temp.txt", "Arquivos\\palestrantes.txt");
         }
 
+    remover_eventos_de_um_palestrante(ID);
     fclose(pale);
     fclose(pale_aux);
     return 0;
@@ -1429,4 +1430,93 @@ int editar_palestrante(){
     remove("Arquivos\\palestrantes.txt");
     rename("Arquivos\\temp.txt", "Arquivos\\palestrantes.txt");
     return 0;
+}
+
+int remover_eventos_de_um_palestrante(int ID){
+
+    FILE *palestras;
+    FILE *palestras_aux;
+
+    FILE *gp_discussoes;
+    FILE *gp_discussoes_aux;
+
+    FILE *cursos;
+    FILE *cursos_aux;
+
+    FILE *oficinas;
+    FILE *oficinas_aux;
+
+    // -----------------
+
+    palestras = fopen("Arquivos\\palestras.txt", "rb");
+    palestras_aux = fopen("Arquivos\\palestras_aux", "ab");
+
+    PALESTRA pale;
+
+    while(fread(&pale, sizeof(PALESTRA), 1, palestras)==1){
+        if (pale.professor_palestrante != ID){
+            fwrite(&pale, sizeof(PALESTRA), 1,palestras_aux);
+        }
+    }
+
+    fclose(palestras);
+    fclose(palestras_aux);
+    remove("Arquivos\\palestras.txt");
+    rename("Arquivos\\palestras_aux.txt", "Arquivos\\palestras.txt");
+
+    // -----------------
+
+    cursos = fopen("Arquivos\\cursos.txt", "rb");
+    cursos_aux = fopen("Arquivos\\cursos_aux.txt", "ab");
+
+    CURSO cur;
+    while (fread(&cur, sizeof(CURSO),1, cursos)==1){
+        if(cur.professor_palestrante != ID){
+            fwrite(&cur, sizeof(CURSO), 1, cursos_aux);
+        }
+    }
+
+    fclose(cursos);
+    fclose(cursos_aux);
+    remove("Arquivos\\cursos.txt");
+    rename("Arquivos\\cursos_aux.txt", "Arquivos\\cursos.txt");
+
+    // -----------------
+
+    oficinas = fopen("Arquivos\\oficinas.txt", "rb");
+    oficinas_aux = fopen("Arquivos\\oficinas_aux.txt", "ab");
+
+    OFICINA ofic;
+    while (fread(&ofic, sizeof(OFICINA),1, oficinas)==1){
+        if(ofic.professor_palestrante != ID){
+            fwrite(&ofic, sizeof(OFICINA), 1, oficinas_aux);
+        }
+    }
+
+    fclose(oficinas);
+    fclose(oficinas_aux);
+    remove("Arquivos\\oficinas.txt");
+    rename("Arquivos\\oficinas_aux.txt", "Arquivos\\oficinas.txt");
+
+    // -----------------
+
+
+    gp_discussoes = fopen("Arquivos\\gp_discussoes.txt", "rb");
+    gp_discussoes_aux = fopen("Arquivos\\gp_discussoes_aux.txt", "ab");
+
+    int i;
+
+    GP_DISCUSSOES gp;
+    while (fread(&gp, sizeof(GP_DISCUSSOES),1, gp_discussoes)==1){
+        for (i=0; i < 5; i++){
+            if (gp.mesa[i] == ID){
+                gp.mesa[i] = 0;
+            }
+        }
+    }
+
+    fclose(cursos);
+    fclose(cursos_aux);
+    remove("Arquivos\\oficinas.txt");
+    rename("Arquivos\\oficinas_aux.txt", "Arquivos\\oficinas.txt");
 }

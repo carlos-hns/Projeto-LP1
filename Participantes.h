@@ -26,17 +26,6 @@ typedef struct {
 
 } PALESTRANTE;
 
-// CONGRESSISTAS
-int quantidade_congressistas();
-
-
-
-
-
-
-
-
-
 // CONGRESSSISTAS
 int quantidade_congressistas();
 int listar_congressistas();
